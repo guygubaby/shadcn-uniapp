@@ -1,0 +1,58 @@
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { fileURLToPath } from 'node:url'
+import {
+  blocks,
+  createPreset,
+  generateThemeCss,
+  presetNames,
+} from '../packages/shadcn-uniapp/dist/index.js'
+
+const root = new URL('../', import.meta.url)
+const output = new URL('apps/site/public/r/', root)
+await mkdir(output, { recursive: true })
+for (const block of blocks) {
+  const files = await Promise.all(
+    block.files.map(async (file) => ({
+      path: `registry/${block.name}/${file}`,
+      type: 'registry:component',
+      target: `src/components/blocks/${block.name}/${file}`,
+      content: await readFile(
+        new URL(`packages/shadcn-uniapp/registry/${block.name}/${file}`, root),
+        'utf8',
+      ),
+    })),
+  )
+  await writeFile(
+    new URL(`${block.name}.json`, output),
+    JSON.stringify(
+      {
+        $schema: 'https://shadcn-vue.com/schema/registry-item.json',
+        name: block.name,
+        title: block.title,
+        description: block.description,
+        type: 'registry:block',
+        dependencies: ['@wot-ui/ui@^2.3.2'],
+        files,
+        docs: 'Requires uni-app Vue 3, Wot UI 2.x easycom, and a shadcn-uniapp theme. This is not a desktop Reka component.',
+      },
+      null,
+      2,
+    ) + '\n',
+  )
+  // Miniapp builds require SFCs to stay inside the uni-app source root.
+  const previewBlock = new URL(`apps/preview/src/blocks/${block.name}/`, root)
+  await mkdir(previewBlock, { recursive: true })
+  for (const [index, file] of block.files.entries()) {
+    await writeFile(new URL(file, previewBlock), files[index].content)
+  }
+}
+const themes = new URL('apps/site/public/themes/', root)
+await mkdir(themes, { recursive: true })
+for (const preset of presetNames) {
+  const theme = createPreset(preset)
+  await writeFile(new URL(`${preset}.json`, themes), JSON.stringify(theme, null, 2) + '\n')
+  await writeFile(new URL(`${preset}.scss`, themes), generateThemeCss(theme))
+}
+console.log(
+  `Built ${blocks.length} registry entries and ${presetNames.length} themes in ${fileURLToPath(output)}`,
+)

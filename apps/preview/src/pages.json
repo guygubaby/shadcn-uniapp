@@ -1,0 +1,8 @@
+{
+  "pages": [{ "path": "pages/index/index", "style": { "navigationStyle": "custom" } }],
+  "easycom": {
+    "autoscan": true,
+    "custom": { "^wd-(.*)": "@wot-ui/ui/components/wd-$1/wd-$1.vue" }
+  },
+  "globalStyle": { "navigationStyle": "custom" }
+}

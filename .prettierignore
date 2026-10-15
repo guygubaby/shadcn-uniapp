@@ -1,0 +1,9 @@
+pnpm-lock.yaml
+apps/site/public/preview
+apps/site/public/r
+apps/site/public/themes
+dist
+artifacts
+node_modules
+docs/feasibility-research.md
+docs/implementation-evidence.md

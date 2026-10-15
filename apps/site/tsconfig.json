@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["vite/client", "unplugin-vue-router/client"],
+    "baseUrl": ".",
+    "paths": { "@/*": ["src/*"] },
+    "noEmit": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.vue", "typed-router.d.ts", "vite.config.ts"]
+}

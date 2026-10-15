@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /preview/
+Sitemap: https://shadcn-uniapp.guygubaby.top/sitemap.xml

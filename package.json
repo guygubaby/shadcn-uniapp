@@ -1,0 +1,25 @@
+{
+  "name": "shadcn-uniapp-workspace",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.32.1",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter shadcn-uniapp build && node scripts/build-registry.mjs && pnpm --filter @shadcn-uniapp/preview build && pnpm --filter @shadcn-uniapp/site dev",
+    "build": "pnpm --filter shadcn-uniapp build && node scripts/build-registry.mjs && pnpm --filter @shadcn-uniapp/preview build && pnpm --filter @shadcn-uniapp/site build",
+    "test": "vitest run",
+    "typecheck": "pnpm --filter shadcn-uniapp build && node scripts/build-registry.mjs && pnpm -r typecheck",
+    "check": "pnpm test && pnpm typecheck && pnpm build && pnpm build:weixin",
+    "build:weixin": "pnpm --filter shadcn-uniapp build && node scripts/build-registry.mjs && pnpm --filter @shadcn-uniapp/preview build:weixin",
+    "pack:release": "pnpm --filter shadcn-uniapp pack --out artifacts/%s-%v.tgz"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "typescript": "~5.9.3",
+    "vitest": "^4.0.18"
+  }
+}

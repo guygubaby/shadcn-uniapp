@@ -1,0 +1,13 @@
+node_modules/
+dist/
+artifacts/
+apps/site/public/preview/
+.env
+.env.*
+!.env.example
+.DS_Store
+coverage/
+*.tsbuildinfo
+apps/site/public/r/
+apps/site/public/themes/
+apps/preview/src/blocks/

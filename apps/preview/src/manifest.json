@@ -1,0 +1,10 @@
+{
+  "name": "shadcn-uniapp-preview",
+  "appid": "__UNI__SHADCN_PREVIEW",
+  "description": "Wot UI 2.x H5 preview and WeChat compile fixture",
+  "versionName": "0.1.0",
+  "versionCode": "1",
+  "uniStatistics": { "enable": false },
+  "h5": { "title": "Wot UI 2.x", "router": { "mode": "hash", "base": "/preview/" } },
+  "mp-weixin": { "appid": "", "setting": { "urlCheck": true } }
+}

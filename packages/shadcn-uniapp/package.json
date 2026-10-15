@@ -1,0 +1,56 @@
+{
+  "name": "shadcn-uniapp",
+  "version": "0.1.0",
+  "description": "Shadcn-inspired themes, a theme creator, and source-owned blocks for Wot UI and uni-app.",
+  "type": "module",
+  "license": "MIT",
+  "author": "guygubaby",
+  "homepage": "https://shadcn-uniapp.guygubaby.top",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guygubaby/shadcn-uniapp.git",
+    "directory": "packages/shadcn-uniapp"
+  },
+  "bugs": {
+    "url": "https://github.com/guygubaby/shadcn-uniapp/issues"
+  },
+  "keywords": [
+    "uni-app",
+    "wot-ui",
+    "shadcn",
+    "vue",
+    "theme",
+    "design-tokens",
+    "blocks"
+  ],
+  "bin": {
+    "shadcn-uniapp": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "registry",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "prepack": "pnpm build"
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "tsdown": "^0.23.1"
+  }
+}
