@@ -2,6 +2,7 @@
 import { useI18n } from '@/lib/i18n'
 
 import RevealText from '@/components/motion/RevealText.vue'
+import RevealBlock from '@/components/motion/RevealBlock.vue'
 import { Button } from '@/components/ui/button'
 import CodeBlock from '@/components/CodeBlock.vue'
 
@@ -20,148 +21,178 @@ const vars = getWotThemeVars(config, 'dark')`
   <div class="mx-auto grid max-w-7xl gap-10 px-5 py-10 lg:grid-cols-[220px_minmax(0,1fr)] lg:px-8">
     <nav
       :aria-label="t('On this page')"
-      class="flex flex-wrap items-start gap-5 text-sm lg:sticky lg:top-25 lg:flex-col lg:self-start"
+      class="docs-nav flex flex-wrap items-start gap-5 text-sm lg:sticky lg:top-25 lg:flex-col lg:self-start"
     >
-      <a href="#requirements">{{ t('Requirements') }}</a
-      ><a href="#install">{{ t('Installation') }}</a
-      ><a href="#theme">{{ t('Create a theme') }}</a
-      ><a href="#blocks">{{ t('Add blocks') }}</a
-      ><a href="#runtime">{{ t('Runtime themes') }}</a
-      ><a href="#limits">{{ t('Scope') }}</a>
+      <a
+        class="nav-link translate-x-0 transition-transform duration-300 hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none"
+        href="#requirements"
+        >{{ t('Requirements') }}</a
+      ><a
+        class="nav-link translate-x-0 transition-transform duration-300 hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none"
+        href="#install"
+        >{{ t('Installation') }}</a
+      ><a
+        class="nav-link translate-x-0 transition-transform duration-300 hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none"
+        href="#theme"
+        >{{ t('Create a theme') }}</a
+      ><a
+        class="nav-link translate-x-0 transition-transform duration-300 hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none"
+        href="#blocks"
+        >{{ t('Add blocks') }}</a
+      ><a
+        class="nav-link translate-x-0 transition-transform duration-300 hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none"
+        href="#runtime"
+        >{{ t('Runtime themes') }}</a
+      ><a
+        class="nav-link translate-x-0 transition-transform duration-300 hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none"
+        href="#limits"
+        >{{ t('Scope') }}</a
+      >
     </nav>
     <article class="max-w-3xl min-w-0">
       <h1 class="text-3xl font-semibold tracking-tight">
         <RevealText :text="t('Add a theme. Keep your components.')" />
       </h1>
       <p class="mt-4 text-base leading-8 text-muted-foreground">
-        {{
-          t(
-            'Keep your Wot components and business logic. Start with a theme, then add blocks when you need them.',
-          )
-        }}
-      </p>
-      <section id="requirements" class="scroll-mt-25 py-9">
-        <h2 class="text-xl font-semibold">{{ t('Requirements') }}</h2>
-        <ul class="mt-4 grid gap-3 text-sm leading-7 text-muted-foreground">
-          <li>
-            {{
-              t(
-                'An existing Vue 3 + uni-app project with npm-installed @wot-ui/ui 2.x. Tested with 2.3.2.',
-              )
-            }}
-          </li>
-          <li>
-            {{
-              t(
-                'Keep your Wot easycom, Sass, and build setup. No need to switch Tailwind or UnoCSS.',
-              )
-            }}
-          </li>
-          <li>
-            {{
-              t(
-                'The CLI requires Node.js 20.19+. This repository requires Node.js 22.18+; 24.x is recommended.',
-              )
-            }}
-          </li>
-          <li>{{ t('Wot v1 and uni_modules installations are not supported by this CLI.') }}</li>
-        </ul>
-      </section>
-      <section id="install" class="scroll-mt-25 border-t py-9">
-        <h2 class="text-xl font-semibold">{{ t('Install and initialize') }}</h2>
-        <p class="my-4 text-sm leading-7 text-muted-foreground">
-          {{
+        <RevealText
+          :text="
             t(
-              'After the npm release, run these commands. The init command creates your config and theme JSON / SCSS, then appends the theme imports to App.vue. It does not install dependencies or patch Wot.',
+              'Keep your Wot components and business logic. Start with a theme, then add blocks when you need them.',
             )
-          }}
-        </p>
-        <CodeBlock :code="install" />
-        <p class="my-4 text-sm leading-7 text-muted-foreground">
-          {{
-            t(
-              'The maintainer publishes to npm manually. Until then, clone the repository and use the local CLI:',
-            )
-          }}
-        </p>
-        <CodeBlock :code="local" />
-        <p class="my-4 text-sm leading-7 text-muted-foreground">
-          {{
-            t(
-              'The initializer adds these imports to App.vue. An existing Wot theme import is not added again.',
-            )
-          }}
-        </p>
-        <CodeBlock :code="app" :label="t('src/App.vue (excerpt)')" />
-      </section>
-      <section id="theme" class="scroll-mt-25 border-t py-9">
-        <h2 class="text-xl font-semibold">{{ t('Create and update themes') }}</h2>
-        <ol
-          class="my-4 flex list-inside list-decimal flex-col gap-3 text-sm leading-7 text-muted-foreground"
-        >
-          <li>
-            {{
-              t(
-                'Open Creator. Adjust light and dark colors, radius, and density. Check contrast and the live preview.',
-              )
-            }}
-          </li>
-          <li>{{ t('Export JSON to the theme path in shadcn-uniapp.json.') }}</li>
-          <li>{{ t('Run generate to update the configured stylesheet.') }}</li>
-          <li>
-            {{
-              t('Check existing hardcoded colors, explicit color props, and deep style overrides.')
-            }}
-          </li>
-        </ol>
-        <CodeBlock code="pnpm exec shadcn-uniapp generate" />
-        <div class="mt-4">
-          <Button as-child variant="outline"
-            ><RouterLink to="/create">{{ t('Open Creator') }}</RouterLink></Button
-          >
-        </div>
-      </section>
-      <section id="blocks" class="scroll-mt-25 border-t py-9">
-        <h2 class="text-xl font-semibold">{{ t('Add source-owned blocks') }}</h2>
-        <p class="my-4 text-sm leading-7 text-muted-foreground">
-          {{
-            t(
-              'Run init before adding a block. Existing files are protected unless you explicitly pass --force. Your application handles business events.',
-            )
-          }}
-        </p>
-        <CodeBlock code="pnpm exec shadcn-uniapp add profile-card" />
-        <div class="mt-4">
-          <CodeBlock
-            :code="block"
-            :label="t('Usage: replace openEditPage with your navigation handler')"
-          />
-        </div>
-      </section>
-      <section id="runtime" class="scroll-mt-25 border-t py-9">
-        <h2 class="text-xl font-semibold">{{ t('Runtime themes and overlays') }}</h2>
-        <p class="my-4 text-sm leading-7 text-muted-foreground">
-          {{
-            t(
-              'Static SCSS applies a global theme. For dynamic or scoped themes, install the package as a runtime dependency. Pass getWotThemeVars(config, mode) to wd-config-provider as theme-vars, and set theme to light or dark. Concrete color values keep detached RootPortal overlays in sync. Apply your page background and text colors separately.',
-            )
-          }}
-        </p>
-        <CodeBlock
-          :code="runtime"
-          :label="t('Validate config with parseTheme first')"
+          "
+          :delay="0.1"
         />
-      </section>
-      <section id="limits" class="scroll-mt-25 border-t py-9">
-        <h2 class="text-xl font-semibold">{{ t('Release scope') }}</h2>
-        <p class="mt-4 text-sm leading-8 text-muted-foreground">
-          {{
-            t(
-              'Themes target Wot UI 2.x. Blocks are uni-app Vue source. The website preview is a real H5 build, not simulated Reka components. WeChat compilation does not replace real-device testing. Wot v1, native apps, arbitrary desktop shadcn-vue components, backends, authentication, uploads, and Vite patches are outside this release.',
-            )
-          }}
-        </p>
-      </section>
+      </p>
+      <RevealBlock
+        ><section id="requirements" class="scroll-mt-25 py-9">
+          <h2 class="text-xl font-semibold">{{ t('Requirements') }}</h2>
+          <ul class="mt-4 grid gap-3 text-sm leading-7 text-muted-foreground">
+            <li>
+              {{
+                t(
+                  'An existing Vue 3 + uni-app project with npm-installed @wot-ui/ui 2.x. Tested with 2.3.2.',
+                )
+              }}
+            </li>
+            <li>
+              {{
+                t(
+                  'Keep your Wot easycom, Sass, and build setup. No need to switch Tailwind or UnoCSS.',
+                )
+              }}
+            </li>
+            <li>
+              {{
+                t(
+                  'The CLI requires Node.js 20.19+. This repository requires Node.js 22.18+; 24.x is recommended.',
+                )
+              }}
+            </li>
+            <li>{{ t('Wot v1 and uni_modules installations are not supported by this CLI.') }}</li>
+          </ul>
+        </section></RevealBlock
+      >
+      <RevealBlock
+        ><section id="install" class="scroll-mt-25 border-t py-9">
+          <h2 class="text-xl font-semibold">{{ t('Install and initialize') }}</h2>
+          <p class="my-4 text-sm leading-7 text-muted-foreground">
+            {{
+              t(
+                'After the npm release, run these commands. The init command creates your config and theme JSON / SCSS, then appends the theme imports to App.vue. It does not install dependencies or patch Wot.',
+              )
+            }}
+          </p>
+          <CodeBlock :code="install" />
+          <p class="my-4 text-sm leading-7 text-muted-foreground">
+            {{
+              t(
+                'The maintainer publishes to npm manually. Until then, clone the repository and use the local CLI:',
+              )
+            }}
+          </p>
+          <CodeBlock :code="local" />
+          <p class="my-4 text-sm leading-7 text-muted-foreground">
+            {{
+              t(
+                'The initializer adds these imports to App.vue. An existing Wot theme import is not added again.',
+              )
+            }}
+          </p>
+          <CodeBlock :code="app" :label="t('src/App.vue (excerpt)')" /></section
+      ></RevealBlock>
+      <RevealBlock
+        ><section id="theme" class="scroll-mt-25 border-t py-9">
+          <h2 class="text-xl font-semibold">{{ t('Create and update themes') }}</h2>
+          <ol
+            class="my-4 flex list-inside list-decimal flex-col gap-3 text-sm leading-7 text-muted-foreground"
+          >
+            <li>
+              {{
+                t(
+                  'Open Creator. Adjust light and dark colors, radius, and density. Check contrast and the live preview.',
+                )
+              }}
+            </li>
+            <li>{{ t('Export JSON to the theme path in shadcn-uniapp.json.') }}</li>
+            <li>{{ t('Run generate to update the configured stylesheet.') }}</li>
+            <li>
+              {{
+                t(
+                  'Check existing hardcoded colors, explicit color props, and deep style overrides.',
+                )
+              }}
+            </li>
+          </ol>
+          <CodeBlock code="pnpm exec shadcn-uniapp generate" />
+          <div class="mt-4">
+            <Button as-child variant="outline"
+              ><RouterLink to="/create">{{ t('Open Creator') }}</RouterLink></Button
+            >
+          </div>
+        </section></RevealBlock
+      >
+      <RevealBlock
+        ><section id="blocks" class="scroll-mt-25 border-t py-9">
+          <h2 class="text-xl font-semibold">{{ t('Add source-owned blocks') }}</h2>
+          <p class="my-4 text-sm leading-7 text-muted-foreground">
+            {{
+              t(
+                'Run init before adding a block. Existing files are protected unless you explicitly pass --force. Your application handles business events.',
+              )
+            }}
+          </p>
+          <CodeBlock code="pnpm exec shadcn-uniapp add profile-card" />
+          <div class="mt-4">
+            <CodeBlock
+              :code="block"
+              :label="t('Usage: replace openEditPage with your navigation handler')"
+            />
+          </div></section
+      ></RevealBlock>
+      <RevealBlock
+        ><section id="runtime" class="scroll-mt-25 border-t py-9">
+          <h2 class="text-xl font-semibold">{{ t('Runtime themes and overlays') }}</h2>
+          <p class="my-4 text-sm leading-7 text-muted-foreground">
+            {{
+              t(
+                'Static SCSS applies a global theme. For dynamic or scoped themes, install the package as a runtime dependency. Pass getWotThemeVars(config, mode) to wd-config-provider as theme-vars, and set theme to light or dark. Concrete color values keep detached RootPortal overlays in sync. Apply your page background and text colors separately.',
+              )
+            }}
+          </p>
+          <CodeBlock :code="runtime" :label="t('Validate config with parseTheme first')" /></section
+      ></RevealBlock>
+      <RevealBlock
+        ><section id="limits" class="scroll-mt-25 border-t py-9">
+          <h2 class="text-xl font-semibold">{{ t('Release scope') }}</h2>
+          <p class="mt-4 text-sm leading-8 text-muted-foreground">
+            {{
+              t(
+                'Themes target Wot UI 2.x. Blocks are uni-app Vue source. The website preview is a real H5 build, not simulated Reka components. WeChat compilation does not replace real-device testing. Wot v1, native apps, arbitrary desktop shadcn-vue components, backends, authentication, uploads, and Vite patches are outside this release.',
+              )
+            }}
+          </p>
+        </section></RevealBlock
+      >
     </article>
   </div>
 </template>

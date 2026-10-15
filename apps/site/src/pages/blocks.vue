@@ -2,6 +2,8 @@
 import { useI18n } from '@/lib/i18n'
 
 import RevealText from '@/components/motion/RevealText.vue'
+import RevealBlock from '@/components/motion/RevealBlock.vue'
+import ExpandPanel from '@/components/motion/ExpandPanel.vue'
 import { useReducedMotion } from 'motion-v'
 import { computed, nextTick, onUnmounted, ref, useTemplateRef, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -68,23 +70,32 @@ watch(selected, async () => {
       <RevealText :text="t('A head start. Not a black box.')" />
     </h1>
     <p class="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
-      {{
-        t('Practical interfaces composed with Wot UI 2.x. Add the Vue source, then make it yours.')
-      }}
+      <RevealText
+        :text="
+          t(
+            'Practical interfaces composed with Wot UI 2.x. Add the Vue source, then make it yours.',
+          )
+        "
+        :delay="0.1"
+      />
     </p>
     <div class="mt-10 grid items-start gap-8 lg:grid-cols-[220px_minmax(0,1fr)]">
       <nav
         :aria-label="t('Available blocks')"
         class="flex flex-wrap gap-2 lg:sticky lg:top-20 lg:max-h-[calc(100dvh-7rem)] lg:flex-col lg:flex-nowrap lg:overflow-y-auto"
       >
-        <Button
-          v-for="block in blocks"
+        <RevealBlock
+          v-for="(block, index) in blocks"
           :key="block.name"
-          :variant="selected.name === block.name ? 'secondary' : 'ghost'"
-          class="justify-start"
-          :aria-pressed="selected.name === block.name"
-          @click="router.replace({ query: { ...route.query, name: block.name } })"
-          >{{ t(block.title) }}</Button
+          :delay="Math.min(index * 0.035, 0.28)"
+          class="lg:w-full"
+          ><Button
+            :variant="selected.name === block.name ? 'secondary' : 'ghost'"
+            class="w-full justify-start"
+            :aria-pressed="selected.name === block.name"
+            @click="router.replace({ query: { ...route.query, name: block.name } })"
+            >{{ t(block.title) }}</Button
+          ></RevealBlock
         >
       </nav>
       <section ref="block-stage" class="min-w-0">
@@ -99,14 +110,16 @@ watch(selected, async () => {
           :code="`pnpm dlx shadcn-uniapp add ${selected.name}`"
           :label="t('Run init first. Available after the npm release.')"
         />
-        <div class="preview-grid mt-6 rounded-xl border p-3 sm:p-6">
-          <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-            <p class="text-xs text-muted-foreground">{{ t('Real components. Try them out.') }}</p>
+        <RevealBlock card :delay="0.15"
+          ><div class="preview-grid mt-6 rounded-xl border p-3 sm:p-6">
+            <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+              <p class="text-xs text-muted-foreground">{{ t('Real components. Try them out.') }}</p>
+            </div>
+            <div class="mx-auto max-w-lg">
+              <WotPreview :theme="theme" :mode="modeRef" :block="selected.name" />
+            </div>
           </div>
-          <div class="mx-auto max-w-lg">
-            <WotPreview :theme="theme" :mode="modeRef" :block="selected.name" />
-          </div>
-        </div>
+        </RevealBlock>
         <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
           <p class="text-xs leading-6 text-muted-foreground">
             {{
@@ -124,13 +137,14 @@ watch(selected, async () => {
             }}</Button
           >
         </div>
-        <div v-if="sourceVisibleRef" class="mt-4">
-          <p v-if="isError" role="alert" class="mb-3 text-sm text-destructive">
-            {{ t('Could not load the source.') }}
-            <button class="underline" @click="refetch()">{{ t('Retry') }}</button>
-          </p>
-          <CodeBlock v-if="source" :code="source" :label="t(selected.files[0])" />
-        </div>
+        <ExpandPanel :open="sourceVisibleRef"
+          ><div class="pt-4">
+            <p v-if="isError" role="alert" class="mb-3 text-sm text-destructive">
+              {{ t('Could not load the source.') }}
+              <button class="underline" @click="refetch()">{{ t('Retry') }}</button>
+            </p>
+            <CodeBlock v-if="source" :code="source" :label="t(selected.files[0])" /></div
+        ></ExpandPanel>
       </section>
     </div>
   </div>

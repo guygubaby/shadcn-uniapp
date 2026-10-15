@@ -2,6 +2,7 @@
 import { useI18n } from '@/lib/i18n'
 
 import { computed, ref, useId } from 'vue'
+import { motion, useReducedMotion } from 'motion-v'
 import { Check, ChevronDown, LockKeyhole, UnlockKeyhole } from '@lucide/vue'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
@@ -17,6 +18,7 @@ const props = defineProps<{
 }>()
 const emit = defineEmits<{ select: [value: string]; lock: [] }>()
 const openRef = ref(false)
+const reducedRef = useReducedMotion()
 const id = useId()
 const selected = computed(() => props.options.find((option) => option.value === props.value))
 function choose(value: string) {
@@ -30,7 +32,7 @@ function choose(value: string) {
     <Popover v-model:open="openRef">
       <PopoverTrigger as-child>
         <button
-          class="creator-picker flex min-h-16 w-full items-center justify-between gap-2 rounded-xl border px-3.5 py-2.5 text-left transition-colors"
+          class="creator-picker flex min-h-16 w-full scale-100 items-center justify-between gap-2 rounded-xl border px-3.5 py-2.5 text-left transition-[color,background-color,border-color,scale] duration-200 active:scale-[0.98] motion-reduce:scale-100 motion-reduce:transition-none"
           :aria-label="`${t(label)}: ${t(selected?.label ?? 'Custom')}`"
         >
           <span class="min-w-0"
@@ -55,7 +57,11 @@ function choose(value: string) {
             class="size-4 border-t border-l border-white/45"
             :style="{ borderTopLeftRadius: `${Math.min(Number(value) || 0, 12)}px` }"
           />
-          <ChevronDown v-else class="size-3.5 text-white/40" />
+          <ChevronDown
+            v-else
+            class="size-3.5 text-white/40 transition-transform duration-300 motion-reduce:transition-none"
+            :class="openRef && 'rotate-180'"
+          />
         </button>
       </PopoverTrigger>
       <PopoverContent side="right" align="start" :side-offset="12" class="w-80 p-2">
@@ -66,7 +72,7 @@ function choose(value: string) {
             :key="option.value"
             :class="
               cn(
-                'relative flex cursor-pointer items-center gap-2.5 rounded-lg border border-transparent px-3 py-3 text-sm hover:bg-muted has-focus-visible:ring-2 has-focus-visible:ring-ring',
+                'relative flex scale-100 cursor-pointer items-center gap-2.5 rounded-lg border border-transparent px-3 py-3 text-sm transition-[background-color,border-color,scale] duration-200 hover:bg-muted active:scale-[0.98] has-focus-visible:ring-2 has-focus-visible:ring-ring motion-reduce:scale-100 motion-reduce:transition-none',
                 value === option.value && 'border-border bg-muted',
               )
             "
@@ -100,7 +106,7 @@ function choose(value: string) {
     <button
       :class="
         cn(
-          'creator-lock absolute -top-1 -right-1 flex size-6 items-center justify-center rounded-md border opacity-0 transition-opacity group-hover/picker:opacity-100 focus:opacity-100 max-lg:opacity-100',
+          'creator-lock absolute -top-1 -right-1 flex size-6 scale-100 items-center justify-center rounded-md border opacity-0 transition-[opacity,scale] group-hover/picker:opacity-100 focus:opacity-100 active:scale-[0.96] motion-reduce:scale-100 motion-reduce:transition-none max-lg:opacity-100',
           locked && 'opacity-100',
         )
       "
@@ -108,7 +114,14 @@ function choose(value: string) {
       :aria-pressed="locked"
       @click="emit('lock')"
     >
-      <LockKeyhole v-if="locked" class="size-3" /><UnlockKeyhole v-else class="size-3" />
+      <motion.span
+        :key="String(locked)"
+        class="inline-flex"
+        :initial="reducedRef ? false : { opacity: 0, rotate: -30, scale: 0.6 }"
+        :animate="{ opacity: 1, rotate: 0, scale: 1 }"
+        :transition="{ duration: reducedRef ? 0 : 0.2 }"
+        ><LockKeyhole v-if="locked" class="size-3" /><UnlockKeyhole v-else class="size-3"
+      /></motion.span>
     </button>
   </div>
 </template>

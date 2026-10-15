@@ -10,7 +10,9 @@ defineProps<{ code: string; label?: string }>()
 </script>
 
 <template>
-  <div class="min-w-0 rounded-lg border bg-muted/60">
+  <div
+    class="min-w-0 rounded-lg border bg-muted/60 transition-[border-color,box-shadow] duration-300 hover:border-foreground/25 hover:shadow-sm motion-reduce:transition-none"
+  >
     <div class="flex items-center justify-between gap-3 border-b px-4 py-2">
       <span class="text-xs text-muted-foreground">{{ t(label ?? 'Terminal') }}</span>
       <Button variant="ghost" size="sm" @click="copyText(code)"><Copy />{{ t('Copy') }}</Button>

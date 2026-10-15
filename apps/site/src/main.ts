@@ -11,6 +11,6 @@ import App from './App.vue'
 const router = createRouter({
   history: createWebHistory(),
   routes,
-  scrollBehavior: () => ({ top: 0 }),
+  scrollBehavior: () => ({ top: 0, behavior: 'instant' }),
 })
 createApp(App).use(createPinia()).use(VueQueryPlugin).use(router).mount('#app')
