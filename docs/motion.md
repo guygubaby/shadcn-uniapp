@@ -35,3 +35,9 @@ This pass keeps the Cuberto reference and native scrolling. It adds no dependenc
 Authored video, agency service expansion, hover footage and an added FAQ are omitted: this product has no corresponding content. The site retains its existing white route cover, outgoing lift, elastic rules and contextual pointer. View-timeline effects are progressive enhancement and do not install a scroll polyfill.
 
 Validation: production site and H5 builds passed; four localized text tests passed (including punctuation attachment). Browser checks used Codex browser at 1440×1000 and 390×844, including live reduced-motion switching (card opacity 1, animation none), menu reversal, drawer focus restoration, source disclosure reversal and route return. Real devices, Safari / Firefox, screen readers and a production performance trace were not checked. Raw CDP animation playback-rate control was unavailable; intermediate states above were observed at normal playback speed.
+
+## Theme switch
+
+The shared ThemeToggle uses a 650ms circular View Transition originating at the header button. The icon has its own named snapshot and rotation. A same-origin acknowledgement waits for the Wot preview to apply its mode before the new snapshot; a 180ms timeout lets an unloaded preview fall back without blocking the page. No animation frame is awaited inside the capture callback, because rendering is paused during capture. Unsupported browsers and reduced motion update directly.
+
+Observed in the production build: dark and light intermediate circle radii around 855px; icon rotation matrix was nonidentity; iframe mode was already dark at reveal start. Enter-key switching and a repeated click settled with the expected mode and aria-busy=false. Reduced motion switched directly, without a transition marker, and the preview followed. Two acknowledgement tests cover wrong origin / source / mode, listener cleanup and timeout.

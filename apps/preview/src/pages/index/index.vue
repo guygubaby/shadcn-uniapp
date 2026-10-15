@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, provide, watch, onMounted, onUnmounted, ref, shallowRef } from 'vue'
+import { computed, nextTick, provide, watch, onMounted, onUnmounted, ref, shallowRef } from 'vue'
 import {
   blocks,
   translate,
@@ -80,6 +80,12 @@ function receive(event: MessageEvent) {
   for (const [key, value] of Object.entries(getThemeVariables(result.data, data.mode))) {
     document.documentElement.style.setProperty(key, value)
   }
+  void nextTick(() =>
+    window.parent.postMessage(
+      { type: 'shadcn-uniapp:theme-applied', mode: data.mode },
+      window.location.origin,
+    ),
+  )
 }
 
 onMounted(() => {

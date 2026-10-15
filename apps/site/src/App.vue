@@ -2,7 +2,7 @@
 import { useI18n } from '@/lib/i18n'
 const { t, localeRef } = useI18n()
 
-import { GitBranch, Moon, Sun } from '@lucide/vue'
+import { GitBranch } from '@lucide/vue'
 import { motion, useReducedMotion } from 'motion-v'
 import { Toaster } from 'vue-sonner'
 import { Button } from '@/components/ui/button'
@@ -11,6 +11,7 @@ import RouteStage from '@/components/motion/RouteStage.vue'
 import SiteCursor from '@/components/motion/SiteCursor.vue'
 import RevealBlock from '@/components/motion/RevealBlock.vue'
 import SiteMenu from '@/components/motion/SiteMenu.vue'
+import ThemeToggle from '@/components/motion/ThemeToggle.vue'
 import { computed, provide, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
@@ -133,19 +134,7 @@ const links = [
             >{{ t(localeRef === 'zh-CN' ? 'EN' : '中文') }}</motion.span
           ></Button
         >
-        <Button
-          variant="ghost"
-          size="icon"
-          :aria-label="t(modeRef === 'light' ? 'Use dark theme' : 'Use light theme')"
-          @click="modeRef = modeRef === 'light' ? 'dark' : 'light'"
-          ><motion.span
-            :key="modeRef"
-            class="inline-flex"
-            :initial="reducedRef ? false : { opacity: 0, rotate: -45, scale: 0.6 }"
-            :animate="{ opacity: 1, rotate: 0, scale: 1 }"
-            :transition="{ duration: reducedRef ? 0 : 0.25 }"
-            ><Moon v-if="modeRef === 'light'" /><Sun v-else /></motion.span
-        ></Button>
+        <ThemeToggle />
         <Button as-child variant="ghost" size="icon" class="hidden sm:inline-flex">
           <a
             href="https://github.com/guygubaby/shadcn-uniapp"
