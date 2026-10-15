@@ -11,6 +11,9 @@ const local =
   'pnpm install\npnpm --filter shadcn-uniapp build\nnode /path/to/shadcn-uniapp/packages/shadcn-uniapp/dist/cli.js init --cwd /path/to/your-project'
 const app = `<style lang="scss">\n@use '@wot-ui/ui/styles/theme/index.scss' as *;\n@use './theme/shadcn.scss' as *;\n</style>`
 const block = `<script setup lang="ts">\nimport ProfileCard from '@/components/blocks/profile-card/ProfileCard.vue'\n<\/script>\n\n<template>\n  <ProfileCard\n    name="Bryce"\n    description="Design & Development"\n    @edit="openEditPage"\n  />\n</template>`
+const runtime = `import { getWotThemeVars } from 'shadcn-uniapp'
+
+const vars = getWotThemeVars(config, 'dark')`
 </script>
 
 <template>
@@ -145,7 +148,7 @@ const block = `<script setup lang="ts">\nimport ProfileCard from '@/components/b
           }}
         </p>
         <CodeBlock
-          code="import { getWotThemeVars } from 'shadcn-uniapp'\n\nconst vars = getWotThemeVars(config, 'dark')"
+          :code="runtime"
           :label="t('Validate config with parseTheme first')"
         />
       </section>
