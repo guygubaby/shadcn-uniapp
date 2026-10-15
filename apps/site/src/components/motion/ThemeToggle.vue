@@ -71,7 +71,6 @@ async function toggle(event: MouseEvent) {
   <Button
     variant="ghost"
     size="icon"
-    class="[view-transition-name:theme-toggle]"
     data-cursor="none"
     :aria-label="t(modeRef === 'light' ? 'Use dark theme' : 'Use light theme')"
     :aria-busy="changingRef"
@@ -79,7 +78,7 @@ async function toggle(event: MouseEvent) {
   >
     <motion.span
       :key="modeRef"
-      class="inline-flex"
+      class="inline-flex [view-transition-name:theme-toggle]"
       :initial="reducedRef || changingRef ? false : { opacity: 0, rotate: -90, scale: 0.4 }"
       :animate="{ opacity: 1, rotate: 0, scale: 1 }"
       :transition="{ duration: reducedRef ? 0 : 0.4, ease: [0.16, 1, 0.3, 1] }"
