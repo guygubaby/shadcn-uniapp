@@ -18,6 +18,8 @@
 - Node：`24.13.0` 或兼容的 Node 24.x
 - pnpm：`10.32.1`（见 packageManager 字段）
 
+仓库根目录的 `.node-version` 固定构建 Node 版本；Cloudflare Pages 支持读取此文件。Pages 环境变量建议另设 `PNPM_VERSION=10.32.1`，与锁文件及 CI 保持一致。
+
 不要只构建 apps/site：它依赖先构建的 npm 工具包、Registry 和 uni-app H5 预览。Cloudflare 通过 GitHub 集成监听 main；不需要把 Cloudflare 或 npm 的凭证提交到仓库。
 
 ## 路由和缓存

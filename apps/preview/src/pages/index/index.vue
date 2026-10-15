@@ -13,6 +13,9 @@ const themeRef = shallowRef(createPreset())
 const modeRef = ref<ThemeMode>('light')
 const blockRef = ref('components')
 const canvasRef = ref(false)
+// #ifdef MP-WEIXIN
+blockRef.value = 'catalog'
+// #endif
 const popupRef = ref(false)
 const valueRef = ref('Bryce')
 const checkedRef = ref(true)
@@ -74,7 +77,18 @@ onUnmounted(() => window.removeEventListener('message', receive))
 <template>
   <wd-config-provider :theme="modeRef" :theme-vars="wotVars">
     <view :style="style">
-      <view v-if="!canvasRef" style="margin-bottom: 24px">
+      <!-- #ifdef MP-WEIXIN -->
+      <view style="margin-bottom: 20px">
+        <wd-button
+          size="small"
+          variant="plain"
+          @click="modeRef = modeRef === 'light' ? 'dark' : 'light'"
+        >
+          {{ modeRef === 'light' ? 'Use dark theme' : 'Use light theme' }}
+        </wd-button>
+      </view>
+      <!-- #endif -->
+      <view v-if="!canvasRef && blockRef !== 'catalog'" style="margin-bottom: 24px">
         <text style="display: block; font-size: 22px; font-weight: 600">Your next interface</text>
         <text
           style="
