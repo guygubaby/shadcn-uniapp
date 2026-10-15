@@ -11,6 +11,13 @@ describe('masked text', () => {
     expect(words.length).toBeGreaterThan(1)
     expect(Math.max(...words.map((word) => word.length))).toBeLessThan(8)
   })
+  it('keeps punctuation attached so animated Chinese does not start a line with a comma', () => {
+    const text = '预览真实组件，再将（主题）带回代码。'
+    const words = splitRevealText(text)
+    expect(words.join('')).toBe(text)
+    expect(words.some((word) => /^[，。！？）]/u.test(word))).toBe(false)
+    expect(words.some((word) => /[（]$/u.test(word))).toBe(false)
+  })
   it('keeps text readable when word segmentation is unavailable', () => {
     vi.stubGlobal('Intl', { Segmenter: undefined })
     try {
