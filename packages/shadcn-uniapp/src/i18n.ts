@@ -776,6 +776,16 @@ export const chineseMessages: Record<string, string> = {
   'The new theme looks great. Ready for a quick review?': '新主题看起来不错，一起快速检查一下？',
   Order: '订单',
   Friday: '周五',
+  'View source': '查看源码',
+  'Hide source': '收起源码',
+  'Loading...': '加载中……',
+  'Play preview': '播放预览',
+  'Pause playback': '暂停播放',
+  'Action cancelled': '已取消操作',
+  'Use an exported shadcn-uniapp JSON theme or share link. Wot v2 themes only; maximum 256 KiB.':
+    '请使用导出的主题 JSON 或分享链接，仅支持 Wot v2，最大 256 KiB。',
+  'Could not read this file. Choose a theme JSON smaller than 256 KiB.':
+    '无法读取文件，请选择小于 256 KiB 的主题 JSON。',
 }
 
 export function translate(value: unknown, locale: UiLocale): string {

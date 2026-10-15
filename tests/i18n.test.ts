@@ -10,6 +10,18 @@ describe('interface languages', () => {
     expect(translate(42, 'zh-CN')).toBe('42')
     expect(translate(undefined, 'zh-CN')).toBe('')
   })
+  it('translates editor loading, source, media, and import error states', () => {
+    for (const label of [
+      'View source',
+      'Hide source',
+      'Loading...',
+      'Play preview',
+      'Pause playback',
+      'Could not read this file. Choose a theme JSON smaller than 256 KiB.',
+    ]) {
+      expect(translate(label, 'zh-CN')).not.toBe(label)
+    }
+  })
   it('provides Chinese names and descriptions for every installable block', () => {
     for (const block of blocks) {
       expect(chineseMessages[block.title], block.name).toBeTruthy()
