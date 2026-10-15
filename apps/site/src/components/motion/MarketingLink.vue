@@ -10,11 +10,12 @@ defineProps<{ to: string; label: string }>()
   <RouterLink
     :to="to"
     :aria-label="t(label)"
+    data-cursor="none"
     class="group relative isolate inline-flex h-12 items-center justify-center gap-5 overflow-hidden rounded-full border border-foreground px-6 text-sm font-semibold text-foreground transition-colors duration-500 hover:text-background focus-visible:text-background motion-reduce:transition-none"
   >
     <span
       aria-hidden="true"
-      class="absolute inset-0 -z-10 origin-bottom translate-y-full rounded-t-full bg-foreground transition-transform duration-600 ease-out group-hover:translate-y-0 group-focus-visible:translate-y-0 motion-reduce:transition-none"
+      class="absolute inset-0 -z-10 translate-y-full bg-foreground transition-transform duration-600 ease-out group-hover:translate-y-0 group-focus-visible:translate-y-0 motion-reduce:transition-none"
     />
     <span aria-hidden="true" class="relative block h-5 overflow-hidden"
       ><span

@@ -39,7 +39,7 @@ function move(event: PointerEvent) {
     return
   }
   const target = event.target as HTMLElement
-  if (target.closest('iframe, dialog, [role="dialog"]')) {
+  if (target.closest('iframe, dialog, [role="dialog"], [data-cursor="none"]')) {
     hide()
     return
   }
