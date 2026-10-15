@@ -13,7 +13,7 @@ Keep your `wd-*` components. Generate a theme instead of replacing the component
 - Ten light/dark accent presets, including zinc, blue, emerald, rose, and orange.
 - Validated theme JSON, semantic CSS variables and a Wot v2 token adapter.
 - CLI commands: `init`, `generate`, `add`.
-- Three source-owned blocks: `profile-card`, `settings-form`, `filter-list`.
+- 20 source-owned blocks for account, commerce, productivity, and campus app layouts.
 - Vue SPA website using shadcn-vue, plus a real, separately compiled uni-app H5 preview.
 - Creator with color/radius/density editing, contrast hints, JSON import/export, SCSS export and shareable URLs.
 
@@ -143,7 +143,7 @@ component layout; all owned interface copy and the Wot locale are English.
 
 - Ten accent presets, five neutral bases, four styles, light/dark palettes,
   heading/body font stacks, chart color, radius, density, and custom hex colors.
-- Overview, component catalog, and the three editable business blocks.
+- An expanded multi-column creator, all 100 Wot components, and 20 editable application blocks.
 - The catalog has source fixtures for all 100 `wd-*` components in Wot UI 2.3.2,
   grouped into Basics, Forms, Pickers, Navigation, Data, and Feedback. Structural
   components are exercised inside their parent examples.
@@ -167,3 +167,11 @@ for preview; consumer projects must provide those fonts or use the system fallba
 Wot's solid primary/success/warning/danger buttons share `buttonMainColor`; the separate
 `destructiveForeground` semantic token is for source-owned UI, not independent Wot solid
 button text. Per-component hardcoded props can override inherited theme tokens.
+
+### Languages
+
+The website and live previews support Chinese and English. The Navbar language control remembers the selected language. Source-owned blocks default to English and accept an optional app-level translation function without another runtime dependency:
+
+```ts
+app.provide('shadcn-uniapp:translate', (message: string) => i18n.t(message))
+```

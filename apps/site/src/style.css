@@ -1,6 +1,7 @@
 /* Hallmark · macrostructure: Product Workbench · tone: modern-minimal · anchor hue: cobalt */
 @import 'tailwindcss';
 @import '../../../tokens.css';
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
   --font-sans: var(--font-body);
@@ -42,6 +43,7 @@
     overflow-x: clip;
   }
   html {
+    scrollbar-gutter: stable;
     color-scheme: light;
   }
   body {
@@ -114,19 +116,35 @@
   scrollbar-width: thin;
   scrollbar-color: #333 transparent;
 }
-.creator-canvas {
-  background: #f8f8f8;
-}
-.creator-canvas-dark {
-  background: #0d0d0f;
-}
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+.nav-link {
+  position: relative;
+  padding-block: 8px;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 2px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 450ms var(--ease-out);
+}
+.nav-link:hover::after,
+.nav-link:focus-visible::after,
+.nav-link[aria-current='page']::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-link::after {
+    transition: none;
   }
 }

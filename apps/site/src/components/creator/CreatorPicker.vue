@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { useI18n } from '@/lib/i18n'
+
 import { computed, ref, useId } from 'vue'
 import { Check, ChevronDown, LockKeyhole, UnlockKeyhole } from '@lucide/vue'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 import type { PickerOption } from './options'
 
+const { t } = useI18n()
 const props = defineProps<{
   label: string
   value: string
@@ -28,12 +31,12 @@ function choose(value: string) {
       <PopoverTrigger as-child>
         <button
           class="creator-picker flex min-h-16 w-full items-center justify-between gap-2 rounded-xl border px-3.5 py-2.5 text-left transition-colors"
-          :aria-label="`${label}: ${selected?.label ?? 'Custom'}`"
+          :aria-label="`${t(label)}: ${t(selected?.label ?? 'Custom')}`"
         >
           <span class="min-w-0"
-            ><span class="block text-xs text-white/50">{{ label }}</span
+            ><span class="block text-xs text-white/50">{{ t(label) }}</span
             ><span class="mt-0.5 block truncate text-sm font-medium">{{
-              selected?.label ?? 'Custom'
+              t(selected?.label ?? 'Custom')
             }}</span></span
           >
           <span
@@ -56,7 +59,7 @@ function choose(value: string) {
         </button>
       </PopoverTrigger>
       <PopoverContent side="right" align="start" :side-offset="12" class="w-80 p-2">
-        <p class="px-2 py-2 text-xs font-medium text-muted-foreground">{{ label }}</p>
+        <p class="px-2 py-2 text-xs font-medium text-muted-foreground">{{ t(label) }}</p>
         <div class="grid grid-cols-2 gap-1">
           <label
             v-for="option in options"
@@ -82,11 +85,11 @@ function choose(value: string) {
               :style="{ backgroundColor: option.color }"
             />
             <span class="min-w-0"
-              ><span class="block text-sm font-medium">{{ option.label }}</span
+              ><span class="block text-sm font-medium">{{ t(option.label) }}</span
               ><span
                 v-if="option.description"
                 class="mt-1 block text-xs leading-5 text-muted-foreground"
-                >{{ option.description }}</span
+                >{{ t(option.description) }}</span
               ></span
             >
             <Check v-if="value === option.value" class="ml-auto size-3.5 shrink-0" />
@@ -101,7 +104,7 @@ function choose(value: string) {
           locked && 'opacity-100',
         )
       "
-      :aria-label="`${locked ? 'Unlock' : 'Lock'} ${label.toLowerCase()}`"
+      :aria-label="`${t(locked ? 'Unlock' : 'Lock')} ${label}`"
       :aria-pressed="locked"
       @click="emit('lock')"
     >

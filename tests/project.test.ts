@@ -11,6 +11,7 @@ import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { afterEach, describe, expect, it } from 'vitest'
 import { addBlock, generateProjectTheme, initProject } from '../packages/shadcn-uniapp/src/project'
+import { blocks } from '../packages/shadcn-uniapp/src/blocks'
 import { createPreset } from '../packages/shadcn-uniapp/src/theme'
 
 const directories: string[] = []
@@ -48,7 +49,11 @@ describe('safe source installation', () => {
     expect(readFileSync(join(root, 'src/App.vue'), 'utf8')).toContain('const keep = true')
     expect(readFileSync(join(root, 'src/App.vue'), 'utf8')).toContain('.keep { color: red }')
     generateProjectTheme(root)
-    for (const block of ['profile-card', 'settings-form', 'filter-list']) addBlock(root, block)
+    for (const block of blocks) {
+      addBlock(root, block.name)
+      for (const file of block.files)
+        expect(existsSync(join(root, 'src/components/blocks', block.name, file))).toBe(true)
+    }
     expect(
       readFileSync(join(root, 'src/components/blocks/profile-card/ProfileCard.vue'), 'utf8'),
     ).toContain('wd-cell-group')

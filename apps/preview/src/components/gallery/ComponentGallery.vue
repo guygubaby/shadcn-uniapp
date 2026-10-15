@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { usePreviewI18n } from '../../i18n'
+
 import { ref } from 'vue'
 import BasicsGallery from './BasicsGallery.vue'
 import FormsGallery from './FormsGallery.vue'
@@ -6,8 +8,12 @@ import PickersGallery from './PickersGallery.vue'
 import NavigationGallery from './NavigationGallery.vue'
 import DataGallery from './DataGallery.vue'
 import FeedbackGallery from './FeedbackGallery.vue'
-const categoryRef = ref('basics')
+
+const { t } = usePreviewI18n()
+const props = defineProps<{ expanded?: boolean }>()
+const categoryRef = ref('all')
 const categories = [
+  { value: 'all', label: 'All components' },
   { value: 'basics', label: 'Basics' },
   { value: 'forms', label: 'Forms' },
   { value: 'pickers', label: 'Pickers' },
@@ -18,25 +24,27 @@ const categories = [
 </script>
 <template>
   <view class="catalog-heading"
-    ><text class="catalog-title">Every piece, in your theme.</text
-    ><text class="gallery-description"
-      >Interactive Wot UI v2 fixtures. Local data only. Media, canvas, and gestures still need
-      device testing.</text
-    ></view
+    ><text class="catalog-title">{{ t('Every piece, in your theme.') }}</text
+    ><text class="gallery-description">{{
+      t('100 Wot UI components. One design language. Every example follows your theme.')
+    }}</text></view
   >
-  <view class="catalog-navigation"
+  <view v-if="!props.expanded" class="catalog-navigation"
     ><wd-button
       v-for="category in categories"
       :key="category.value"
       size="small"
       :variant="categoryRef === category.value ? 'base' : 'plain'"
       @click="categoryRef = category.value"
-      >{{ category.label }}</wd-button
+      >{{ t(category.label) }}</wd-button
     ></view
   >
-  <BasicsGallery v-if="categoryRef === 'basics'" /><FormsGallery
-    v-else-if="categoryRef === 'forms'"
-  /><PickersGallery v-else-if="categoryRef === 'pickers'" /><NavigationGallery
-    v-else-if="categoryRef === 'navigation'"
-  /><DataGallery v-else-if="categoryRef === 'data'" /><FeedbackGallery v-else />
+  <BasicsGallery v-if="props.expanded || categoryRef === 'all' || categoryRef === 'basics'" />
+  <FormsGallery v-if="props.expanded || categoryRef === 'all' || categoryRef === 'forms'" />
+  <PickersGallery v-if="props.expanded || categoryRef === 'all' || categoryRef === 'pickers'" />
+  <NavigationGallery
+    v-if="props.expanded || categoryRef === 'all' || categoryRef === 'navigation'"
+  />
+  <DataGallery v-if="props.expanded || categoryRef === 'all' || categoryRef === 'data'" />
+  <FeedbackGallery v-if="props.expanded || categoryRef === 'all' || categoryRef === 'feedback'" />
 </template>

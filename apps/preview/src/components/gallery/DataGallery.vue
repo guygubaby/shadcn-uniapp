@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import { usePreviewI18n } from '../../i18n'
+
 import image from '../../static/preview-cover.png'
 import { ref, shallowRef } from 'vue'
 import GallerySection from './GallerySection.vue'
+
+const { t } = usePreviewI18n()
 const collapseRef = shallowRef(['theme'])
 const currentRef = ref(0)
 const rows = [
@@ -14,38 +18,41 @@ const noticeRef = ref('')
 </script>
 <template>
   <view class="gallery-grid">
-    <GallerySection title="Table" description="Table and TableColumn with local data."
+    <GallerySection :title="t('Table')" :description="t('Table and TableColumn with local data.')"
       ><wd-table :data="rows" :height="210"
-        ><wd-table-column prop="name" label="Project" :width="150" /><wd-table-column
+        ><wd-table-column prop="name" :label="t('Project')" :width="150" /><wd-table-column
           prop="status"
-          label="Status"
-          :width="110" /><wd-table-column prop="owner" label="Owner" :width="90" /></wd-table
+          :label="t('Status')"
+          :width="110" /><wd-table-column prop="owner" :label="t('Owner')" :width="90" /></wd-table
     ></GallerySection>
-    <GallerySection title="Collapse" description="Collapse and CollapseItem."
+    <GallerySection :title="t('Collapse')" :description="t('Collapse and CollapseItem.')"
       ><wd-collapse v-model="collapseRef"
-        ><wd-collapse-item name="theme" title="Can I keep my Wot components?"
-          >Yes. Your component APIs stay the same.</wd-collapse-item
-        ><wd-collapse-item name="source" title="Do I own the blocks?"
-          >Blocks are installed as editable Vue source.</wd-collapse-item
-        ></wd-collapse
+        ><wd-collapse-item name="theme" :title="t('Can I keep my Wot components?')">{{
+          t('Yes. Your component APIs stay the same.')
+        }}</wd-collapse-item
+        ><wd-collapse-item name="source" :title="t('Do I own the blocks?')">{{
+          t('Blocks are installed as editable Vue source.')
+        }}</wd-collapse-item></wd-collapse
       ></GallerySection
     >
     <GallerySection
-      title="Swipe actions"
-      description="SwipeAction and Loadmore. No backend requests."
+      :title="t('Swipe actions')"
+      :description="t('SwipeAction and Loadmore. No backend requests.')"
       ><wd-swipe-action
-        ><wd-cell title="Project invitation" label="Swipe left to reveal an action." /><template
-          #right
-          ><wd-button type="danger" @click="noticeRef = 'Demo action only. Nothing was deleted.'"
-            >Dismiss</wd-button
-          ></template
+        ><wd-cell
+          :title="t('Project invitation')"
+          :label="t('Swipe left to reveal an action.')"
+        /><template #right
+          ><wd-button type="danger" @click="noticeRef = 'Demo action only. Nothing was deleted.'">{{
+            t('Dismiss')
+          }}</wd-button></template
         ></wd-swipe-action
-      ><text v-if="noticeRef" class="gallery-description" role="status">{{ noticeRef }}</text
-      ><wd-loadmore state="finished" finished-text="You are all caught up"
+      ><text v-if="noticeRef" class="gallery-description" role="status">{{ t(noticeRef) }}</text
+      ><wd-loadmore state="finished" :finished-text="t('You are all caught up')"
     /></GallerySection>
     <GallerySection
-      title="Images & swiper"
-      description="Img, Swiper, and SwiperNav with a local image fixture."
+      :title="t('Images & swiper')"
+      :description="t('Img, Swiper, and SwiperNav with a local image fixture.')"
       ><wd-img
         :src="image"
         width="100%"

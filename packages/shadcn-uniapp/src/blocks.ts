@@ -17,6 +17,108 @@ export const blocks = [
     description: 'Instant filtering, empty states, and item selection.',
     files: ['FilterList.vue'],
   },
+  {
+    name: 'login-form',
+    title: 'Welcome back',
+    description: 'A validated email entry form with a submit event.',
+    files: ['LoginForm.vue'],
+  },
+  {
+    name: 'notification-settings',
+    title: 'Notification preferences',
+    description: 'Notification toggles and a digest frequency setting.',
+    files: ['NotificationSettings.vue'],
+  },
+  {
+    name: 'team-members',
+    title: 'Team members',
+    description: 'Avatars, member roles, and invitation actions.',
+    files: ['TeamMembers.vue'],
+  },
+  {
+    name: 'shopping-cart',
+    title: 'Shopping bag',
+    description: 'Adjust quantities and review a total calculated in cents.',
+    files: ['ShoppingCart.vue'],
+  },
+  {
+    name: 'order-status',
+    title: 'Order tracking',
+    description: 'A delivery timeline and a tracking action.',
+    files: ['OrderStatus.vue'],
+  },
+  {
+    name: 'booking-form',
+    title: 'Make a booking',
+    description: 'An inline calendar, guest count, and reservation event.',
+    files: ['BookingForm.vue'],
+  },
+  {
+    name: 'feedback-form',
+    title: 'Send feedback',
+    description: 'A star rating, a short review, and a submit action.',
+    files: ['FeedbackForm.vue'],
+  },
+  {
+    name: 'project-tasks',
+    title: 'Project checklist',
+    description: 'A task list with live completion progress.',
+    files: ['ProjectTasks.vue'],
+  },
+  {
+    name: 'stats-card',
+    title: 'At a glance',
+    description: 'A headline metric, a change indicator, and progress.',
+    files: ['StatsCard.vue'],
+  },
+  {
+    name: 'quick-actions',
+    title: 'Quick actions',
+    description: 'A familiar home screen shortcut grid.',
+    files: ['QuickActions.vue'],
+  },
+  {
+    name: 'announcement-feed',
+    title: 'Announcements',
+    description: 'Grouped announcements with expandable sections and unread labels.',
+    files: ['AnnouncementFeed.vue'],
+  },
+  {
+    name: 'event-agenda',
+    title: 'Upcoming events',
+    description: 'Date tiles, event details, and category labels.',
+    files: ['EventAgenda.vue'],
+  },
+  {
+    name: 'student-switcher',
+    title: 'Student switcher',
+    description: 'A student identity card with a selection sheet.',
+    files: ['StudentSwitcher.vue'],
+  },
+  {
+    name: 'application-progress',
+    title: 'Application progress',
+    description: 'An applicant summary and an admissions milestone timeline.',
+    files: ['ApplicationProgress.vue'],
+  },
+  {
+    name: 'service-inbox',
+    title: 'Service inbox',
+    description: 'Categorized messages with local read state and detail actions.',
+    files: ['ServiceInbox.vue'],
+  },
+  {
+    name: 'survey-card',
+    title: 'Survey invitation',
+    description: 'A survey summary, deadline, and response action.',
+    files: ['SurveyCard.vue'],
+  },
+  {
+    name: 'document-list',
+    title: 'Your documents',
+    description: 'Document requirements, review states, and detail actions.',
+    files: ['DocumentList.vue'],
+  },
 ] as const
 
 export type BlockName = (typeof blocks)[number]['name']

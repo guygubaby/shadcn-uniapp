@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useI18n } from '@/lib/i18n'
+const { t, localeRef } = useI18n()
+
 import { onMounted, onUnmounted, ref, useTemplateRef, watch } from 'vue'
 import { LoaderCircle, RefreshCw } from '@lucide/vue'
 import type { ThemeConfig, ThemeMode } from 'shadcn-uniapp'
@@ -22,6 +25,7 @@ function send() {
       mode: props.mode,
       block: props.block,
       canvas: props.canvas,
+      locale: localeRef.value,
     },
     window.location.origin,
   )
@@ -45,7 +49,9 @@ function retry() {
     if (!readyRef.value) failedRef.value = true
   }, 15000)
 }
-watch(() => [props.theme, props.mode, props.block, props.canvas], send, { deep: true })
+watch(() => [props.theme, props.mode, props.block, props.canvas, localeRef.value], send, {
+  deep: true,
+})
 onMounted(() => {
   window.addEventListener('message', receive)
   timer = setTimeout(() => {
@@ -71,28 +77,38 @@ onUnmounted(() => {
       v-if="!canvas"
       class="flex items-center justify-between gap-3 border-b px-4 py-3 text-xs text-muted-foreground"
     >
-      <span>Live uni-app H5 preview</span><span>Wot UI 2.3.2</span>
+      <span>{{ t('Live uni-app H5 preview') }}</span
+      ><span>Wot UI 2.3.2</span>
     </div>
     <iframe
       ref="frame"
       src="/preview/index.html#/"
-      title="Live Wot UI component preview"
-      :class="cn('block w-full border-0', canvas ? 'h-full min-h-180' : 'h-152')"
+      :title="t('Live Wot UI component preview')"
+      :class="cn('block w-full border-0', canvas ? 'h-full min-h-0' : 'h-152')"
       @load="send"
     />
     <div
       v-if="!readyRef"
-      class="absolute inset-x-0 top-12 bottom-0 flex flex-col items-center justify-center gap-4 bg-background p-6 text-center"
+      :class="
+        cn(
+          'absolute inset-x-0 bottom-0 flex flex-col items-center justify-center gap-4 bg-background p-6 text-center',
+          canvas ? 'top-0' : 'top-12',
+        )
+      "
     >
       <template v-if="failedRef">
         <p class="text-sm text-muted-foreground">
-          The preview could not start. Check your connection and make sure the H5 preview is built.
+          {{
+            t(
+              'The preview could not start. Check your connection and make sure the H5 preview is built.',
+            )
+          }}
         </p>
-        <Button variant="outline" @click="retry"><RefreshCw />Reload preview</Button>
+        <Button variant="outline" @click="retry"><RefreshCw />{{ t('Reload preview') }}</Button>
       </template>
       <template v-else
         ><LoaderCircle class="size-5 animate-spin motion-reduce:animate-none" />
-        <p class="text-sm text-muted-foreground">Starting Wot components...</p></template
+        <p class="text-sm text-muted-foreground">{{ t('Starting Wot components...') }}</p></template
       >
     </div>
   </div>

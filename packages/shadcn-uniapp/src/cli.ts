@@ -3,6 +3,7 @@ import { parseArgs } from 'node:util'
 import { readFileSync, statSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { addBlock, generateProjectTheme, initProject } from './project'
+import { blocks } from './blocks'
 import { parseTheme, presetNames } from './theme'
 import type { PresetName } from './theme'
 
@@ -11,7 +12,9 @@ const help = `shadcn-uniapp 0.1.0 — Wot UI 2.x themes and source blocks
   shadcn-uniapp init [--preset ${presetNames.join('|')}]
   shadcn-uniapp init --theme ./shadcn.theme.json
   shadcn-uniapp generate
-  shadcn-uniapp add profile-card|settings-form|filter-list
+  shadcn-uniapp add <block>
+
+Blocks: ${blocks.map((block) => block.name).join(', ')}
 
 Options:
   --cwd <directory>  Use a different project directory

@@ -1,16 +1,20 @@
-import { computed, ref, shallowRef, watch } from 'vue'
+import { computed, shallowRef, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from '@/lib/i18n'
 import { toast } from 'vue-sonner'
+import { storeToRefs } from 'pinia'
+import { useAppearanceStore } from '@/stores/appearance'
 import { createPreset, parseTheme, presetNames } from 'shadcn-uniapp'
-import type { ColorTokens, PresetName, ThemeConfig, ThemeMode } from 'shadcn-uniapp'
+import type { ColorTokens, PresetName, ThemeConfig } from 'shadcn-uniapp'
 import { baseColors, baseOptions, fontOptions, styles, styleOptions } from './options'
 import type { SettingKey } from './options'
 
 export function useCreatorTheme() {
+  const { t } = useI18n()
   const route = useRoute()
   const router = useRouter()
   const themeRef = shallowRef(createPreset())
-  const modeRef = ref<ThemeMode>('light')
+  const { modeRef } = storeToRefs(useAppearanceStore())
   const locksRef = shallowRef(new Set<SettingKey>())
   const selections = computed(() => {
     const theme = themeRef.value
@@ -80,10 +84,7 @@ export function useCreatorTheme() {
     if (key === 'density') next.density = value as ThemeConfig['density']
     apply(next)
   }
-  function setMode(mode: ThemeMode) {
-    modeRef.value = mode
-    persist()
-  }
+  watch(modeRef, persist)
   function toggleLock(key: SettingKey) {
     const next = new Set(locksRef.value)
     if (next.has(key)) next.delete(key)
@@ -138,10 +139,11 @@ export function useCreatorTheme() {
           if (route.query.theme.length > 4096) throw new Error('Theme URL too large')
           themeRef.value = parseTheme(JSON.parse(atob(route.query.theme)))
         } catch {
-          toast.error('The linked theme is invalid. Your current theme was kept.')
+          toast.error(t('The linked theme is invalid. Your current theme was kept.'))
         }
       }
-      modeRef.value = route.query.mode === 'dark' ? 'dark' : 'light'
+      if (route.query.mode === 'dark' || route.query.mode === 'light')
+        modeRef.value = route.query.mode
     },
     { immediate: true },
   )
@@ -153,7 +155,6 @@ export function useCreatorTheme() {
     apply,
     select,
     color,
-    setMode,
     toggleLock,
     shuffle,
     reset: () => apply(createPreset()),

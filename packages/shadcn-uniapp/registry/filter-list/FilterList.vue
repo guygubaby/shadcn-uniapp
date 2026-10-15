@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { inject } from 'vue'
+const t = inject<(text: unknown) => string>('shadcn-uniapp:translate', (text) => String(text ?? ''))
+
 import { computed, ref } from 'vue'
 
 const props = defineProps<{ items: { id: string; title: string; description?: string }[] }>()
@@ -13,16 +16,16 @@ const filtered = computed(() => {
 </script>
 
 <template>
-  <wd-search v-model="queryRef" placeholder="Search items" hide-cancel />
+  <wd-search v-model="queryRef" :placeholder="t('Search items')" hide-cancel />
   <wd-cell-group v-if="filtered.length" border>
     <wd-cell
       v-for="item in filtered"
       :key="item.id"
-      :title="item.title"
-      :label="item.description"
+      :title="t(item.title)"
+      :label="t(item.description)"
       is-link
       @click="$emit('select', item.id)"
     />
   </wd-cell-group>
-  <wd-empty v-else description="No matching items" />
+  <wd-empty v-else :description="t('No matching items')" />
 </template>

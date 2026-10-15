@@ -28,3 +28,15 @@
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --dur-fast: 150ms;
 }
+
+:root.dark {
+  --color-paper: oklch(0.15 0.005 275);
+  --color-paper-soft: oklch(0.2 0.006 275);
+  --color-ink: oklch(0.96 0.003 275);
+  --color-muted-ink: oklch(0.72 0.012 275);
+  --color-rule: oklch(0.3 0.008 275);
+  --color-accent: oklch(0.75 0.13 265);
+  --color-accent-soft: oklch(0.25 0.045 265);
+  --color-danger: oklch(0.72 0.18 28);
+  --color-positive: oklch(0.74 0.13 160);
+}

@@ -13,14 +13,4 @@ const router = createRouter({
   routes,
   scrollBehavior: () => ({ top: 0 }),
 })
-router.afterEach((to) => {
-  const titles: Record<string, string> = {
-    '/': 'New theme. Same components.',
-    '/creator': 'Theme Creator',
-    '/create': 'Create your theme',
-    '/blocks': 'Source-owned blocks',
-    '/docs': 'Getting started',
-  }
-  document.title = `${titles[to.path] ?? 'Page not found'} — shadcn-uniapp`
-})
 createApp(App).use(createPinia()).use(VueQueryPlugin).use(router).mount('#app')

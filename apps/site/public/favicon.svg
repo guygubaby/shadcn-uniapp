@@ -1,1 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#18181b"/><text x="16" y="23" fill="#fff" text-anchor="middle" font-family="sans-serif" font-size="25" font-weight="600">u</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <style>.tile{fill:#18181b}.mark{fill:#fafafa}@media(prefers-color-scheme:dark){.tile{fill:#fafafa}.mark{fill:#18181b}}</style>
+  <rect class="tile" width="40" height="40" rx="10"/>
+  <path class="mark" transform="translate(4 4)" d="M4 6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6Zm0 14a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6ZM24 4h4L18 28h-4L24 4Z"/>
+</svg>

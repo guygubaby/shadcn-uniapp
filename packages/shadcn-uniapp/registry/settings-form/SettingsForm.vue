@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { inject } from 'vue'
+const t = inject<(text: unknown) => string>('shadcn-uniapp:translate', (text) => String(text ?? ''))
+
 import { computed, ref } from 'vue'
 import type { FormSchema } from '@wot-ui/ui'
 import type { FormInstance } from '@wot-ui/ui/components/wd-form/types'
@@ -14,7 +17,7 @@ const schema: FormSchema = {
     const email = (value as { email: string }).email.trim()
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
       ? []
-      : [{ path: ['email'], message: 'Enter a valid email address' }]
+      : [{ path: ['email'], message: t('Enter a valid email address') }]
   },
   isRequired: (path) => path === 'email',
 }
@@ -28,14 +31,14 @@ async function save() {
 
 <template>
   <wd-form ref="formRef" :model="model" :schema="schema">
-    <wd-form-item title="Email" prop="email">
-      <wd-input v-model="emailRef" placeholder="you@example.com" />
+    <wd-form-item :title="t('Email')" prop="email">
+      <wd-input v-model="emailRef" :placeholder="t('you@example.com')" />
     </wd-form-item>
-    <wd-form-item title="Email notifications" prop="notifications">
+    <wd-form-item :title="t('Email notifications')" prop="notifications">
       <wd-switch v-model="notificationsRef" />
     </wd-form-item>
   </wd-form>
-  <wd-button type="primary" block :loading="loading" :disabled="loading" @click="save"
-    >Save preferences</wd-button
-  >
+  <wd-button type="primary" block :loading="loading" :disabled="loading" @click="save">{{
+    t('Save preferences')
+  }}</wd-button>
 </template>

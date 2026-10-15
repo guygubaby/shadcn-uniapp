@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useI18n } from '@/lib/i18n'
+
 import { ref, useTemplateRef } from 'vue'
 import { Upload } from '@lucide/vue'
 import { parseTheme } from 'shadcn-uniapp'
@@ -14,6 +16,8 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 
+
+const { t } = useI18n()
 const openRef = defineModel<boolean>('open', { default: false })
 const emit = defineEmits<{ apply: [theme: ThemeConfig] }>()
 const textRef = ref('')
@@ -56,14 +60,13 @@ async function upload(event: Event) {
   <Dialog v-model:open="openRef">
     <DialogContent class="sm:max-w-xl">
       <DialogHeader
-        ><DialogTitle>Open a preset</DialogTitle
-        ><DialogDescription
-          >Paste a shared theme URL or exported JSON. Everything stays in your
-          browser.</DialogDescription
-        ></DialogHeader
+        ><DialogTitle>{{ t('Open a preset') }}</DialogTitle
+        ><DialogDescription>{{
+          t('Paste a shared theme URL or exported JSON. Everything stays in your browser.')
+        }}</DialogDescription></DialogHeader
       >
       <div class="flex flex-col gap-3">
-        <Label for="preset-text">Theme URL or JSON</Label
+        <Label for="preset-text">{{ t('Theme URL or JSON') }}</Label
         ><Textarea
           id="preset-text"
           v-model="textRef"
@@ -78,7 +81,7 @@ async function upload(event: Event) {
           role="alert"
           class="text-xs leading-6 text-destructive"
         >
-          {{ errorRef }}
+          {{ t(errorRef) }}
         </p>
       </div>
       <div class="flex flex-wrap items-center justify-between gap-3">
@@ -87,10 +90,11 @@ async function upload(event: Event) {
           type="file"
           accept=".json,application/json"
           class="hidden"
-          aria-label="Upload a theme JSON"
+          :aria-label="t('Upload a theme JSON')"
           @change="upload"
-        /><Button variant="outline" @click="fileRef?.click()"><Upload />Upload JSON</Button
-        ><Button :disabled="!textRef.trim()" @click="load(textRef)">Open preset</Button>
+        /><Button variant="outline" @click="fileRef?.click()"
+          ><Upload />{{ t('Upload JSON') }}</Button
+        ><Button :disabled="!textRef.trim()" @click="load(textRef)">{{ t('Open preset') }}</Button>
       </div>
     </DialogContent>
   </Dialog>

@@ -1,24 +1,34 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { useI18n } from '@/lib/i18n'
+
+import RevealText from '@/components/motion/RevealText.vue'
+import { useReducedMotion } from 'motion-v'
+import { computed, nextTick, onUnmounted, ref, useTemplateRef, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import ky from 'ky'
 import { useQuery } from '@tanstack/vue-query'
 import { z } from 'zod'
 import { blocks, createPreset } from 'shadcn-uniapp'
-import type { ThemeMode } from 'shadcn-uniapp'
+import { storeToRefs } from 'pinia'
+import { useAppearanceStore } from '@/stores/appearance'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import CodeBlock from '@/components/CodeBlock.vue'
 import WotPreview from '@/components/WotPreview.vue'
 
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const selected = computed(
   () => blocks.find((block) => block.name === route.query.name) ?? blocks[0],
 )
 const theme = createPreset()
-const modeRef = ref<ThemeMode>('light')
+const { modeRef } = storeToRefs(useAppearanceStore())
 const sourceVisibleRef = ref(false)
+const previewRef = useTemplateRef<HTMLElement>('block-stage')
+const reducedRef = useReducedMotion()
+let previewAnimation: Animation | undefined
+onUnmounted(() => previewAnimation?.cancel())
 const registrySchema = z.object({ files: z.array(z.object({ content: z.string() })).min(1) })
 const {
   data: source,
@@ -37,50 +47,61 @@ const {
     return item.files[0]!.content
   },
 })
-watch(selected, () => {
+watch(selected, async () => {
   sourceVisibleRef.value = false
+  await nextTick()
+  previewAnimation?.cancel()
+  if (!reducedRef.value)
+    previewAnimation = previewRef.value?.animate(
+      [
+        { opacity: 0.5, transform: 'translateY(14px)' },
+        { opacity: 1, transform: 'translateY(0)' },
+      ],
+      { duration: 500, easing: 'cubic-bezier(.16,1,.3,1)' },
+    )
 })
 </script>
 
 <template>
   <div class="mx-auto max-w-7xl px-5 py-10 lg:px-8">
-    <h1 class="text-3xl font-semibold tracking-tight">A head start. Not a black box.</h1>
+    <h1 class="text-3xl font-semibold tracking-tight">
+      <RevealText :text="t('A head start. Not a black box.')" />
+    </h1>
     <p class="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
-      Practical interfaces composed with Wot UI 2.x. Add the Vue source, then make it yours.
+      {{
+        t('Practical interfaces composed with Wot UI 2.x. Add the Vue source, then make it yours.')
+      }}
     </p>
     <div class="mt-10 grid items-start gap-8 lg:grid-cols-[220px_minmax(0,1fr)]">
-      <nav aria-label="Available blocks" class="flex flex-wrap gap-2 lg:flex-col">
+      <nav
+        :aria-label="t('Available blocks')"
+        class="flex flex-wrap gap-2 lg:sticky lg:top-20 lg:max-h-[calc(100dvh-7rem)] lg:flex-col lg:flex-nowrap lg:overflow-y-auto"
+      >
         <Button
           v-for="block in blocks"
           :key="block.name"
           :variant="selected.name === block.name ? 'secondary' : 'ghost'"
           class="justify-start"
           :aria-pressed="selected.name === block.name"
-          @click="router.replace({ query: { name: block.name } })"
-          >{{ block.title }}</Button
+          @click="router.replace({ query: { ...route.query, name: block.name } })"
+          >{{ t(block.title) }}</Button
         >
       </nav>
-      <section class="min-w-0">
+      <section ref="block-stage" class="min-w-0">
         <div class="mb-5 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h2 class="text-xl font-semibold">{{ selected.title }}</h2>
-            <p class="mt-2 text-sm text-muted-foreground">{{ selected.description }}</p>
+            <h2 class="text-xl font-semibold">{{ t(selected.title) }}</h2>
+            <p class="mt-2 text-sm text-muted-foreground">{{ t(selected.description) }}</p>
           </div>
           <Badge variant="outline">Wot UI 2.x</Badge>
         </div>
         <CodeBlock
           :code="`pnpm dlx shadcn-uniapp add ${selected.name}`"
-          label="Run init first. Available after the npm release."
+          :label="t('Run init first. Available after the npm release.')"
         />
         <div class="preview-grid mt-6 rounded-xl border p-3 sm:p-6">
           <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-            <p class="text-xs text-muted-foreground">Real components. Try them out.</p>
-            <Button
-              size="sm"
-              variant="outline"
-              @click="modeRef = modeRef === 'light' ? 'dark' : 'light'"
-              >{{ modeRef === 'light' ? 'Use dark theme' : 'Use light theme' }}</Button
-            >
+            <p class="text-xs text-muted-foreground">{{ t('Real components. Try them out.') }}</p>
           </div>
           <div class="mx-auto max-w-lg">
             <WotPreview :theme="theme" :mode="modeRef" :block="selected.name" />
@@ -88,23 +109,27 @@ watch(selected, () => {
         </div>
         <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
           <p class="text-xs leading-6 text-muted-foreground">
-            UI and local interactions only. Connect save and selection events to your business
-            logic.
+            {{
+              t(
+                'UI and local interactions only. Connect save and selection events to your business logic.',
+              )
+            }}
           </p>
           <Button
             variant="outline"
             :disabled="isFetching"
             @click="sourceVisibleRef = !sourceVisibleRef"
             >{{
-              isFetching ? 'Loading...' : sourceVisibleRef ? 'Hide source' : 'View source'
+              t(isFetching ? 'Loading...' : sourceVisibleRef ? 'Hide source' : 'View source')
             }}</Button
           >
         </div>
         <div v-if="sourceVisibleRef" class="mt-4">
           <p v-if="isError" role="alert" class="mb-3 text-sm text-destructive">
-            Could not load the source. <button class="underline" @click="refetch()">Retry</button>
+            {{ t('Could not load the source.') }}
+            <button class="underline" @click="refetch()">{{ t('Retry') }}</button>
           </p>
-          <CodeBlock v-if="source" :code="source" :label="selected.files[0]" />
+          <CodeBlock v-if="source" :code="source" :label="t(selected.files[0])" />
         </div>
       </section>
     </div>

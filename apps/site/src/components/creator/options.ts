@@ -4,8 +4,6 @@ import type { ColorTokens } from 'shadcn-uniapp'
 export type PickerOption = { value: string; label: string; color?: string; description?: string }
 export type SettingKey =
   'style' | 'base' | 'accent' | 'chart' | 'heading' | 'font' | 'radius' | 'density'
-export type PreviewBlock =
-  'components' | 'catalog' | 'profile-card' | 'settings-form' | 'filter-list'
 
 const neutrals = {
   zinc: [
