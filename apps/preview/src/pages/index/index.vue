@@ -9,6 +9,7 @@ import {
   themeSchema,
 } from 'shadcn-uniapp'
 import type { UiLocale, ThemeMode } from 'shadcn-uniapp'
+import { previewColorsKey } from '../../theme'
 import ProfileCard from '../../blocks/profile-card/ProfileCard.vue'
 import BlockPreview from '../../components/gallery/BlockPreview.vue'
 import OverviewBoard from '../../components/gallery/OverviewBoard.vue'
@@ -32,6 +33,10 @@ watch(
 )
 const themeRef = shallowRef(createPreset())
 const modeRef = ref<ThemeMode>('light')
+provide(
+  previewColorsKey,
+  computed(() => themeRef.value[modeRef.value]),
+)
 const blockRef = ref('components')
 const canvasRef = ref(false)
 // #ifdef MP-WEIXIN

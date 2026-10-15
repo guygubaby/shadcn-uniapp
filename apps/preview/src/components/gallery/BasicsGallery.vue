@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { usePreviewI18n } from '../../i18n'
 
-import { ref } from 'vue'
+import { inject, ref } from 'vue'
+import { previewColorsKey } from '../../theme'
 import GallerySection from './GallerySection.vue'
 
 const { t } = usePreviewI18n()
+const colorsRef = inject(previewColorsKey)!
 const counterRef = ref(1280)
 const watermarkRef = ref(false)
 </script>
@@ -49,7 +51,14 @@ const watermarkRef = ref(false)
       :description="t('Progress, Circle, CountTo, CountDown, and Loading.')"
     >
       <wd-progress :percentage="72" /><view class="gallery-inline"
-        ><wd-circle :model-value="72" :size="88" text="72%" /><view
+        ><!-- Circle does not watch layerColor; remount when the track color changes. -->
+        <wd-circle
+          :key="colorsRef.muted"
+          :color="colorsRef.primary"
+          :layer-color="colorsRef.muted"
+          :model-value="72"
+          :size="88"
+          text="72%" /><view
           ><wd-count-to :end-val="counterRef" :duration="800" /><wd-count-down
             :time="3600000"
             format="HH:mm:ss" /></view

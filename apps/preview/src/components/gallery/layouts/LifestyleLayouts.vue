@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { usePreviewI18n } from '../../../i18n'
 
-import { ref, shallowRef } from 'vue'
+import { inject, ref, shallowRef } from 'vue'
 import { useToast } from '@wot-ui/ui'
+import { previewColorsKey } from '../../../theme'
 import GallerySection from '../GallerySection.vue'
 
 const { t } = usePreviewI18n()
+const colorsRef = inject(previewColorsKey)!
 const toast = useToast('layouts')
 const lightRef = ref(true)
 const sceneRef = ref('Focus')
@@ -54,7 +56,14 @@ const dates = { min: new Date(2026, 9, 1).getTime(), max: new Date(2026, 9, 31).
       ><view
         ><text class="gallery-description">{{ t('Currently using') }}</text
         ><text class="overview-metric">{{ t('3.4 kW') }}</text></view
-      ><wd-circle :model-value="85" :size="92" text="85%"
+      ><!-- Circle does not watch layerColor; remount when the track color changes. -->
+      <wd-circle
+        :key="colorsRef.muted"
+        :color="colorsRef.primary"
+        :layer-color="colorsRef.muted"
+        :model-value="85"
+        :size="92"
+        text="85%"
     /></view>
     <view class="gallery-surface layout-between"
       ><text>{{ t('Solar generation') }}</text
