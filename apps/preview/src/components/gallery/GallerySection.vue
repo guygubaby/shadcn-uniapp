@@ -2,13 +2,13 @@
 import { usePreviewI18n } from '../../i18n'
 
 const { t } = usePreviewI18n()
-defineProps<{ title: string; description?: string }>()
+defineProps<{ title: string; description?: string; bare?: boolean }>()
 </script>
 <template>
-  <view class="gallery-card"
-    ><text class="gallery-title">{{ t(title) }}</text
-    ><text v-if="description" class="gallery-description">{{ t(description) }}</text
-    ><view class="gallery-content"><slot /></view
+  <view :class="bare ? undefined : 'gallery-card'"
+    ><text v-if="!bare" class="gallery-title">{{ t(title) }}</text
+    ><text v-if="!bare && description" class="gallery-description">{{ t(description) }}</text
+    ><view :class="bare ? undefined : 'gallery-content'"><slot /></view
   ></view>
 </template>
 

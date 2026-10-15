@@ -26,7 +26,7 @@ import SurveyCard from '../../blocks/survey-card/SurveyCard.vue'
 import DocumentList from '../../blocks/document-list/DocumentList.vue'
 
 const { t } = usePreviewI18n()
-const props = defineProps<{ block: string }>()
+const props = defineProps<{ block: string; bare?: boolean }>()
 const emit = defineEmits<{ notice: [message: string] }>()
 const item = computed(() => blocks.find((block) => block.name === props.block))
 const projects = [
@@ -162,7 +162,12 @@ function notice(message: string) {
 }
 </script>
 <template>
-  <GallerySection v-if="item" :title="t(item.title)" :description="t(item.description)">
+  <GallerySection
+    v-if="item"
+    :bare="bare"
+    :title="t(item.title)"
+    :description="t(item.description)"
+  >
     <ProfileCard
       v-if="block === 'profile-card'"
       name="Bryce"

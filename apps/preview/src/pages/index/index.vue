@@ -50,12 +50,14 @@ const wotVars = computed(() => getWotThemeVars(themeRef.value, modeRef.value))
 useConfigProvider({ theme: modeRef, themeVars: wotVars })
 const style = computed(() => ({
   ...getThemeVariables(themeRef.value, modeRef.value),
-  backgroundColor: canvasRef.value
-    ? themeRef.value[modeRef.value].muted
-    : themeRef.value[modeRef.value].background,
+  backgroundColor: canvasRef.value ? themeRef.value[modeRef.value].muted : 'transparent',
   color: themeRef.value[modeRef.value].foreground,
   minHeight: '100vh',
-  padding: canvasRef.value ? 'clamp(16px, 2.5vw, 32px)' : '20px',
+  padding: canvasRef.value
+    ? 'clamp(16px, 2.5vw, 32px)'
+    : ['components', 'catalog'].includes(blockRef.value)
+      ? '20px'
+      : '0',
   fontFamily: getThemeVariables(themeRef.value, modeRef.value)['--sui-font-body'],
   boxSizing: 'border-box' as const,
 }))
@@ -110,7 +112,7 @@ onUnmounted(() => window.removeEventListener('message', receive))
         </wd-button>
       </view>
       <!-- #endif -->
-      <view v-if="!canvasRef && blockRef !== 'catalog'" style="margin-bottom: 24px">
+      <view v-if="!canvasRef && blockRef === 'components'" style="margin-bottom: 24px">
         <text style="display: block; font-size: 22px; font-weight: 600">{{
           t('Your next interface')
         }}</text>
@@ -160,7 +162,7 @@ onUnmounted(() => window.removeEventListener('message', receive))
           />
         </view>
       </template>
-      <BlockPreview v-else :key="blockRef" :block="blockRef" @notice="noticeRef = $event" />
+      <BlockPreview v-else :key="blockRef" :block="blockRef" bare @notice="noticeRef = $event" />
       <text
         v-if="noticeRef"
         role="status"

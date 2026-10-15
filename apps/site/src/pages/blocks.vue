@@ -110,14 +110,9 @@ watch(selected, async () => {
           :code="`pnpm dlx shadcn-uniapp add ${selected.name}`"
           :label="t('Run init first. Available after the npm release.')"
         />
-        <RevealBlock card :delay="0.15"
-          ><div class="preview-grid mt-6 rounded-xl border p-3 sm:p-6">
-            <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-              <p class="text-xs text-muted-foreground">{{ t('Real components. Try them out.') }}</p>
-            </div>
-            <div class="mx-auto max-w-lg">
-              <WotPreview :theme="theme" :mode="modeRef" :block="selected.name" />
-            </div>
+        <RevealBlock card :delay="0.15" class="mt-6"
+          ><div class="mx-auto max-w-lg">
+            <WotPreview :theme="theme" :mode="modeRef" :block="selected.name" />
           </div>
         </RevealBlock>
         <div class="mt-4 flex flex-wrap items-center justify-between gap-3">

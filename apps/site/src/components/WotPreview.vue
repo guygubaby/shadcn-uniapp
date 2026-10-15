@@ -65,21 +65,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div
-    :class="
-      cn(
-        'relative min-w-0 overflow-hidden rounded-xl border bg-background',
-        canvas && 'h-full rounded-none border-0 bg-transparent',
-      )
-    "
-  >
-    <div
-      v-if="!canvas"
-      class="flex items-center justify-between gap-3 border-b px-4 py-3 text-xs text-muted-foreground"
-    >
-      <span>{{ t('Live uni-app H5 preview') }}</span
-      ><span>Wot UI 2.3.2</span>
-    </div>
+  <div :class="cn('relative min-w-0', canvas && 'h-full')">
     <iframe
       ref="frame"
       src="/preview/index.html#/"
@@ -89,12 +75,7 @@ onUnmounted(() => {
     />
     <div
       v-if="!readyRef"
-      :class="
-        cn(
-          'absolute inset-x-0 bottom-0 flex flex-col items-center justify-center gap-4 bg-background p-6 text-center',
-          canvas ? 'top-0' : 'top-12',
-        )
-      "
+      class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-background p-6 text-center"
     >
       <template v-if="failedRef">
         <p class="text-sm text-muted-foreground">
