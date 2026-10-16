@@ -8,7 +8,7 @@ const ratingRef = ref(4)
 const commentRef = ref('')
 </script>
 <template>
-  <view style="padding: 12px 0"><wd-rate v-model="ratingRef" :size="28" /></view>
+  <view class="py-3"><wd-rate v-model="ratingRef" :size="28" /></view>
   <wd-textarea
     v-model="commentRef"
     :placeholder="t('What worked well? What could feel better?')"

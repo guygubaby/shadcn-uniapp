@@ -19,31 +19,18 @@ defineEmits<{ open: [id: string] }>()
   <view
     v-for="event in events"
     :key="event.id"
-    style="
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 16px 0;
-      border-bottom: 1px solid var(--sui-border);
-    "
+    class="flex items-center gap-4 border-0 border-b border-solid border-(--sui-border) py-4"
   >
-    <view
-      style="
-        min-width: 46px;
-        padding: 10px;
-        border-radius: var(--sui-radius);
-        background: var(--sui-muted);
-        text-align: center;
-      "
-      ><text style="display: block; font-size: 24px; font-weight: 700">{{ t(event.day) }}</text
+    <view class="min-w-11.5 rounded-(--sui-radius) bg-(--sui-muted) p-2.5 text-center"
+      ><text class="block text-2xl font-bold">{{ t(event.day) }}</text
       ><wd-text :text="t(event.month)" color="var(--sui-muted-foreground)"
     /></view>
-    <view style="flex: 1; min-width: 0"
-      ><text style="display: block; font-weight: 600">{{ t(event.title) }}</text
+    <view class="min-w-0 flex-1"
+      ><text class="block font-semibold">{{ t(event.title) }}</text
       ><wd-text
         :text="t(`${event.time} · ${event.location}`)"
         color="var(--sui-muted-foreground)"
-      /><view style="margin-top: 8px"
+      /><view class="mt-2"
         ><wd-tag variant="light">{{ t(event.category) }}</wd-tag></view
       ></view
     >

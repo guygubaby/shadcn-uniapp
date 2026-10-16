@@ -24,9 +24,9 @@ function markRead(id: string) {
   <view
     v-for="message in messages"
     :key="message.id"
-    style="padding: 16px 0; border-bottom: 1px solid var(--sui-border)"
+    class="border-0 border-b border-solid border-(--sui-border) py-4"
   >
-    <view style="display: flex; align-items: center; justify-content: space-between; gap: 12px"
+    <view class="flex items-center justify-between gap-3"
       ><wd-tag variant="light">{{ t(message.category) }}</wd-tag
       ><wd-text :text="t(message.date)" color="var(--sui-muted-foreground)"
     /></view>

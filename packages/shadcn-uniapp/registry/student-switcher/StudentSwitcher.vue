@@ -17,9 +17,9 @@ function select(id: string) {
 }
 </script>
 <template>
-  <view v-if="selected" style="display: flex; align-items: center; gap: 14px; margin-bottom: 18px"
+  <view v-if="selected" class="mb-4.5 flex items-center gap-3.5"
     ><wd-avatar :text="t(selected.initials)" :size="52" /><view
-      ><text style="display: block; font-size: 18px; font-weight: 600">{{ t(selected.name) }}</text
+      ><text class="block text-lg font-semibold">{{ t(selected.name) }}</text
       ><wd-text
         :text="t(`${t(selected.grade)} · ${t(selected.campus)}`)"
         color="var(--sui-muted-foreground)" /></view
@@ -28,10 +28,8 @@ function select(id: string) {
     t('Switch student')
   }}</wd-button>
   <wd-popup v-model="popupRef" position="bottom" round root-portal>
-    <view style="padding: 24px"
-      ><text style="display: block; margin-bottom: 16px; font-size: 18px; font-weight: 600">{{
-        t('Choose a student')
-      }}</text>
+    <view class="p-6"
+      ><text class="mb-4 block text-lg font-semibold">{{ t('Choose a student') }}</text>
       <wd-cell
         v-for="student in students"
         :key="student.id"

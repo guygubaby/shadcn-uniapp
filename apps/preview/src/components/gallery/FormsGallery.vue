@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { usePreviewI18n } from '../../i18n'
 
-import { ref, shallowRef } from 'vue'
+import { inject, ref, shallowRef } from 'vue'
+import type { SignatureResult } from '@wot-ui/ui/components/wd-signature/types'
+import { previewColorsKey } from '../../theme'
 import GallerySection from './GallerySection.vue'
 import SettingsForm from '../../blocks/settings-form/SettingsForm.vue'
 
 const { t } = usePreviewI18n()
+const colorsRef = inject(previewColorsKey)!
 const inputRef = ref('Design systems')
 const areaRef = ref('Made for H5 and WeChat.')
 const numberRef = ref(3)
@@ -17,6 +20,7 @@ const sliderRef = ref(42)
 const passwordRef = ref('123')
 const keyboardRef = ref(false)
 const noticeRef = ref('')
+const signatureRef = shallowRef<SignatureResult>()
 </script>
 <template>
   <view class="gallery-grid">
@@ -79,12 +83,23 @@ const noticeRef = ref('')
       :description="t('Local canvas and gesture interactions.')"
       ><wd-signature
         :height="140"
+        :pen-color="colorsRef.foreground"
         :confirm-text="t('Confirm')"
         :clear-text="t('Clear')"
         :revoke-text="t('Undo')"
-        :restore-text="t('Redo')" /><wd-slide-verify
-        :text="t('Slide to verify')"
-        :success-text="t('Verified')"
+        :restore-text="t('Redo')"
+        @confirm="signatureRef = $event"
+        @clear="signatureRef = undefined" />
+      <image
+        v-if="signatureRef?.success"
+        :src="signatureRef.tempFilePath"
+        :aria-label="t('Signature preview')"
+        mode="widthFix"
+        style="width: 100%" />
+      <text v-else-if="signatureRef" role="status" class="gallery-description">{{
+        t('Could not export signature. Please try again.')
+      }}</text>
+      <wd-slide-verify :text="t('Slide to verify')" :success-text="t('Verified')"
     /></GallerySection>
     <GallerySection
       :title="t('Upload')"

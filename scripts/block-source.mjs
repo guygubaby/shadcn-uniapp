@@ -1,11 +1,12 @@
 import ts from 'typescript'
 
 export function removePreviewI18n(source) {
-  let code = source.replace(
-    /^import \{ inject \} from 'vue'\r?\nconst t = inject[^\r\n]+\r?\n(?:[ \t]*\r?\n)*/m,
-    '',
-  )
-  if (code === source) return source
+  const translation =
+    /^const t = inject[^\r\n]*['"]shadcn-uniapp:translate['"][^\r\n]*(?:\r?\n(?:[ \t]*\r?\n)*)?/m
+  if (!translation.test(source)) return source
+  let code = source
+    .replace(translation, '')
+    .replace(/^import \{ inject \} from 'vue'\r?\n(?:[ \t]*\r?\n)*/m, '')
 
   let match
   while ((match = /\bt\(/.exec(code))) {

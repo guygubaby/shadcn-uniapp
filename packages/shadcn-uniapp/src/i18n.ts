@@ -174,6 +174,7 @@ export const chineseMessages: Record<string, string> = {
   Copy: '复制',
   'Copy preset link': '复制预设链接',
   'Could not load the source.': '源码加载失败。',
+  'Could not export signature. Please try again.': '签名导出失败，请重试。',
   Create: '创建',
   'Create a theme': '创建主题',
   'Create a workspace': '创建工作空间',
@@ -304,8 +305,8 @@ export const chineseMessages: Record<string, string> = {
   'Keep this theme?': '保留这个主题？',
   'Keep your Wot components and business logic. Start with a theme, then add blocks when you need them.':
     '保留 Wot 组件和业务逻辑。从主题开始，按需添加区块。',
-  'Keep your Wot easycom, Sass, and build setup. No need to switch Tailwind or UnoCSS.':
-    '保留现有 Wot easycom、Sass 和构建配置，无需切换 Tailwind 或 UnoCSS。',
+  'Keep your Wot easycom and Sass setup. Blocks use Tailwind CSS v4; miniapps need weapp-tailwindcss.':
+    '保留现有 Wot easycom 和 Sass 配置。区块使用 Tailwind CSS v4，小程序需接入 weapp-tailwindcss。',
   'Keep your wd-* components. Unify colors, radii, and states with semantic tokens.':
     '保留 wd-* 组件，通过语义令牌统一颜色、圆角和状态。',
   'Last payout': '上次提现',
@@ -511,6 +512,7 @@ export const chineseMessages: Record<string, string> = {
   'Sidebar & steps': '侧边栏与步骤条',
   'Sidebar, SidebarItem, Steps, and Step.': '侧边导航、导航项、步骤条和步骤项。',
   'Signature & verification': '签名与验证',
+  'Signature preview': '签名预览',
   'Skeleton & empty states': '骨架屏与空状态',
   Skip: '跳过',
   'Skip to main content': '跳到主要内容',

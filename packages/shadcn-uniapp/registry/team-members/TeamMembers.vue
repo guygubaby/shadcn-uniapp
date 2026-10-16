@@ -6,14 +6,10 @@ defineProps<{ members: { id: string; name: string; role: string; initials: strin
 defineEmits<{ invite: []; manage: [id: string] }>()
 </script>
 <template>
-  <view
-    v-for="member in members"
-    :key="member.id"
-    style="display: flex; align-items: center; gap: 12px; margin-bottom: 18px"
-  >
+  <view v-for="member in members" :key="member.id" class="mb-4.5 flex items-center gap-3">
     <wd-avatar :text="t(member.initials)" :size="38" />
-    <view style="flex: 1; min-width: 0"
-      ><text style="display: block; font-weight: 600">{{ t(member.name) }}</text
+    <view class="min-w-0 flex-1"
+      ><text class="block font-semibold">{{ t(member.name) }}</text
       ><wd-text :text="t(member.role)" color="var(--sui-muted-foreground)"
     /></view>
     <wd-button size="small" variant="plain" @click="$emit('manage', member.id)">{{
