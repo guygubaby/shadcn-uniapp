@@ -21,6 +21,7 @@ import { usePageSeo } from '@/lib/usePageSeo'
 
 const route = useRoute()
 const router = useRouter()
+const isServer = import.meta.env.SSR
 usePageSeo()
 const reducedRef = useReducedMotion()
 const { modeRef } = storeToRefs(useAppearanceStore())
@@ -80,7 +81,7 @@ const links = [
     class="scroll-progress pointer-events-none fixed inset-x-0 top-0 z-50 h-0.5 origin-left bg-foreground"
   />
   <motion.header
-    :initial="false"
+    :initial="isServer || reducedRef ? false : { opacity: 0, y: -16 }"
     :animate="{ opacity: 1, y: 0 }"
     :transition="{ duration: reducedRef ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] }"
     class="sticky top-0 z-40 bg-background/95 backdrop-blur-sm"
@@ -103,7 +104,7 @@ const links = [
         <motion.span
           v-for="(link, index) in links"
           :key="link.to"
-          :initial="false"
+          :initial="isServer || reducedRef ? false : { opacity: 0, y: -10 }"
           :animate="{ opacity: 1, y: 0 }"
           :transition="{ duration: reducedRef ? 0 : 0.6, delay: reducedRef ? 0 : index * 0.08 }"
           ><RouterLink

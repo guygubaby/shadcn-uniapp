@@ -1,4 +1,4 @@
-import { inject, onMounted, ref, watch } from 'vue'
+import { inject, ref, watch } from 'vue'
 import type { InjectionKey, Ref } from 'vue'
 import { useInView, useReducedMotion } from 'motion-v'
 
@@ -9,10 +9,8 @@ export function useReveal(target: Ref<HTMLElement | null>) {
   const readyRef = inject(routeReadyKey, ref(true))
   const reducedRef = useReducedMotion()
   const inViewRef = useInView(target, { once: true, margin: '0px 0px -5% 0px' })
-  const shownRef = ref(true)
-  onMounted(() => {
-    if (!reducedRef.value && !inViewRef.value) shownRef.value = false
-  })
+  // Static HTML stays readable; the client starts hidden before its first viewport callback.
+  const shownRef = ref(import.meta.env.SSR)
   watch(
     [readyRef, reducedRef, inViewRef],
     () => {
