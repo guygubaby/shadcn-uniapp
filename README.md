@@ -91,10 +91,7 @@ Pass `theme="dark"` and `:theme-vars="themeVars"` to `wd-config-provider`. Apply
 
 ## Develop locally
 
-On the author's machine, use the configured Node binary:
-
 ```sh
-export PATH="/Users/bryceloskie/Library/Caches/fnm_multishells/41098_1779758644280/bin:$PATH"
 pnpm install --frozen-lockfile
 pnpm dev
 ```

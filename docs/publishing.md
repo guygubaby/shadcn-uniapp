@@ -4,10 +4,9 @@
 
 ## 1. 安装并检查
 
-使用 Node.js 22.18+（建议 24.x）。在本机可先选择已配置的 Node：
+使用 Node.js 22.18+（建议 24.x）。
 
 ```sh
-export PATH="/Users/bryceloskie/Library/Caches/fnm_multishells/41098_1779758644280/bin:$PATH"
 pnpm install --frozen-lockfile
 pnpm check
 ```
