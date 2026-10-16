@@ -1,24 +1,44 @@
-# Lucide components for uni-app
+# Lucide Vite plugin for uni-app
 
-The implementation stays inside shadcn-uniapp instead of publishing another package. `init --icons Search,House` creates the theme and requested icons in one preflighted operation, and installs a project-local generator entry point. `shadcn-uniapp icons Search House` also works independently of `init`. Both use the consumer's installed `@lucide/vue`, generate only requested `.vue` files, and preserve existing files unless explicitly forced.
+Register the plugin before `uni()` in the existing Vite configuration:
 
-## Rendering contract
+```ts
+import { lucideUniapp } from 'shadcn-uniapp/vite'
 
-| Target                                 | Generated output                               | Color and sizing                                                   |
-| -------------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------ |
-| H5 / ordinary App WebView              | Official `@lucide/vue` component               | `size`, `color`, `stroke-width`, `label`                           |
-| Miniapp (`MP` conditional compilation) | A native `view` with `mask` and `-webkit-mask` | Same props; mask uses `background-color`, including `currentColor` |
+// Keep your other plugins and settings.
+plugins: [lucideUniapp(), uni()]
+```
 
-The miniapp branch encodes a single icon's SVG shape in its own component. Theme CSS contains no icon data. The H5 branch strips the mask data; the miniapp branch strips the Lucide Vue runtime import and SVG element. This is a component adapter, not a global patch of Vue, Wot, or the installed Lucide package.
+Use normal named imports everywhere:
 
-Import generated components from the project, for example `@/components/lucide/Search.vue`. Imports from `@lucide/vue` remain ordinary SVG components and are not rewritten. No component registry containing every Lucide icon is generated. Aliases such as `Home` resolve through Lucide's installed ESM exports.
+```vue
+<script setup lang="ts">
+import { Search, House as Home } from '@lucide/vue'
+</script>
 
-The generator validates names against those exports, validates icon metadata, copies the original license, rejects path traversal and symlink outputs, and preflights conflicts before writing. Its data reader targets Lucide v1's `dist/esm/icons/*.mjs` metadata. If Lucide changes that layout, update the generator; it must not silently emit blank icons. Re-run generation with the CLI's `--force` after upgrading Lucide to refresh miniapp shapes.
+<template>
+  <Search :size="24" color="currentColor" :stroke-width="2" />
+  <Home :size="24" />
+</template>
+```
 
-## Limits and verification
+## Rendering and build contract
 
-This adapter covers static monochrome icons. It does not emulate SVG DOM access, arbitrary SVG children or attributes, filters, animations, absolute/non-scaling strokes, App nvue, or uni-app x. Wot's private icons without custom slots retain Wot's renderer.
+| Target                        | Behavior                                                                                          |
+| ----------------------------- | ------------------------------------------------------------------------------------------------- |
+| H5 / ordinary App WebView     | Imports stay unchanged; official Lucide SVG components and tree shaking                           |
+| Miniapp (`UNI_PLATFORM=mp-*`) | Named imports in Vue SFCs and JS/TS modules become native `view` components with inline SVG masks |
 
-Automated checks cover generated aliases and source branches, safe incremental writes, conflicts, and symlinks. H5 rendering and WeChat compilation are checked separately. A successful build does not verify every miniapp engine: test the generated mask and `currentColor` on the intended iOS/Android devices before claiming full platform support.
+The plugin uses Vite 5's `configResolved`, `buildStart`, and `transform` hooks with `enforce: 'pre'`. It does not require newer hook filters, environment APIs, or a framework upgrade. Its SFC parser comes from the project's own `vue/compiler-sfc` to respect uni-app's Vue compiler aliases and pinned version.
 
-References: [Lucide Vue imports render inline SVG and support tree shaking](https://lucide.dev/guide/vue/getting-started), [DCloud's SVG platform limits](https://uniapp.dcloud.net.cn/component/image#图片格式说明).
+Only imported icons are written to `UNI_INPUT_DIR/shadcn-lucide/` (normally `src/shadcn-lucide/`), with the original license. This filesystem cache lets uni-app discover and compile native components. Add `shadcn-lucide/` to `.gitignore`. Cache components are not globally registered, so unused files do not become application dependencies. Source imports are transformed in memory, with source maps; user source and installed dependencies are not patched. No icon generation command is needed.
+
+The whole installed Lucide v1 catalog is available by named import, including aliases. Hashes in cache filenames avoid collisions between aliases differing only by case. Type-only imports stay type-only. New imports are handled during normal build/watch transformation, and unchanged cache files are not rewritten. The plugin validates names and icon metadata and fails if the installed Lucide metadata layout changes.
+
+## Supported API and limits
+
+Use `size`, `color`, and `stroke-width` for cross-platform styling; the native mask inherits `currentColor`. The miniapp adapter covers static monochrome icons, not SVG DOM access, arbitrary SVG children, filters, SVG animation, or absolute/non-scaling strokes. Namespace/default imports and non-icon helper exports are not adapted; use named icon imports. App nvue and uni-app x are outside this plugin's scope. Wot's private icons keep their renderer.
+
+H5 and WeChat builds use the repository's existing uni-app + Vite 5.2.8 fixture. Compiler output is checked for native `view` components and removal of the Lucide SVG runtime on WeChat. A successful build does not verify every miniapp engine: test masks and colors on intended iOS/Android devices before claiming full platform support.
+
+References: [Vite 5 plugin hooks](https://v5.vite.dev/guide/api-plugin), [Lucide Vue named imports](https://lucide.dev/guide/vue/getting-started), [DCloud SVG limits](https://uniapp.dcloud.net.cn/component/image#图片格式说明).

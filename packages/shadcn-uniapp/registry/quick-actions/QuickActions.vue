@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { inject } from 'vue'
-import CalendarDays from './CalendarDays.vue'
-import FileText from './FileText.vue'
-import Mail from './Mail.vue'
-import Pencil from './Pencil.vue'
-import UserRound from './UserRound.vue'
-import LayoutGrid from './LayoutGrid.vue'
+import { CalendarDays, FileText, Mail, Pencil, UserRound, LayoutGrid } from '@lucide/vue'
 const t = inject<(text: unknown) => string>('shadcn-uniapp:translate', (text) => String(text ?? ''))
 
 defineProps<{ actions: { id: string; title: string; icon: string }[] }>()

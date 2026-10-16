@@ -46,9 +46,7 @@ describe('safe source installation', () => {
   it('initializes, generates, and installs each block without erasing project code', () => {
     const root = project()
     initProject(root)
-    expect(readFileSync(join(root, 'scripts/lucide-icons.mjs'), 'utf8')).toContain(
-      "from 'shadcn-uniapp/icons'",
-    )
+    expect(existsSync(join(root, 'scripts/lucide-icons.mjs'))).toBe(false)
     expect(readFileSync(join(root, 'src/App.vue'), 'utf8')).toContain('const keep = true')
     expect(readFileSync(join(root, 'src/App.vue'), 'utf8')).toContain('.keep { color: red }')
     generateProjectTheme(root)

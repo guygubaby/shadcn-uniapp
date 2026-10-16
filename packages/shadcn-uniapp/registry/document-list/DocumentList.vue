@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inject } from 'vue'
-import FileText from './FileText.vue'
+import { FileText } from '@lucide/vue'
 const t = inject<(text: unknown) => string>('shadcn-uniapp:translate', (text) => String(text ?? ''))
 
 defineProps<{

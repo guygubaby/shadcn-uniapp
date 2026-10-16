@@ -4,7 +4,6 @@ import { readFileSync, statSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { addBlock, generateProjectTheme, initProject } from './project'
 import { blocks } from './blocks'
-import { createLucideIconSources, generateLucideIcons } from './icons'
 import { parseTheme, presetNames } from './theme'
 import type { PresetName } from './theme'
 
@@ -12,17 +11,14 @@ const help = `shadcn-uniapp 0.1.0 — Wot UI 2.x themes and source blocks
 
   shadcn-uniapp init [--preset ${presetNames.join('|')}]
   shadcn-uniapp init --theme ./shadcn.theme.json
-  shadcn-uniapp init --icons Search,House
   shadcn-uniapp generate
   shadcn-uniapp add <block>
-  shadcn-uniapp icons <Search House ...>
 
 Blocks: ${blocks.map((block) => block.name).join(', ')}
 
 Options:
   --cwd <directory>  Use a different project directory
   --theme <file>     Initialize from exported Creator JSON (relative to --cwd)
-  --icons <names>    Generate comma-separated Lucide components during init
   --force            Explicitly replace existing generated files
   --help             Show this message
 
@@ -40,7 +36,6 @@ try {
       cwd: { type: 'string', default: process.cwd() },
       preset: { type: 'string', default: 'zinc' },
       theme: { type: 'string' },
-      icons: { type: 'string' },
       force: { type: 'boolean', default: false },
       help: { type: 'boolean', short: 'h', default: false },
     },
@@ -49,21 +44,12 @@ try {
   if (values.help || !command) {
     process.stdout.write(help)
   } else {
-    if (command !== 'icons' && (extra.length || (command !== 'add' && name)))
+    if (extra.length || (command !== 'add' && name))
       throw new Error('Unexpected arguments. Run with --help.')
     let files: string[]
-    if (values.icons !== undefined && command !== 'init')
-      throw new Error('--icons is only supported with init')
     if (command === 'init') {
       if (!(presetNames as readonly string[]).includes(values.preset))
         throw new Error(`Unknown preset: ${values.preset}`)
-      const iconSources =
-        values.icons !== undefined
-          ? await createLucideIconSources(
-              values.cwd,
-              values.icons.split(',').map((name) => name.trim()),
-            )
-          : {}
       if (values.theme) {
         const file = resolve(values.cwd, values.theme)
         if (statSync(file).size > 256 * 1024)
@@ -72,24 +58,21 @@ try {
           values.cwd,
           parseTheme(JSON.parse(readFileSync(file, 'utf8'))),
           values.force,
-          iconSources,
         )
       } else {
-        files = initProject(values.cwd, values.preset as PresetName, values.force, iconSources)
+        files = initProject(values.cwd, values.preset as PresetName, values.force)
       }
     } else if (command === 'generate') {
       files = generateProjectTheme(values.cwd)
     } else if (command === 'add' && name) {
       files = addBlock(values.cwd, name, values.force)
-    } else if (command === 'icons') {
-      files = await generateLucideIcons(values.cwd, name ? [name, ...extra] : [], values.force)
     } else {
       throw new Error('Unknown command or missing block name. Run with --help.')
     }
     process.stdout.write(`Done:\n${files.map((file) => `  ${file}`).join('\n')}\n`)
     if (command === 'init')
       process.stdout.write(
-        'Keep Wot easycom as configured. Sass is required.\nInstall icons: pnpm add @lucide/vue\nGenerate portable icon components: node scripts/lucide-icons.mjs Search House\nOr run: pnpm exec shadcn-uniapp icons Search House\nImport local components from src/components/lucide; H5 uses Lucide SVG, miniapps use inline masks. Theme styles contain no icon assets.\nNew miniapps: Tailwind CSS v4 + weapp-tailwindcss.\nEdit the theme JSON, then run shadcn-uniapp generate.\n',
+        'Keep Wot easycom as configured. Sass is required.\nInstall icons: pnpm add @lucide/vue\nRegister lucideUniapp() from shadcn-uniapp/vite before uni() in vite.config.ts (Vite 5 supported).\nUse named imports from @lucide/vue normally; miniapp builds adapt them automatically. Theme styles contain no icon assets.\nNew miniapps: Tailwind CSS v4 + weapp-tailwindcss.\nEdit the theme JSON, then run shadcn-uniapp generate.\n',
       )
   }
 } catch (error) {

@@ -56,6 +56,22 @@ describe('theme contract', () => {
     expect(css).not.toContain('data:image/svg+xml')
   })
 
+  it.each(presetNames)('keeps %s switch thumbs visible in both modes and states', (name) => {
+    const theme = createPreset(name)
+    for (const mode of ['light', 'dark'] as const) {
+      const vars = getWotThemeVars(theme, mode)
+      expect(
+        contrastRatio(vars.switchColorActionBg!, vars.switchColorActiveBg!),
+      ).toBeGreaterThanOrEqual(3)
+      expect(
+        contrastRatio(vars.switchColorActionBg!, vars.switchColorInactiveBg!),
+      ).toBeGreaterThanOrEqual(3)
+      expect(generateThemeCss(theme)).toContain(
+        `--wot-switch-color-action-bg: ${theme[mode].primaryForeground};`,
+      )
+    }
+  })
+
   it('rejects CSS injection, incompatible versions, unknown properties, and unsafe names', () => {
     const theme = createPreset()
     expect(() => parseTheme({ ...theme, radius: 100 })).toThrow()

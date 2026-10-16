@@ -4,10 +4,7 @@ import { usePreviewI18n } from '../../../i18n'
 import { computed, ref } from 'vue'
 import { useToast } from '@wot-ui/ui'
 import GallerySection from '../GallerySection.vue'
-import Gift from '../../lucide/Gift.vue'
-import CreditCard from '../../lucide/CreditCard.vue'
-import CircleCheck from '../../lucide/CircleCheck.vue'
-import Pencil from '../../lucide/Pencil.vue'
+import { Gift, CreditCard, CircleCheck, Pencil } from '@lucide/vue'
 
 const { t } = usePreviewI18n()
 const toast = useToast('layouts')

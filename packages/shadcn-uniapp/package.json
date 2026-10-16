@@ -31,9 +31,9 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./icons": {
-      "types": "./dist/icons.d.ts",
-      "import": "./dist/icons.js"
+    "./vite": {
+      "types": "./dist/vite.d.ts",
+      "import": "./dist/vite.js"
     }
   },
   "files": [
@@ -44,18 +44,29 @@
     "LUCIDE-LICENSE"
   ],
   "sideEffects": false,
+  "peerDependencies": {
+    "vite": ">=5.0.0 <9"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
+  },
   "engines": {
     "node": ">=20.19.0"
   },
   "scripts": {
-    "build": "tsdown && node ../../scripts/build-icons.mjs",
+    "build": "tsdown",
     "typecheck": "tsc --noEmit",
     "prepack": "pnpm build"
   },
   "dependencies": {
+    "magic-string": "^0.30.21",
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "tsdown": "^0.23.1"
+    "@vue/compiler-sfc": "^3.5.44",
+    "tsdown": "^0.23.1",
+    "vite": "5.2.8"
   }
 }

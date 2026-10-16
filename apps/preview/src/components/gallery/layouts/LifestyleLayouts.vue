@@ -5,9 +5,7 @@ import { inject, ref, shallowRef } from 'vue'
 import { useToast } from '@wot-ui/ui'
 import { previewColorsKey } from '../../../theme'
 import GallerySection from '../GallerySection.vue'
-import Lightbulb from '../../lucide/Lightbulb.vue'
-import Headphones from '../../lucide/Headphones.vue'
-import CalendarDays from '../../lucide/CalendarDays.vue'
+import { Lightbulb, Headphones, CalendarDays } from '@lucide/vue'
 
 const { t } = usePreviewI18n()
 const colorsRef = inject(previewColorsKey)!

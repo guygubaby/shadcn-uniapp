@@ -178,19 +178,18 @@ app.provide('shadcn-uniapp:translate', (message: string) => i18n.t(message))
 
 ### Icons and new miniapps
 
-Install icons with `pnpm add @lucide/vue`. `init` creates a local generator script; request only the icons you need:
+Install icons with `pnpm add @lucide/vue`. Add the Vite plugin once, before the existing `uni()` plugin. It supports Vite 5 and keeps normal named imports:
 
-```sh
-pnpm exec shadcn-uniapp init --icons Search,House
-# Add more icons later:
-node scripts/lucide-icons.mjs Camera
-# Equivalent command, also available without running init:
-pnpm exec shadcn-uniapp icons Camera
+```ts
+import { lucideUniapp } from 'shadcn-uniapp/vite'
+
+// Keep the rest of your existing Vite configuration.
+plugins: [lucideUniapp(), uni()]
 ```
 
 ```vue
 <script setup lang="ts">
-import Search from '@/components/lucide/Search.vue'
+import { Search } from '@lucide/vue'
 </script>
 
 <template>
@@ -198,7 +197,7 @@ import Search from '@/components/lucide/Search.vue'
 </template>
 ```
 
-Generated components use the official `@lucide/vue` component on H5 and a `view` with an inline SVG mask on miniapps. Size, color, stroke width and an optional accessible `label` share the same API. SVG shapes come from the installed Lucide v1 package, including its official aliases; no Wot icon-name mapping is generated. Existing files are protected unless `--force` is passed to the CLI. Regenerate with `--force` after upgrading Lucide to refresh the miniapp shapes.
+H5 uses the official `@lucide/vue` components unchanged. During miniapp builds and watch mode, named icon imports are automatically converted to native `view` components with inline SVG masks. Only imported icons are cached in `src/shadcn-lucide/`; add `shadcn-lucide/` to `.gitignore`. No icon generation command, global icon registry, or copied source files need to be maintained. Aliases and type-only imports are supported. Use `size`, `color`, and `stroke-width` for portable sizing and color.
 
 Theme exports contain no icon assets or global Wot icon replacements. Wot's private internal icons keep their library defaults. Arbitrary SVG DOM APIs, SVG children, filters, and SVG animation are outside this adapter's scope. WeChat compilation is checked; native rendering still needs real-device verification. GitHub keeps its brand logo because Lucide v1 does not contain brand icons. See [the rendering contract](docs/lucide-uniapp.md).
 

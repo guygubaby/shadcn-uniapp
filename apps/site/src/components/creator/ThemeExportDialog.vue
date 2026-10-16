@@ -23,7 +23,14 @@ const props = defineProps<{ theme: ThemeConfig }>()
 const json = computed(() => JSON.stringify(props.theme, null, 2) + '\n')
 const css = computed(() => generateThemeCss(props.theme))
 const install =
-  'pnpm add -D shadcn-uniapp sass\npnpm add @lucide/vue\npnpm exec shadcn-uniapp init --theme ./shadcn.theme.json --icons Search,House'
+  'pnpm add -D shadcn-uniapp sass\npnpm add @lucide/vue\npnpm exec shadcn-uniapp init --theme ./shadcn.theme.json'
+const icons = `import { lucideUniapp } from 'shadcn-uniapp/vite'
+
+// Add before uni() in your existing Vite 5 config.
+plugins: [lucideUniapp(), uni()]
+
+// Your component imports stay the same:
+import { Search } from '@lucide/vue'`
 </script>
 
 <template>
@@ -60,6 +67,7 @@ const install =
               {{ t('Initialize the theme in your Wot project.') }}
             </p>
             <CodeBlock :code="install" label="pnpm" />
+            <CodeBlock :code="icons" label="vite.config.ts / icons" />
           </div>
           <p class="rounded-lg border bg-muted/50 p-3 text-xs leading-6 text-muted-foreground">
             {{

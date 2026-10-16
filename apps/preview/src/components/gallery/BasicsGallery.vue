@@ -4,10 +4,7 @@ import { usePreviewI18n } from '../../i18n'
 import { inject, ref } from 'vue'
 import { previewColorsKey } from '../../theme'
 import GallerySection from './GallerySection.vue'
-import CircleCheck from '../lucide/CircleCheck.vue'
-import House from '../lucide/House.vue'
-import Settings from '../lucide/Settings.vue'
-import UserRound from '../lucide/UserRound.vue'
+import { CircleCheck, House, Settings, UserRound } from '@lucide/vue'
 
 const { t } = usePreviewI18n()
 const colorsRef = inject(previewColorsKey)!

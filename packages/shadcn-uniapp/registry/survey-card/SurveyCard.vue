@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inject } from 'vue'
-import CalendarDays from './CalendarDays.vue'
+import { CalendarDays } from '@lucide/vue'
 const t = inject<(text: unknown) => string>('shadcn-uniapp:translate', (text) => String(text ?? ''))
 
 defineProps<{ title: string; description: string; deadline: string; completed?: boolean }>()

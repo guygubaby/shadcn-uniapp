@@ -23,7 +23,14 @@ const activeSection = computed(
     sections.find((section) => `#${section.id}` === locationRef.value.hash)?.id ?? 'requirements',
 )
 const install =
-  'pnpm add -D shadcn-uniapp sass\npnpm add @lucide/vue\npnpm exec shadcn-uniapp init --preset zinc --icons Search,House'
+  'pnpm add -D shadcn-uniapp sass\npnpm add @lucide/vue\npnpm exec shadcn-uniapp init --preset zinc'
+const icons = `import { lucideUniapp } from 'shadcn-uniapp/vite'
+
+// Add before uni() in your existing Vite 5 config.
+plugins: [lucideUniapp(), uni()]
+
+// Your component imports stay the same:
+import { Search } from '@lucide/vue'`
 const local =
   'pnpm install\npnpm --filter shadcn-uniapp build\nnode /path/to/shadcn-uniapp/packages/shadcn-uniapp/dist/cli.js init --cwd /path/to/your-project'
 const app = `<style lang="scss">\n@use '@wot-ui/ui/styles/theme/index.scss' as *;\n@use './theme/shadcn.scss' as *;\n</style>`
@@ -105,6 +112,7 @@ const vars = getWotThemeVars(config, 'dark')`
             }}
           </p>
           <CodeBlock :code="install" />
+          <div class="mt-4"><CodeBlock :code="icons" label="vite.config.ts / icons" /></div>
           <p class="my-4 text-sm leading-7 text-muted-foreground">
             {{
               t(

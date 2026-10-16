@@ -1,9 +1,8 @@
-import { existsSync, readFileSync } from 'node:fs'
+import { readFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
-import { dirname, join } from 'node:path'
+import { dirname, join, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { z } from 'zod'
-import { checkedPath, projectRoot, writeFiles } from './project'
 
 const iconDataSchema = z.object({
   node: z.array(
@@ -18,7 +17,7 @@ const escapeAttribute = (value: string | number) =>
 
 export async function createLucideIconSources(cwd: string, names: string[]) {
   if (!names.length) throw new Error('Specify Lucide icon names, for example: Search House')
-  const require = createRequire(join(projectRoot(cwd), 'package.json'))
+  const require = createRequire(join(resolve(cwd), 'package.json'))
   let lucideRoot: string
   try {
     lucideRoot = dirname(require.resolve('@lucide/vue/package.json'))
@@ -91,25 +90,4 @@ const iconStyleRef = computed(() => {
 `
   }
   return result
-}
-
-export async function generateLucideIcons(cwd: string, names: string[], force = false) {
-  const root = projectRoot(cwd)
-  const directory = existsSync(join(root, 'src/App.vue'))
-    ? 'src/components/lucide'
-    : 'components/lucide'
-  const sources = await createLucideIconSources(root, names)
-  const licensePath = `${directory}/LUCIDE-LICENSE`
-  const licenseFile = checkedPath(root, licensePath)
-  const allowed = new Set<string>()
-  if (existsSync(licenseFile) && readFileSync(licenseFile, 'utf8') === sources['LUCIDE-LICENSE'])
-    allowed.add(licensePath)
-  return writeFiles(
-    root,
-    Object.fromEntries(
-      Object.entries(sources).map(([name, source]) => [`${directory}/${name}`, source]),
-    ),
-    force,
-    allowed,
-  )
 }
