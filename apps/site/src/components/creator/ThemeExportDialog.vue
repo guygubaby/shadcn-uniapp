@@ -59,14 +59,12 @@ import { Search } from '@lucide/vue'`
         >
         <TabsContent value="install" class="flex flex-col gap-5 pt-3">
           <div
-            class="flex items-center justify-between gap-4 rounded-md border border-accent/20 bg-accent/5 p-4"
+            class="flex items-center justify-between gap-4 rounded-md border border-foreground/20 bg-muted/50 p-4"
           >
             <div class="min-w-0 space-y-2">
               <div class="flex flex-wrap items-center gap-2">
                 <Label for="export-lucide">{{ t('Use Lucide icons') }}</Label>
-                <Badge variant="outline" class="border-accent/20 bg-accent/10 text-accent"
-                  ><Sparkles aria-hidden="true" />{{ t('Recommended') }}</Badge
-                >
+                <Badge><Sparkles aria-hidden="true" />{{ t('Recommended') }}</Badge>
               </div>
               <p id="export-lucide-description" class="text-xs leading-5 text-muted-foreground">
                 {{ t('Recommended across your project for a consistent icon style.') }}
