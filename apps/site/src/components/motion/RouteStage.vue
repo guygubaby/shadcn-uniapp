@@ -120,7 +120,12 @@ onUnmounted(() => {
       <div :key="route.path" class="route-page"><component :is="Component" /></div>
     </Transition>
   </RouterView>
-  <div v-show="activeRef" aria-hidden="true" class="route-cover fixed inset-0 z-50 bg-black/30">
+  <div
+    v-show="activeRef"
+    aria-hidden="true"
+    class="route-cover fixed inset-0 z-50"
+    :class="!readyRef && 'bg-black/30'"
+  >
     <div ref="fill" class="absolute inset-0 origin-bottom bg-white" style="transform: scaleY(0)" />
   </div>
 </template>
