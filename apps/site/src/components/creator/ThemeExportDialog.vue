@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from '@/lib/i18n'
 
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { Download } from '@lucide/vue'
 import { generateThemeCss } from 'shadcn-uniapp'
 import type { ThemeConfig } from 'shadcn-uniapp'
@@ -14,16 +14,24 @@ import {
 } from '@/components/ui/dialog'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
+import { Switch } from '@/components/ui/switch'
 import CodeBlock from '@/components/CodeBlock.vue'
 import { downloadText } from '@/lib/browser'
 
 const { t } = useI18n()
 const openRef = defineModel<boolean>('open', { default: false })
 const props = defineProps<{ theme: ThemeConfig }>()
+const lucideRef = ref(true)
 const json = computed(() => JSON.stringify(props.theme, null, 2) + '\n')
 const css = computed(() => generateThemeCss(props.theme))
-const install =
-  'pnpm add -D shadcn-uniapp sass\npnpm add @lucide/vue\npnpm exec shadcn-uniapp init --theme ./shadcn.theme.json'
+const install = computed(() =>
+  [
+    'pnpm add -D shadcn-uniapp sass',
+    ...(lucideRef.value ? ['pnpm add @lucide/vue'] : []),
+    'pnpm exec shadcn-uniapp init --theme ./shadcn.theme.json',
+  ].join('\n'),
+)
 const icons = `import { lucideUniapp } from 'shadcn-uniapp/vite'
 
 // Add before uni() in your existing Vite 5 config.
@@ -49,6 +57,10 @@ import { Search } from '@lucide/vue'`
           ><TabsTrigger value="json">JSON</TabsTrigger></TabsList
         >
         <TabsContent value="install" class="flex flex-col gap-5 pt-3">
+          <div class="flex items-center justify-between gap-4 rounded-md border p-3">
+            <Label for="export-lucide">{{ t('Use Lucide icons') }}</Label>
+            <Switch id="export-lucide" v-model="lucideRef" />
+          </div>
           <div class="flex flex-col gap-3">
             <p class="text-sm">
               <span class="mr-2 text-muted-foreground">1.</span>
@@ -67,7 +79,7 @@ import { Search } from '@lucide/vue'`
               {{ t('Initialize the theme in your Wot project.') }}
             </p>
             <CodeBlock :code="install" label="pnpm" />
-            <CodeBlock :code="icons" label="vite.config.ts / icons" />
+            <CodeBlock v-if="lucideRef" :code="icons" label="vite.config.ts / icons" />
           </div>
           <p class="rounded-lg border bg-muted/50 p-3 text-xs leading-6 text-muted-foreground">
             {{
