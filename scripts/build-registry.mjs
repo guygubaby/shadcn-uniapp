@@ -16,7 +16,7 @@ for (const block of blocks) {
   const files = await Promise.all(
     block.files.map(async (file) => ({
       path: `registry/${block.name}/${file}`,
-      type: 'registry:component',
+      type: file.endsWith('.vue') ? 'registry:component' : 'registry:file',
       target: `src/components/blocks/${block.name}/${file}`,
       content: await readFile(
         new URL(`packages/shadcn-uniapp/registry/${block.name}/${file}`, root),

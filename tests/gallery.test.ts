@@ -13,13 +13,14 @@ describe('component gallery coverage', () => {
   const preview = sourceFiles('apps/preview/src').filter((path) => !path.includes('/blocks/'))
   const blocks = sourceFiles('packages/shadcn-uniapp/registry')
 
-  it('provides a source fixture for every wd-* component in the pinned Wot release', () => {
+  it('provides fixtures for Wot components, using Lucide instead of wd-icon', () => {
     const expected = readdirSync('apps/preview/node_modules/@wot-ui/ui/components').filter((name) =>
       name.startsWith('wd-'),
     )
     const source = [...preview, ...blocks].map((path) => readFileSync(path, 'utf8')).join('\n')
     const used = new Set([...source.matchAll(/<(wd-[a-z-]+)\b/g)].map((match) => match[1]))
-    expect(expected.filter((name) => !used.has(name))).toEqual([])
+    expect(expected.filter((name) => name !== 'wd-icon' && !used.has(name))).toEqual([])
+    expect(used.has('wd-icon')).toBe(false)
     expect(expected).toHaveLength(100)
   })
 

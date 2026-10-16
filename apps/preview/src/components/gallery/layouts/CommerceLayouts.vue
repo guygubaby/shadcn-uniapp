@@ -4,6 +4,10 @@ import { usePreviewI18n } from '../../../i18n'
 import { computed, ref } from 'vue'
 import { useToast } from '@wot-ui/ui'
 import GallerySection from '../GallerySection.vue'
+import Gift from '../../lucide/Gift.vue'
+import CreditCard from '../../lucide/CreditCard.vue'
+import CircleCheck from '../../lucide/CircleCheck.vue'
+import Pencil from '../../lucide/Pencil.vue'
 
 const { t } = usePreviewI18n()
 const toast = useToast('layouts')
@@ -102,7 +106,10 @@ const transactions = [
     :description="t('The little details, all in one place.')"
   >
     <view v-for="item in transactions" :key="item.name" class="overview-person"
-      ><wd-icon :name="item.icon" size="22" /><view class="layout-grow"
+      ><Gift v-if="item.icon === 'gift'" :size="22" /><CreditCard
+        v-else-if="item.icon === 'idcard'"
+        :size="22"
+      /><CircleCheck v-else :size="22" /><view class="layout-grow"
         ><text class="overview-person-name">{{ t(item.name) }}</text
         ><text class="gallery-description">{{ t(item.date) }}</text></view
       ><text class="layout-value">{{ t(item.amount) }}</text></view
@@ -125,7 +132,7 @@ const transactions = [
     <wd-tabs v-model="paymentRef"
       ><wd-tab :title="t('Card')"
         ><view class="gallery-surface"
-          ><wd-icon name="idcard" size="28" /><text class="overview-person-name">{{
+          ><CreditCard :size="28" /><text class="overview-person-name">{{
             t('Visa ending in 4242')
           }}</text
           ><text class="gallery-description">{{ t('Expires 12 / 2028') }}</text></view
@@ -147,7 +154,7 @@ const transactions = [
     >
   </GallerySection>
   <GallerySection :title="t('The everyday notebook')" :description="t('For ideas worth keeping.')">
-    <view class="product-art"><wd-icon name="edit" size="64" /></view>
+    <view class="product-art"><Pencil :size="64" /></view>
     <view class="layout-between"
       ><view
         ><text class="overview-person-name">{{ t('Studio collection') }}</text
@@ -167,7 +174,7 @@ const transactions = [
     :description="t('A few things to make your day.')"
   >
     <view class="overview-person"
-      ><wd-icon name="gift" size="28" /><view class="layout-grow"
+      ><Gift :size="28" /><view class="layout-grow"
         ><text class="overview-person-name">{{ t('Everyday notebook') }}</text
         ><text class="gallery-description">{{ t('$48.00 each') }}</text></view
       ><wd-input-number v-model="quantityRef" :min="1" :max="10"
@@ -194,7 +201,7 @@ const transactions = [
   >
     <view class="layout-between"
       ><wd-tag type="primary" variant="light">{{ t('In transit') }}</wd-tag
-      ><wd-icon name="check-circle" size="24"
+      ><CircleCheck :size="24"
     /></view>
     <text class="overview-metric">{{ t('Arriving Friday') }}</text>
     <wd-steps :active="2" vertical

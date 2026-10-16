@@ -4,6 +4,7 @@ import { readFileSync, statSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { addBlock, generateProjectTheme, initProject } from './project'
 import { blocks } from './blocks'
+import { generateLucideIcons } from './icons'
 import { parseTheme, presetNames } from './theme'
 import type { PresetName } from './theme'
 
@@ -13,6 +14,7 @@ const help = `shadcn-uniapp 0.1.0 — Wot UI 2.x themes and source blocks
   shadcn-uniapp init --theme ./shadcn.theme.json
   shadcn-uniapp generate
   shadcn-uniapp add <block>
+  shadcn-uniapp icons <Search House ...>
 
 Blocks: ${blocks.map((block) => block.name).join(', ')}
 
@@ -44,7 +46,7 @@ try {
   if (values.help || !command) {
     process.stdout.write(help)
   } else {
-    if (extra.length || (command !== 'add' && name))
+    if (command !== 'icons' && (extra.length || (command !== 'add' && name)))
       throw new Error('Unexpected arguments. Run with --help.')
     let files: string[]
     if (command === 'init') {
@@ -66,13 +68,15 @@ try {
       files = generateProjectTheme(values.cwd)
     } else if (command === 'add' && name) {
       files = addBlock(values.cwd, name, values.force)
+    } else if (command === 'icons') {
+      files = await generateLucideIcons(values.cwd, name ? [name, ...extra] : [], values.force)
     } else {
       throw new Error('Unknown command or missing block name. Run with --help.')
     }
     process.stdout.write(`Done:\n${files.map((file) => `  ${file}`).join('\n')}\n`)
     if (command === 'init')
       process.stdout.write(
-        'Keep Wot easycom as configured. Sass is required.\nInstall icons: pnpm add @lucide/vue\nNew miniapps: Tailwind CSS v4 + weapp-tailwindcss. The generated stylesheet includes Lucide replacements for Wot icons.\nEdit the theme JSON, then run shadcn-uniapp generate.\n',
+        'Keep Wot easycom as configured. Sass is required.\nInstall icons: pnpm add @lucide/vue\nGenerate portable icon components: node scripts/lucide-icons.mjs Search House\nOr run: pnpm exec shadcn-uniapp icons Search House\nImport local components from src/components/lucide; H5 uses Lucide SVG, miniapps use inline masks. Theme styles contain no icon assets.\nNew miniapps: Tailwind CSS v4 + weapp-tailwindcss.\nEdit the theme JSON, then run shadcn-uniapp generate.\n',
       )
   }
 } catch (error) {

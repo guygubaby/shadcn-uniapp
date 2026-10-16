@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { usePreviewI18n } from '../../i18n'
 
-import { ref, shallowRef } from 'vue'
+import { inject, ref, shallowRef } from 'vue'
+import { previewColorsKey } from '../../theme'
 import GallerySection from './GallerySection.vue'
+import House from '../lucide/House.vue'
+import Search from '../lucide/Search.vue'
+import UserRound from '../lucide/UserRound.vue'
 
 const { t } = usePreviewI18n()
+const colorsRef = inject(previewColorsKey)!
 const tabRef = ref(0)
 const segmentRef = ref('Overview')
 const navRef = ref('home')
@@ -25,13 +30,20 @@ const anchors = shallowRef([160, 300])
       ><wd-navbar :title="t('Workspace')" :left-text="t('Back')" left-arrow
         ><template #capsule><wd-navbar-capsule /></template></wd-navbar
       ><wd-tabbar v-model="navRef" :fixed="false" :safe-area-inset-bottom="false"
-        ><wd-tabbar-item name="home" :title="t('Home')" icon="home" /><wd-tabbar-item
-          name="search"
-          :title="t('Search')"
-          icon="search" /><wd-tabbar-item
-          name="profile"
-          :title="t('Profile')"
-          icon="user" /></wd-tabbar
+        ><wd-tabbar-item name="home" :title="t('Home')"
+          ><template #icon="{ active }"
+            ><House :color="active ? colorsRef.primary : colorsRef.mutedForeground" /></template
+        ></wd-tabbar-item>
+        <wd-tabbar-item name="search" :title="t('Search')"
+          ><template #icon="{ active }"
+            ><Search :color="active ? colorsRef.primary : colorsRef.mutedForeground" /></template
+        ></wd-tabbar-item>
+        <wd-tabbar-item name="profile" :title="t('Profile')"
+          ><template #icon="{ active }"
+            ><UserRound
+              :color="
+                active ? colorsRef.primary : colorsRef.mutedForeground
+              " /></template></wd-tabbar-item></wd-tabbar
     ></GallerySection>
     <GallerySection
       :title="t('Tabs & segmented')"

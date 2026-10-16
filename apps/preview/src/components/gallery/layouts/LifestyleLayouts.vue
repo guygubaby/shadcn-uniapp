@@ -5,6 +5,9 @@ import { inject, ref, shallowRef } from 'vue'
 import { useToast } from '@wot-ui/ui'
 import { previewColorsKey } from '../../../theme'
 import GallerySection from '../GallerySection.vue'
+import Lightbulb from '../../lucide/Lightbulb.vue'
+import Headphones from '../../lucide/Headphones.vue'
+import CalendarDays from '../../lucide/CalendarDays.vue'
 
 const { t } = usePreviewI18n()
 const colorsRef = inject(previewColorsKey)!
@@ -26,7 +29,7 @@ const dates = { min: new Date(2026, 9, 1).getTime(), max: new Date(2026, 9, 31).
   <GallerySection :title="t('Set the mood')" :description="t('Living room · Your favorite corner')">
     <view class="layout-between"
       ><view class="gallery-inline"
-        ><wd-icon name="bulb" size="30" /><text class="overview-person-name">{{
+        ><Lightbulb :size="30" /><text class="overview-person-name">{{
           t('Ambient lighting')
         }}</text></view
       ><wd-switch v-model="lightRef"
@@ -74,7 +77,7 @@ const dates = { min: new Date(2026, 9, 1).getTime(), max: new Date(2026, 9, 31).
     }}</text>
   </GallerySection>
   <GallerySection :title="t('Now playing')" :description="t('A soundtrack for your next idea.')">
-    <view class="music-art"><wd-icon name="headset" size="56" /></view>
+    <view class="music-art"><Headphones :size="56" /></view>
     <view class="layout-between"
       ><view
         ><text class="overview-person-name">{{ t('Quiet mornings') }}</text
@@ -113,7 +116,7 @@ const dates = { min: new Date(2026, 9, 1).getTime(), max: new Date(2026, 9, 31).
   >
     <view class="layout-between"
       ><wd-tag type="primary" variant="light">{{ t('Oct 24 · 10:00 AM') }}</wd-tag
-      ><wd-icon name="calendar-line" size="24"
+      ><CalendarDays :size="24"
     /></view>
     <text class="gallery-description">{{
       t('A hands-on session on the small details that make an interface feel right.')

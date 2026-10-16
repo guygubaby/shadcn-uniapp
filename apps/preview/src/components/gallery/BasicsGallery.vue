@@ -4,6 +4,10 @@ import { usePreviewI18n } from '../../i18n'
 import { inject, ref } from 'vue'
 import { previewColorsKey } from '../../theme'
 import GallerySection from './GallerySection.vue'
+import CircleCheck from '../lucide/CircleCheck.vue'
+import House from '../lucide/House.vue'
+import Settings from '../lucide/Settings.vue'
+import UserRound from '../lucide/UserRound.vue'
 
 const { t } = usePreviewI18n()
 const colorsRef = inject(previewColorsKey)!
@@ -37,7 +41,7 @@ const watermarkRef = ref(false)
             v-for="(name, i) in ['AB', 'CD', 'EF', 'GH']"
             :key="i"
             :text="t(name)" /></wd-avatar-group
-        ><wd-icon name="check-circle" size="24"
+        ><CircleCheck :size="24"
       /></view>
       <view class="gallery-inline"
         ><wd-tag type="primary">{{ t('Synced') }}</wd-tag
@@ -86,9 +90,14 @@ const watermarkRef = ref(false)
         ></wd-resize
       ><wd-gap :height="8" /><wd-divider>{{ t('Quick actions') }}</wd-divider
       ><wd-grid :column="3"
-        ><wd-grid-item icon="home" :text="t('Home')" /><wd-grid-item
-          icon="settings"
-          :text="t('Settings')" /><wd-grid-item icon="user" :text="t('Profile')" /></wd-grid
+        ><wd-grid-item :text="t('Home')"
+          ><template #icon><House :size="28" /></template
+        ></wd-grid-item>
+        <wd-grid-item :text="t('Settings')"
+          ><template #icon><Settings :size="28" /></template
+        ></wd-grid-item>
+        <wd-grid-item :text="t('Profile')"
+          ><template #icon><UserRound :size="28" /></template></wd-grid-item></wd-grid
       ><wd-card :title="t('Source-owned by design')">{{
         t('Adapt the pieces to your product.')
       }}</wd-card>

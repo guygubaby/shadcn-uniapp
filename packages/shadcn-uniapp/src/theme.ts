@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import { lucideThemeCss } from './lucide-icons'
 
 const colorSchema = z.string().regex(/^#[\da-f]{6}$/i, 'Use a six-digit hex color, e.g. #18181b')
 
@@ -306,9 +305,7 @@ export function getWotThemeVars(
   )
 }
 
-export const componentThemeCss = `${lucideThemeCss}
-
-.wd-checkbox--vertical + .wd-checkbox--vertical {
+export const componentThemeCss = `.wd-checkbox--vertical + .wd-checkbox--vertical {
   margin-top: 8px;
 }
 

@@ -52,6 +52,10 @@ MIT. Independent community project, not an official Wot or shadcn product.
 
 ### Icons and new miniapps
 
-Install icons with `pnpm add @lucide/vue`. The generated theme stylesheet maps Wot's icon names (including `search`) to SVG masks built from this library. H5 and WeChat use the same glyphs and inherit their color from the component; no SVG DOM tags or Wot source patches are needed in the miniapp. Import the generated stylesheet after Wot's theme stylesheet. GitHub keeps its brand logo because Lucide v1 does not contain brand icons.
+Install icons with `pnpm add @lucide/vue`. `init` creates `scripts/lucide-icons.mjs`. Run `node scripts/lucide-icons.mjs Search House`, or `pnpm exec shadcn-uniapp icons Search House`, then import `Search` from `@/components/lucide/Search.vue`.
+
+Each generated component uses the official Lucide component on H5 and a `view` with an inline SVG mask on miniapps. It supports `size`, `color`, `stroke-width`, and an optional accessible `label`. Only requested icons and their license are copied. Official Lucide v1 aliases are supported. Existing files are protected; use the CLI's `--force` only to replace them. Regenerate after upgrading Lucide to refresh miniapp glyphs.
+
+Theme exports contain no icon assets or global Wot icon replacements. Wot's private internal icons keep their defaults. SVG DOM APIs, children, filters, and SVG animation are not polyfilled. WeChat compilation is checked; real-device rendering is not yet verified. GitHub keeps its brand logo because Lucide v1 does not contain brand icons.
 
 For a new uni-app miniapp, use **Tailwind CSS v4 + weapp-tailwindcss** with the [official uni-app Vite setup](https://tw.weapp.dev/zh-cn/docs/quick-start/frameworks/uni-app-vite). Preserve existing projects' styling system.

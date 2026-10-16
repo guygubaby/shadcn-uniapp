@@ -27,7 +27,7 @@ export const defaultProjectConfig = {
 }
 const configFile = 'shadcn-uniapp.json'
 
-function checkedPath(root: string, name: string): string {
+export function checkedPath(root: string, name: string): string {
   const full = resolve(root, name)
   const rel = relative(root, full)
   if (isAbsolute(name) || !rel || rel === '..' || rel.startsWith(`..${sep}`)) {
@@ -43,7 +43,7 @@ function checkedPath(root: string, name: string): string {
   return full
 }
 
-function writeFiles(
+export function writeFiles(
   root: string,
   files: Record<string, string>,
   force = false,
@@ -70,7 +70,7 @@ function writeFiles(
   return targets.map((file) => file.name)
 }
 
-function projectRoot(cwd: string) {
+export function projectRoot(cwd: string) {
   return realpathSync(resolve(cwd))
 }
 
@@ -133,6 +133,17 @@ export function initProject(cwd: string, preset: PresetName | ThemeConfig = 'zin
       [configFile]: JSON.stringify(config, null, 2) + '\n',
       [config.theme]: JSON.stringify(theme, null, 2) + '\n',
       [config.css]: generateThemeCss(theme),
+      'scripts/lucide-icons.mjs': `import { generateLucideIcons } from 'shadcn-uniapp/icons'
+import { fileURLToPath } from 'node:url'
+
+try {
+  const files = await generateLucideIcons(fileURLToPath(new URL('../', import.meta.url)), process.argv.slice(2))
+  console.log(files.join('\\n'))
+} catch (error) {
+  console.error(error.message)
+  process.exitCode = 1
+}
+`,
       [appPath]: nextApp,
     },
     force,

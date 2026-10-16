@@ -30,6 +30,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./icons": {
+      "types": "./dist/icons.d.ts",
+      "import": "./dist/icons.js"
     }
   },
   "files": [
@@ -44,7 +48,7 @@
     "node": ">=20.19.0"
   },
   "scripts": {
-    "build": "node ../../scripts/build-icons.mjs && tsdown",
+    "build": "tsdown && node ../../scripts/build-icons.mjs",
     "typecheck": "tsc --noEmit",
     "prepack": "pnpm build"
   },

@@ -75,7 +75,16 @@ export const blocks = [
     name: 'quick-actions',
     title: 'Quick actions',
     description: 'A familiar home screen shortcut grid.',
-    files: ['QuickActions.vue'],
+    files: [
+      'QuickActions.vue',
+      'CalendarDays.vue',
+      'FileText.vue',
+      'Mail.vue',
+      'Pencil.vue',
+      'UserRound.vue',
+      'LayoutGrid.vue',
+      'LUCIDE-LICENSE',
+    ],
   },
   {
     name: 'announcement-feed',
@@ -111,13 +120,13 @@ export const blocks = [
     name: 'survey-card',
     title: 'Survey invitation',
     description: 'A survey summary, deadline, and response action.',
-    files: ['SurveyCard.vue'],
+    files: ['SurveyCard.vue', 'CalendarDays.vue', 'LUCIDE-LICENSE'],
   },
   {
     name: 'document-list',
     title: 'Your documents',
     description: 'Document requirements, review states, and detail actions.',
-    files: ['DocumentList.vue'],
+    files: ['DocumentList.vue', 'FileText.vue', 'LUCIDE-LICENSE'],
   },
 ] as const
 

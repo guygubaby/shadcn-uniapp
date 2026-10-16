@@ -178,6 +178,26 @@ app.provide('shadcn-uniapp:translate', (message: string) => i18n.t(message))
 
 ### Icons and new miniapps
 
-Install icons with `pnpm add @lucide/vue`. The generated theme stylesheet maps Wot's icon names (including `search`) to SVG masks built from this library. H5 and WeChat use the same glyphs and inherit their color from the component; no SVG DOM tags or Wot source patches are needed in the miniapp. Import the generated stylesheet after Wot's theme stylesheet. GitHub keeps its brand logo because Lucide v1 does not contain brand icons.
+Install icons with `pnpm add @lucide/vue`. `init` creates a local generator script; request only the icons you need:
+
+```sh
+node scripts/lucide-icons.mjs Search House
+# Equivalent command, also available without running init:
+pnpm exec shadcn-uniapp icons Search House
+```
+
+```vue
+<script setup lang="ts">
+import Search from '@/components/lucide/Search.vue'
+</script>
+
+<template>
+  <Search :size="24" color="currentColor" :stroke-width="2" />
+</template>
+```
+
+Generated components use the official `@lucide/vue` component on H5 and a `view` with an inline SVG mask on miniapps. Size, color, stroke width and an optional accessible `label` share the same API. SVG shapes come from the installed Lucide v1 package, including its official aliases; no Wot icon-name mapping is generated. Existing files are protected unless `--force` is passed to the CLI. Regenerate with `--force` after upgrading Lucide to refresh the miniapp shapes.
+
+Theme exports contain no icon assets or global Wot icon replacements. Wot's private internal icons keep their library defaults. Arbitrary SVG DOM APIs, SVG children, filters, and SVG animation are outside this adapter's scope. WeChat compilation is checked; native rendering still needs real-device verification. GitHub keeps its brand logo because Lucide v1 does not contain brand icons. See [the rendering contract](docs/lucide-uniapp.md).
 
 For a new uni-app miniapp, use **Tailwind CSS v4 + weapp-tailwindcss** with the [official uni-app Vite setup](https://tw.weapp.dev/zh-cn/docs/quick-start/frameworks/uni-app-vite). Preserve existing projects' styling system.

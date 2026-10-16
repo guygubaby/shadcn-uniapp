@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { inject } from 'vue'
+import FileText from './FileText.vue'
 const t = inject<(text: unknown) => string>('shadcn-uniapp:translate', (text) => String(text ?? ''))
 
 defineProps<{
@@ -19,10 +20,10 @@ defineEmits<{ open: [id: string] }>()
       :key="document.id"
       :title="t(document.title)"
       :label="t(document.description)"
-      icon="file"
       is-link
       @click="$emit('open', document.id)"
     >
+      <template #prefix><FileText :size="20" /></template>
       <wd-tag
         :type="
           document.status === 'ready'

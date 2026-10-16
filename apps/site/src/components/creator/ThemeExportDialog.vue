@@ -23,7 +23,7 @@ const props = defineProps<{ theme: ThemeConfig }>()
 const json = computed(() => JSON.stringify(props.theme, null, 2) + '\n')
 const css = computed(() => generateThemeCss(props.theme))
 const install =
-  'pnpm add -D shadcn-uniapp sass\npnpm add @lucide/vue\npnpm exec shadcn-uniapp init --theme ./shadcn.theme.json'
+  'pnpm add -D shadcn-uniapp sass\npnpm add @lucide/vue\npnpm exec shadcn-uniapp init --theme ./shadcn.theme.json\nnode scripts/lucide-icons.mjs Search House'
 </script>
 
 <template>

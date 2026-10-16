@@ -49,6 +49,13 @@ describe('theme contract', () => {
     expect(css).toContain('max-width: var(--wot-calendar-view-day-height, 60px);')
   })
 
+  it('keeps icon assets out of exported theme styles', () => {
+    const css = generateThemeCss(createPreset())
+    expect(css).not.toContain('.wd-icon-')
+    expect(css).not.toContain('--sui-lucide-icon')
+    expect(css).not.toContain('data:image/svg+xml')
+  })
+
   it('rejects CSS injection, incompatible versions, unknown properties, and unsafe names', () => {
     const theme = createPreset()
     expect(() => parseTheme({ ...theme, radius: 100 })).toThrow()
