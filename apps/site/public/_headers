@@ -7,3 +7,5 @@
   Cache-Control: public, max-age=300
 /themes/*
   Cache-Control: public, max-age=300
+/preview/*
+  Cache-Control: public, max-age=0, must-revalidate
