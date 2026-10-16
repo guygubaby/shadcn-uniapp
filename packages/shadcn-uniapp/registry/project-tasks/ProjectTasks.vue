@@ -15,11 +15,13 @@ watch(completedRef, (value) => emit('change', value))
 </script>
 <template>
   <wd-progress :percentage="progress" />
+  <wd-gap :height="16" />
   <wd-checkbox-group v-model="completedRef" shape="square">
     <wd-checkbox v-for="task in tasks" :key="task.id" :name="task.id">{{
       t(task.label)
     }}</wd-checkbox>
   </wd-checkbox-group>
+  <wd-gap :height="16" />
   <wd-text
     :text="`${completedRef.length}/${tasks.length} ${t('tasks completed')}`"
     color="var(--sui-muted-foreground)"

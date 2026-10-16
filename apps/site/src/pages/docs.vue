@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { useI18n } from '@/lib/i18n'
-import { computed } from 'vue'
-import { useBrowserLocation } from '@vueuse/core'
+import { onMounted, onUnmounted, ref, useTemplateRef } from 'vue'
+import { useEventListener, useResizeObserver } from '@vueuse/core'
 
 import RevealText from '@/components/motion/RevealText.vue'
 import RevealBlock from '@/components/motion/RevealBlock.vue'
 import { Button } from '@/components/ui/button'
 import CodeBlock from '@/components/CodeBlock.vue'
+import AgentSetupDialog from '@/components/docs/AgentSetupDialog.vue'
 
 const { t } = useI18n()
-const locationRef = useBrowserLocation()
+const articleRef = useTemplateRef<HTMLElement>('article')
 const sections = [
   { id: 'requirements', label: 'Requirements' },
   { id: 'install', label: 'Installation' },
@@ -18,10 +19,30 @@ const sections = [
   { id: 'runtime', label: 'Runtime themes' },
   { id: 'limits', label: 'Scope' },
 ]
-const activeSection = computed(
-  () =>
-    sections.find((section) => `#${section.id}` === locationRef.value.hash)?.id ?? 'requirements',
-)
+const activeSectionRef = ref('requirements')
+let scrollFrame = 0
+function scheduleActiveSection() {
+  if (scrollFrame) return
+  scrollFrame = requestAnimationFrame(() => {
+    scrollFrame = 0
+    const targets = articleRef.value?.querySelectorAll<HTMLElement>('section[id]')
+    if (!targets?.length) return
+    const marker = Number.parseFloat(getComputedStyle(targets[0]!).scrollMarginTop) + 1
+    let active = targets[0]!.id
+    for (const section of targets) {
+      if (section.getBoundingClientRect().top <= marker) active = section.id
+    }
+    if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2)
+      active = targets[targets.length - 1]!.id
+    activeSectionRef.value = active
+  })
+}
+useEventListener(window, 'scroll', scheduleActiveSection, { passive: true })
+useEventListener(window, 'resize', scheduleActiveSection)
+useEventListener(window, 'hashchange', scheduleActiveSection)
+useResizeObserver(articleRef, scheduleActiveSection)
+onMounted(scheduleActiveSection)
+onUnmounted(() => cancelAnimationFrame(scrollFrame))
 const install =
   'pnpm add -D shadcn-uniapp sass\npnpm add @lucide/vue\npnpm exec shadcn-uniapp init --preset zinc'
 const icons = `import { lucideUniapp } from 'shadcn-uniapp/vite'
@@ -52,13 +73,13 @@ const vars = getWotThemeVars(config, 'dark')`
         as-child
         variant="navigation"
         class="justify-start lg:w-full"
-        :data-active="activeSection === section.id"
-        :aria-current="activeSection === section.id ? 'location' : undefined"
+        :data-active="activeSectionRef === section.id"
+        :aria-current="activeSectionRef === section.id ? 'location' : undefined"
       >
         <a :href="`#${section.id}`">{{ t(section.label) }}</a>
       </Button>
     </nav>
-    <article class="max-w-3xl min-w-0">
+    <article ref="article" class="max-w-3xl min-w-0">
       <h1 class="text-3xl font-semibold tracking-tight">
         <RevealText :text="t('Add a theme. Keep your components.')" />
       </h1>
@@ -104,6 +125,7 @@ const vars = getWotThemeVars(config, 'dark')`
       <RevealBlock
         ><section id="install" class="scroll-mt-25 border-t py-9">
           <h2 class="text-xl font-semibold">{{ t('Install and initialize') }}</h2>
+          <div class="mt-4"><AgentSetupDialog /></div>
           <p class="my-4 text-sm leading-7 text-muted-foreground">
             {{
               t(

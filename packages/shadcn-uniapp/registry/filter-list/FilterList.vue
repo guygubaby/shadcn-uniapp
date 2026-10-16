@@ -17,6 +17,7 @@ const filtered = computed(() => {
 
 <template>
   <wd-search v-model="queryRef" :placeholder="t('Search items')" hide-cancel />
+  <wd-gap :height="12" />
   <wd-cell-group v-if="filtered.length" border>
     <wd-cell
       v-for="item in filtered"

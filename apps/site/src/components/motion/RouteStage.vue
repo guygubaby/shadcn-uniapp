@@ -126,6 +126,10 @@ onUnmounted(() => {
     class="route-cover fixed inset-0 z-50"
     :class="!readyRef && 'bg-black/30'"
   >
-    <div ref="fill" class="absolute inset-0 origin-bottom bg-white" style="transform: scaleY(0)" />
+    <div
+      ref="fill"
+      class="absolute inset-0 origin-bottom bg-background"
+      style="transform: scaleY(0)"
+    />
   </div>
 </template>

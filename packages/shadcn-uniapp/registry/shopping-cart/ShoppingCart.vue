@@ -18,6 +18,7 @@ const totalCents = computed(() => quantityRef.value * props.item.priceCents)
     ><wd-tag type="success" variant="light">{{ t('On us') }}</wd-tag></wd-cell
   >
   <wd-cell :title="t('Total')" :value="`$${(totalCents / 100).toFixed(2)}`" />
+  <wd-gap :height="16" />
   <wd-button block @click="emit('checkout', { quantity: quantityRef, totalCents })">{{
     t('Review order')
   }}</wd-button>

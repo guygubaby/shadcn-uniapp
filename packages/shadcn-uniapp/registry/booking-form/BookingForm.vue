@@ -11,6 +11,7 @@ const guestsRef = ref(2)
 <template>
   <wd-calendar-view v-model="dateRef" :min-date="minDate" :max-date="maxDate" :panel-height="310" />
   <wd-cell :title="t('Guests')"><wd-input-number v-model="guestsRef" :min="1" :max="8" /></wd-cell>
+  <wd-gap :height="16" />
   <wd-button block @click="emit('reserve', { date: dateRef, guests: guestsRef })">{{
     t('Reserve a time')
   }}</wd-button>

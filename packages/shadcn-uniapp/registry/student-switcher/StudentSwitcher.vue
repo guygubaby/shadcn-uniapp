@@ -43,6 +43,7 @@ function select(id: string) {
           t('Selected')
         }}</wd-tag></wd-cell
       >
+      <wd-gap :height="16" />
       <wd-button block variant="plain" @click="popupRef = false">{{ t('Close') }}</wd-button>
     </view>
   </wd-popup>

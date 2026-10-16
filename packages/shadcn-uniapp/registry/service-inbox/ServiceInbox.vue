@@ -36,6 +36,7 @@ function markRead(id: string) {
       is-link
       @click="$emit('open', message.id)"
     />
+    <wd-gap :height="12" />
     <wd-button
       v-if="!message.read && !readIdsRef.includes(message.id)"
       size="small"

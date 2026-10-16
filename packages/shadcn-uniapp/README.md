@@ -59,3 +59,5 @@ H5 uses the official Lucide component unchanged. Miniapp builds and watch mode a
 Theme exports contain no icon assets or global Wot icon replacements. Wot's private internal icons keep their defaults. SVG DOM APIs, children, filters, and SVG animation are not polyfilled. WeChat compilation is checked; real-device rendering is not yet verified. GitHub keeps its brand logo because Lucide v1 does not contain brand icons.
 
 For a new uni-app miniapp, use **Tailwind CSS v4 + weapp-tailwindcss** with the [official uni-app Vite setup](https://tw.weapp.dev/zh-cn/docs/quick-start/frameworks/uni-app-vite). Preserve existing projects' styling system.
+
+Existing UnoCSS projects are also supported. Theme initialization preserves the existing utility framework. The website's AI setup entry can generate installation instructions for existing styling, Tailwind v4, or UnoCSS, with Lucide enabled or disabled.

@@ -37,10 +37,10 @@ const noticeRef = ref('')
     <GallerySection
       :title="t('Choices')"
       :description="t('CheckboxGroup, RadioGroup, Switch, Rate, and Slider.')"
-      ><wd-checkbox-group v-model="checksRef" shape="square"
+      ><wd-checkbox-group v-model="checksRef" shape="square" direction="horizontal" custom-class="sui-choice-group"
         ><wd-checkbox name="design">{{ t('Design') }}</wd-checkbox
         ><wd-checkbox name="code">{{ t('Development') }}</wd-checkbox></wd-checkbox-group
-      ><wd-radio-group v-model="radioRef" inline
+      ><wd-radio-group v-model="radioRef" direction="horizontal" custom-class="sui-choice-group"
         ><wd-radio value="daily">{{ t('Daily') }}</wd-radio
         ><wd-radio value="weekly">{{ t('Weekly') }}</wd-radio></wd-radio-group
       ><view class="gallery-inline"

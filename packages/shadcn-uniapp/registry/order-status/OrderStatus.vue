@@ -21,5 +21,6 @@ defineEmits<{ track: [] }>()
       :description="t(step.description)"
     />
   </wd-steps>
+  <wd-gap :height="16" />
   <wd-button block variant="plain" @click="$emit('track')">{{ t('Track package') }}</wd-button>
 </template>

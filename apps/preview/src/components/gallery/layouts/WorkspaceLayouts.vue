@@ -72,7 +72,7 @@ function sendMessage() {
       ><wd-input v-model="emailRef" :placeholder="t('you@example.com')" clearable
     /></wd-form-item>
     <wd-form-item :title="t('Your plan')"
-      ><wd-radio-group v-model="planRef"
+      ><wd-radio-group v-model="planRef" direction="horizontal" custom-class="sui-choice-group"
         ><wd-radio value="starter">{{ t('Starter') }}</wd-radio
         ><wd-radio value="pro">{{ t('Pro') }}</wd-radio></wd-radio-group
       ></wd-form-item

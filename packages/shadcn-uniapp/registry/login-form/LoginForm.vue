@@ -28,6 +28,7 @@ async function submit() {
       ><wd-input v-model="emailRef" :placeholder="t('you@example.com')" clearable
     /></wd-form-item>
   </wd-form>
+  <wd-gap :height="16" />
   <wd-button block :loading="loading" :disabled="loading" @click="submit">{{
     t('Continue with email')
   }}</wd-button>

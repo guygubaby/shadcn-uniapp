@@ -35,7 +35,7 @@ for (const block of blocks) {
         type: 'registry:block',
         dependencies: ['@wot-ui/ui@^2.3.2', '@lucide/vue@^1.57.0'],
         files: files.map((file) => ({ ...file, content: removePreviewI18n(file.content) })),
-        docs: 'Requires uni-app Vue 3, Wot UI 2.x easycom, Tailwind CSS v4 utilities, and a shadcn-uniapp theme. Miniapps need weapp-tailwindcss and lucideUniapp() from shadcn-uniapp/vite before uni() to adapt @lucide/vue imports (Vite 5 supported). This is not a desktop Reka component.',
+        docs: 'Requires uni-app Vue 3, Wot UI 2.x easycom, and a shadcn-uniapp theme. Preserve the project styling system: UnoCSS is supported; new projects may choose Tailwind CSS v4 + weapp-tailwindcss. Blocks importing @lucide/vue need lucideUniapp() from shadcn-uniapp/vite before uni() for miniapps (Vite 5 supported). This is not a desktop Reka component.',
       },
       null,
       2,

@@ -1,6 +1,20 @@
 export type UiLocale = 'zh-CN' | 'en-US'
 
 export const chineseMessages: Record<string, string> = {
+  'Set up with an AI agent': '交给 AI Agent 配置',
+  'Choose your setup, then paste the instructions into your coding agent in the target project.':
+    '选择配置后，将指令粘贴给目标项目中的编程 Agent 执行。',
+  'Styling system': '样式方案',
+  'Keep existing setup': '保留现有方案',
+  'Recommended for existing projects, including UnoCSS.': '推荐老项目使用，兼容已有 UnoCSS。',
+  'Tailwind CSS v4': 'Tailwind CSS v4',
+  'Use weapp-tailwindcss for uni-app targets.': '通过 weapp-tailwindcss 适配 uni-app。',
+  UnoCSS: 'UnoCSS',
+  'Use compatible uni-app presets and preserve existing versions.': '使用兼容的 uni-app 预设，保留已有版本。',
+  'Use Lucide icons': '使用 Lucide 图标',
+  'Automatically adapt named imports with the Vite 5 plugin.': '通过 Vite 5 插件自动适配图标导入。',
+  'Agent instructions': 'Agent 配置指令',
+  'Copy agent instructions': '复制 Agent 配置指令',
   '$15,000 goal': '目标 $15,000',
   '$37,500 goal': '目标 $37,500',
   '$48.00 each': '每本 $48.00',

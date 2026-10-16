@@ -21,11 +21,12 @@ const frequencyRef = ref('weekly')
     /></wd-cell>
   </wd-cell-group>
   <wd-form-item :title="t('Summary frequency')"
-    ><wd-radio-group v-model="frequencyRef" inline
+    ><wd-radio-group v-model="frequencyRef" direction="horizontal" custom-class="sui-choice-group"
       ><wd-radio value="daily">{{ t('Daily') }}</wd-radio
       ><wd-radio value="weekly">{{ t('Weekly') }}</wd-radio></wd-radio-group
     ></wd-form-item
   >
+  <wd-gap :height="16" />
   <wd-button
     block
     @click="

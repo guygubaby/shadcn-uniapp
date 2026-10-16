@@ -7,7 +7,7 @@ Reference: [Cuberto](https://cuberto.com/), adapted to this product with the exi
 | Masked words                        | RevealText     | Initial and route entry; observed nonzero word translation during entry             | Readable static words             |
 | Content reveals                     | RevealBlock    | Once in view, coordinated with route readiness                                      | Immediate content                 |
 | Rising fill and rolling label       | MarketingLink  | Hover and keyboard focus                                                            | Immediate feedback                |
-| White route cover and outgoing lift | RouteStage     | Bottom-up cover, covered swap, opacity reveal; observed intermediate scale and lift | Direct navigation after Vue patch |
+| Theme-colored route cover and outgoing lift | RouteStage     | Bottom-up cover follows the site background in light / dark mode; covered swap and opacity reveal | Direct navigation after Vue patch |
 | Flexible rule                       | ElasticDivider | Fine pointer; observed curved SVG path and release                                  | Straight rule                     |
 | Pointer follower                    | SiteCursor     | Fine pointer on marketing routes; observed position and opacity                     | Hidden; native pointer retained   |
 | Block change                        | Blocks page    | Local reveal without reloading the iframe                                           | Immediate content                 |
@@ -42,4 +42,4 @@ The shared ThemeToggle uses a 650ms circular View Transition originating at the 
 
 Observed in the production build: dark and light intermediate circle radii around 855px; icon rotation matrix was nonidentity; iframe mode was already dark at reveal start. Enter-key switching and a repeated click settled with the expected mode and aria-busy=false. Reduced motion switched directly, without a transition marker, and the preview followed. Two acknowledgement tests cover wrong origin / source / mode, listener cleanup and timeout.
 
-The route backdrop is present only while covering the outgoing page. During the incoming reveal it is already transparent; the white fill alone fades out. Browser samples confirmed a 30% black outgoing backdrop and an incoming white-fill opacity of .803 above a fully opaque new page, followed by no cover, inert state, or scroll lock.
+The route backdrop is present only while covering the outgoing page. During the incoming reveal it is already transparent; only the fill fades out. The fill uses the site's background token, staying white in light mode and dark in dark mode. Earlier browser samples confirmed a 30% black outgoing backdrop and an incoming fill opacity of .803 above a fully opaque new page, followed by no cover, inert state, or scroll lock.

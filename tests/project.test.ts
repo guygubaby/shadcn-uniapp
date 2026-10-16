@@ -87,6 +87,24 @@ describe('safe source installation', () => {
     expect(readFileSync(join(root, 'src/theme/shadcn.scss'), 'utf8')).toBe('user owned')
   })
 
+  it('preserves an existing UnoCSS setup when installing and regenerating the theme', () => {
+    const root = project()
+    const files = {
+      'uno.config.ts':
+        "export default { presets: ['existing-uni-preset'], shortcuts: { page: 'p-4' } }",
+      'vite.config.ts': 'export default { plugins: [uni(), UnoCSS()] }',
+      'pnpm-lock.yaml': 'existing lockfile',
+    }
+    for (const [name, content] of Object.entries(files)) writeFileSync(join(root, name), content)
+    initProject(root)
+    generateProjectTheme(root)
+    for (const [name, content] of Object.entries(files))
+      expect(readFileSync(join(root, name), 'utf8')).toBe(content)
+    expect(readFileSync(join(root, 'src/theme/shadcn.scss'), 'utf8')).not.toMatch(
+      /@tailwind|weapp-tailwindcss|@import/,
+    )
+  })
+
   it('rejects traversal and symlink output paths', () => {
     const root = project()
     initProject(root)

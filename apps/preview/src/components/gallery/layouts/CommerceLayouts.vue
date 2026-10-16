@@ -26,7 +26,7 @@ const transactions = [
     :description="t('Choose when your balance is ready to move.')"
   >
     <wd-form-item :title="t('Preferred currency')"
-      ><wd-radio-group v-model="currencyRef" inline
+      ><wd-radio-group v-model="currencyRef" direction="horizontal" custom-class="sui-choice-group"
         ><wd-radio value="usd">{{ t('USD') }}</wd-radio
         ><wd-radio value="eur">{{ t('EUR') }}</wd-radio></wd-radio-group
       ></wd-form-item

@@ -38,6 +38,7 @@ async function save() {
       <wd-switch v-model="notificationsRef" />
     </wd-form-item>
   </wd-form>
+  <wd-gap :height="16" />
   <wd-button type="primary" block :loading="loading" :disabled="loading" @click="save">{{
     t('Save preferences')
   }}</wd-button>

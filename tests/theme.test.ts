@@ -47,6 +47,11 @@ describe('theme contract', () => {
     )
     expect(css).toContain('aspect-ratio: 1;')
     expect(css).toContain('max-width: var(--wot-calendar-view-day-height, 60px);')
+    expect(css).toContain('.sui-choice-group {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px;')
+    expect(css).toContain('--wot-radio-horizontal-margin: 0;')
+    expect(css).toContain('--wot-checkbox-horizontal-margin: 0;')
+    expect(getWotThemeVars(createPreset()).switchSize).toBe('20px')
+    expect(getWotThemeVars({ ...createPreset(), density: 'compact' }).switchSize).toBe('18px')
   })
 
   it('keeps icon assets out of exported theme styles', () => {

@@ -219,6 +219,7 @@ export function getThemeVariables(
     '--wot-switch-color-inactive-bg': c.mutedForeground,
     '--wot-switch-color-inactive-icon': c.primaryForeground,
     '--wot-switch-color-inner-inactive-text': c.primaryForeground,
+    '--wot-switch-size': config.density === 'compact' ? '18px' : '20px',
     '--wot-button-radius-main': radius,
     '--wot-button-height-medium': config.density === 'compact' ? '32px' : '40px',
     '--wot-button-height-large': config.density === 'compact' ? '40px' : '48px',
@@ -315,6 +316,19 @@ export function getWotThemeVars(
 
 export const componentThemeCss = `.wd-checkbox--vertical + .wd-checkbox--vertical {
   margin-top: 8px;
+}
+
+.sui-choice-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  --wot-radio-horizontal-margin: 0;
+  --wot-checkbox-horizontal-margin: 0;
+}
+
+.sui-choice-group .wd-radio,
+.sui-choice-group .wd-checkbox {
+  max-width: 100%;
 }
 
 .wd-cell.wd-form-item > .wd-cell__wrapper:not(.wd-cell__wrapper--vertical) {

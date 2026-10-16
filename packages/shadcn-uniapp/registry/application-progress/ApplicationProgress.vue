@@ -22,5 +22,6 @@ defineEmits<{ continue: [] }>()
       :title="t(step.title)"
       :description="t(step.description)"
   /></wd-steps>
+  <wd-gap :height="16" />
   <wd-button block @click="$emit('continue')">{{ t('Continue application') }}</wd-button>
 </template>

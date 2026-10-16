@@ -15,6 +15,7 @@ const commentRef = ref('')
     :maxlength="240"
     show-word-limit
   />
+  <wd-gap :height="16" />
   <wd-button
     block
     :disabled="ratingRef < 1"

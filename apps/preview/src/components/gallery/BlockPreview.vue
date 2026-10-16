@@ -168,118 +168,100 @@ function notice(message: string) {
     :title="t(item.title)"
     :description="t(item.description)"
   >
-    <ProfileCard
-      v-if="block === 'profile-card'"
-      name="Bryce"
-      :description="t('Design & Development')"
-      @edit="notice('Profile editing is ready for your app.')"
-    />
-    <SettingsForm
-      v-else-if="block === 'settings-form'"
-      email="hello@example.com"
-      @save="notice('Preferences validated and saved locally.')"
-    />
-    <FilterList
-      v-else-if="block === 'filter-list'"
-      :items="projects"
-      @select="notice('Selection updated locally.')"
-    />
-    <LoginForm
-      v-else-if="block === 'login-form'"
-      @submit="notice('Email validated. No sign-in email was sent.')"
-    />
-    <NotificationSettings
-      v-else-if="block === 'notification-settings'"
-      @save="notice('Notification preferences saved locally.')"
-    />
-    <TeamMembers
-      v-else-if="block === 'team-members'"
-      :members="members"
-      @invite="notice('Your demo invitation is ready.')"
-      @manage="notice('Selection updated locally.')"
-    />
-    <ShoppingCart
-      v-else-if="block === 'shopping-cart'"
-      :item="{ name: 'Everyday notebook', priceCents: 4800 }"
-      :quantity="2"
-      @checkout="notice('Demo order reviewed. No order was placed.')"
-    />
-    <OrderStatus
-      v-else-if="block === 'order-status'"
-      order-number="ST-2048"
-      expected-date="Friday"
-      :active="2"
-      :steps="delivery"
-      @track="notice('Your demo package is on schedule.')"
-    />
-    <BookingForm
-      v-else-if="block === 'booking-form'"
-      :min-date="dates.min"
-      :max-date="dates.max"
-      :date="dates.selected"
-      @reserve="notice('Demo reservation selected.')"
-    />
-    <FeedbackForm
-      v-else-if="block === 'feedback-form'"
-      @submit="notice('Thanks for your demo review.')"
-    />
-    <ProjectTasks
-      v-else-if="block === 'project-tasks'"
-      :tasks="tasks"
-      :completed="['tokens', 'components']"
-    />
-    <StatsCard
-      v-else-if="block === 'stats-card'"
-      :label="t('Monthly active members')"
-      value="12,480"
-      change="+24.5%"
-      :progress="72"
-    />
-    <QuickActions
-      v-else-if="block === 'quick-actions'"
-      :actions="actions"
-      @select="notice('Selection updated locally.')"
-    />
-    <AnnouncementFeed
-      v-else-if="block === 'announcement-feed'"
-      :sections="announcements"
-      @open="notice('Your announcement is ready to connect to a detail page.')"
-    />
-    <EventAgenda
-      v-else-if="block === 'event-agenda'"
-      :events="events"
-      @open="notice('Your event details are ready to explore.')"
-    />
-    <StudentSwitcher
-      v-else-if="block === 'student-switcher'"
-      :students="students"
-      @select="notice('Student updated locally.')"
-    />
-    <ApplicationProgress
-      v-else-if="block === 'application-progress'"
-      applicant="Alex Taylor"
-      program="Grade 5 · Autumn intake"
-      :active="2"
-      :steps="application"
-      @continue="notice('Your next step is to choose a campus visit.')"
-    />
-    <ServiceInbox
-      v-else-if="block === 'service-inbox'"
-      :messages="messages"
-      @open="notice('Message detail action selected.')"
-      @read="notice('Message marked as read in this preview.')"
-    />
-    <SurveyCard
-      v-else-if="block === 'survey-card'"
-      :title="t('Your voice matters')"
-      :description="t('Help shape next term\'s family activities.')"
-      deadline="October 24"
-      @start="notice('Your survey is ready to open.')"
-    />
-    <DocumentList
-      v-else-if="block === 'document-list'"
-      :documents="documents"
-      @open="notice('Document detail action selected. No file was downloaded.')"
-    />
+    <view
+      ><ProfileCard
+        v-if="block === 'profile-card'"
+        name="Bryce"
+        :description="t('Design & Development')"
+        @edit="notice('Profile editing is ready for your app.')" />
+      <SettingsForm
+        v-else-if="block === 'settings-form'"
+        email="hello@example.com"
+        @save="notice('Preferences validated and saved locally.')" />
+      <FilterList
+        v-else-if="block === 'filter-list'"
+        :items="projects"
+        @select="notice('Selection updated locally.')" />
+      <LoginForm
+        v-else-if="block === 'login-form'"
+        @submit="notice('Email validated. No sign-in email was sent.')" />
+      <NotificationSettings
+        v-else-if="block === 'notification-settings'"
+        @save="notice('Notification preferences saved locally.')" />
+      <TeamMembers
+        v-else-if="block === 'team-members'"
+        :members="members"
+        @invite="notice('Your demo invitation is ready.')"
+        @manage="notice('Selection updated locally.')" />
+      <ShoppingCart
+        v-else-if="block === 'shopping-cart'"
+        :item="{ name: 'Everyday notebook', priceCents: 4800 }"
+        :quantity="2"
+        @checkout="notice('Demo order reviewed. No order was placed.')" />
+      <OrderStatus
+        v-else-if="block === 'order-status'"
+        order-number="ST-2048"
+        expected-date="Friday"
+        :active="2"
+        :steps="delivery"
+        @track="notice('Your demo package is on schedule.')" />
+      <BookingForm
+        v-else-if="block === 'booking-form'"
+        :min-date="dates.min"
+        :max-date="dates.max"
+        :date="dates.selected"
+        @reserve="notice('Demo reservation selected.')" />
+      <FeedbackForm
+        v-else-if="block === 'feedback-form'"
+        @submit="notice('Thanks for your demo review.')" />
+      <ProjectTasks
+        v-else-if="block === 'project-tasks'"
+        :tasks="tasks"
+        :completed="['tokens', 'components']" />
+      <StatsCard
+        v-else-if="block === 'stats-card'"
+        :label="t('Monthly active members')"
+        value="12,480"
+        change="+24.5%"
+        :progress="72" />
+      <QuickActions
+        v-else-if="block === 'quick-actions'"
+        :actions="actions"
+        @select="notice('Selection updated locally.')" />
+      <AnnouncementFeed
+        v-else-if="block === 'announcement-feed'"
+        :sections="announcements"
+        @open="notice('Your announcement is ready to connect to a detail page.')" />
+      <EventAgenda
+        v-else-if="block === 'event-agenda'"
+        :events="events"
+        @open="notice('Your event details are ready to explore.')" />
+      <StudentSwitcher
+        v-else-if="block === 'student-switcher'"
+        :students="students"
+        @select="notice('Student updated locally.')" />
+      <ApplicationProgress
+        v-else-if="block === 'application-progress'"
+        applicant="Alex Taylor"
+        program="Grade 5 · Autumn intake"
+        :active="2"
+        :steps="application"
+        @continue="notice('Your next step is to choose a campus visit.')" />
+      <ServiceInbox
+        v-else-if="block === 'service-inbox'"
+        :messages="messages"
+        @open="notice('Message detail action selected.')"
+        @read="notice('Message marked as read in this preview.')" />
+      <SurveyCard
+        v-else-if="block === 'survey-card'"
+        :title="t('Your voice matters')"
+        :description="t('Help shape next term\'s family activities.')"
+        deadline="October 24"
+        @start="notice('Your survey is ready to open.')" />
+      <DocumentList
+        v-else-if="block === 'document-list'"
+        :documents="documents"
+        @open="notice('Document detail action selected. No file was downloaded.')"
+    /></view>
   </GallerySection>
 </template>
