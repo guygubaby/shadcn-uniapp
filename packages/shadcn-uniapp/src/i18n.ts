@@ -13,6 +13,9 @@ export const chineseMessages: Record<string, string> = {
   'Use compatible uni-app presets and preserve existing versions.':
     '使用兼容的 uni-app 预设，保留已有版本。',
   'Use Lucide icons': '使用 Lucide 图标',
+  Recommended: '推荐',
+  'Recommended across your project for a consistent icon style.':
+    '建议在整个项目统一使用 Lucide，保持图标风格一致。',
   'Automatically adapt named imports with the Vite 5 plugin.': '通过 Vite 5 插件自动适配图标导入。',
   'Agent instructions': 'Agent 配置指令',
   'Copy agent instructions': '复制 Agent 配置指令',
