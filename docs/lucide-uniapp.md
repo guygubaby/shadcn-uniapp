@@ -1,6 +1,6 @@
 # Lucide components for uni-app
 
-The implementation stays inside shadcn-uniapp instead of publishing another package. `init` installs a project-local generator entry point. `shadcn-uniapp icons Search House` also works independently of `init`. Both use the consumer's installed `@lucide/vue`, generate only requested `.vue` files, and preserve existing files unless explicitly forced.
+The implementation stays inside shadcn-uniapp instead of publishing another package. `init --icons Search,House` creates the theme and requested icons in one preflighted operation, and installs a project-local generator entry point. `shadcn-uniapp icons Search House` also works independently of `init`. Both use the consumer's installed `@lucide/vue`, generate only requested `.vue` files, and preserve existing files unless explicitly forced.
 
 ## Rendering contract
 

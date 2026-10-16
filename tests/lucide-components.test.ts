@@ -12,6 +12,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, expect, it } from 'vitest'
 import { createLucideIconSources, generateLucideIcons } from '../packages/shadcn-uniapp/src/icons'
+import { initProject } from '../packages/shadcn-uniapp/src/project'
 
 const directories: string[] = []
 afterEach(() =>
@@ -62,4 +63,22 @@ it('adds icons incrementally, preflights conflicts, and refuses symlink output p
   const other = project()
   symlinkSync(other, output, 'dir')
   await expect(generateLucideIcons(root, ['Search'])).rejects.toThrow('symlink')
+})
+
+it('initializes icons with the theme atomically, without changing files on a conflict', async () => {
+  const root = project()
+  writeFileSync(
+    join(root, 'package.json'),
+    JSON.stringify({ dependencies: { '@wot-ui/ui': '^2.3.2' } }),
+  )
+  const sources = await createLucideIconSources(root, ['Search'])
+  mkdirSync(join(root, 'src/components/lucide'), { recursive: true })
+  writeFileSync(join(root, 'src/components/lucide/Search.vue'), 'user owned')
+  expect(() => initProject(root, 'zinc', false, sources)).toThrow('already exists')
+  expect(existsSync(join(root, 'shadcn-uniapp.json'))).toBe(false)
+  rmSync(join(root, 'src/components/lucide/Search.vue'))
+  initProject(root, 'zinc', false, sources)
+  expect(readFileSync(join(root, 'src/components/lucide/Search.vue'), 'utf8')).toContain(
+    'SourceIcon',
+  )
 })

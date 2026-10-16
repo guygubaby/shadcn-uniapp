@@ -23,7 +23,7 @@ const activeSection = computed(
     sections.find((section) => `#${section.id}` === locationRef.value.hash)?.id ?? 'requirements',
 )
 const install =
-  'pnpm add -D shadcn-uniapp sass\npnpm add @lucide/vue\npnpm exec shadcn-uniapp init --preset zinc\nnode scripts/lucide-icons.mjs Search House'
+  'pnpm add -D shadcn-uniapp sass\npnpm add @lucide/vue\npnpm exec shadcn-uniapp init --preset zinc --icons Search,House'
 const local =
   'pnpm install\npnpm --filter shadcn-uniapp build\nnode /path/to/shadcn-uniapp/packages/shadcn-uniapp/dist/cli.js init --cwd /path/to/your-project'
 const app = `<style lang="scss">\n@use '@wot-ui/ui/styles/theme/index.scss' as *;\n@use './theme/shadcn.scss' as *;\n</style>`

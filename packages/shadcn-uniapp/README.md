@@ -52,7 +52,7 @@ MIT. Independent community project, not an official Wot or shadcn product.
 
 ### Icons and new miniapps
 
-Install icons with `pnpm add @lucide/vue`. `init` creates `scripts/lucide-icons.mjs`. Run `node scripts/lucide-icons.mjs Search House`, or `pnpm exec shadcn-uniapp icons Search House`, then import `Search` from `@/components/lucide/Search.vue`.
+Install icons with `pnpm add @lucide/vue`. Run `pnpm exec shadcn-uniapp init --icons Search,House` to initialize the theme and icon components together. `init` also creates `scripts/lucide-icons.mjs` for later additions. Run `node scripts/lucide-icons.mjs Camera`, or `pnpm exec shadcn-uniapp icons Camera`, then import generated components from `@/components/lucide/`.
 
 Each generated component uses the official Lucide component on H5 and a `view` with an inline SVG mask on miniapps. It supports `size`, `color`, `stroke-width`, and an optional accessible `label`. Only requested icons and their license are copied. Official Lucide v1 aliases are supported. Existing files are protected; use the CLI's `--force` only to replace them. Regenerate after upgrading Lucide to refresh miniapp glyphs.
 

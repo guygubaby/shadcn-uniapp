@@ -181,9 +181,11 @@ app.provide('shadcn-uniapp:translate', (message: string) => i18n.t(message))
 Install icons with `pnpm add @lucide/vue`. `init` creates a local generator script; request only the icons you need:
 
 ```sh
-node scripts/lucide-icons.mjs Search House
+pnpm exec shadcn-uniapp init --icons Search,House
+# Add more icons later:
+node scripts/lucide-icons.mjs Camera
 # Equivalent command, also available without running init:
-pnpm exec shadcn-uniapp icons Search House
+pnpm exec shadcn-uniapp icons Camera
 ```
 
 ```vue

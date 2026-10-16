@@ -101,7 +101,12 @@ function requireWot2(root: string) {
   }
 }
 
-export function initProject(cwd: string, preset: PresetName | ThemeConfig = 'zinc', force = false) {
+export function initProject(
+  cwd: string,
+  preset: PresetName | ThemeConfig = 'zinc',
+  force = false,
+  iconSources: Record<string, string> = {},
+) {
   const root = projectRoot(cwd)
   requireWot2(root)
   if (typeof preset === 'string' && !(presetNames as readonly string[]).includes(preset))
@@ -133,6 +138,12 @@ export function initProject(cwd: string, preset: PresetName | ThemeConfig = 'zin
       [configFile]: JSON.stringify(config, null, 2) + '\n',
       [config.theme]: JSON.stringify(theme, null, 2) + '\n',
       [config.css]: generateThemeCss(theme),
+      ...Object.fromEntries(
+        Object.entries(iconSources).map(([name, content]) => [
+          `${appPath === 'App.vue' ? '' : 'src/'}components/lucide/${name}`,
+          content,
+        ]),
+      ),
       'scripts/lucide-icons.mjs': `import { generateLucideIcons } from 'shadcn-uniapp/icons'
 import { fileURLToPath } from 'node:url'
 
