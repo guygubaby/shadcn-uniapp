@@ -1,6 +1,6 @@
 # 手动发布 npm
 
-第一版 npm 包：`shadcn-uniapp@0.1.0`。官网和 H5 预览是 private workspace，不发布。维护者自行登录和发布；仓库不存储 npm token。本次实现不会代为执行 publish。
+`shadcn-uniapp@0.1.0` 已于 2026 年 10 月 16 日发布到 npm。以下流程用于后续版本；请先修改版本号，再进行检查、打包和发布。官网和 H5 预览是 private workspace，不发布；仓库不存储 npm token。
 
 ## 1. 安装并检查
 
@@ -19,7 +19,7 @@ pnpm pack:release
 tar -tzf artifacts/shadcn-uniapp-0.1.0.tgz
 ```
 
-应包含 package.json、README、LICENSE、dist 中的 JS/声明文件及 registry 下的三个 Vue Block；不应包含网站源码、测试夹具、node_modules 或环境变量。
+应包含 package.json、README、许可证、dist 中的运行时 / CLI / Vite 插件及声明文件、registry 下的 20 个 Vue Block；不应包含网站源码、测试夹具、node_modules 或环境变量。下文的 0.1.0 为路径示例，请替换为待发布的新版本号。
 
 ## 3. 由你登录 npm
 
@@ -29,7 +29,7 @@ npm whoami --registry https://registry.npmjs.org
 npm view shadcn-uniapp name version --registry https://registry.npmjs.org
 ```
 
-首次发布前，最后一条若返回 E404，表示查询时尚无同名公开包，不代表名称已为你保留。若已有同名包且你无发布权限，应先改为你有权限的名称，再同步 CLI 安装文档。不要把登录凭证、OTP 或 token 发到聊天或提交到 Git。
+确认登录账号具有 shadcn-uniapp 的发布权限。不要把登录凭证、OTP 或 token 发到聊天或提交到 Git。
 
 ## 4. 只发布这个包
 

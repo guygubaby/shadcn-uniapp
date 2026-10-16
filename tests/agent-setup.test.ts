@@ -7,7 +7,8 @@ it('keeps legacy UnoCSS and project changes by default, with optional Lucide int
   expect(prompt).toContain('preserve uncommitted changes')
   expect(prompt).toContain('lucideUniapp')
   expect(prompt).toContain('before uni()')
-  expect(prompt).toContain('If unpublished, build and pack')
+  expect(prompt).toContain('pnpm add -D shadcn-uniapp sass')
+  expect(prompt).not.toMatch(/unpublished|temporary directory|\.tgz/)
 })
 
 it('separates UnoCSS and Tailwind choices, and skips Lucide installation when disabled', () => {

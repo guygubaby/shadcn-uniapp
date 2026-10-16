@@ -85,16 +85,8 @@ const steps = [
             <CodeBlock
               code="pnpm dlx shadcn-uniapp init"
               :label="t('In your existing Wot UI 2.x project')"
-            />
-          </div> </RevealBlock
-        ><RevealBlock :delay="0.45"
-          ><p class="mt-3 text-xs leading-6 text-muted-foreground">
-            {{ t('Until the npm release, use the CLI built from this repository.') }}
-            <RouterLink to="/docs" class="underline underline-offset-4">{{
-              t('Local setup')
-            }}</RouterLink>
-          </p>
-        </RevealBlock>
+            /></div
+        ></RevealBlock>
       </div>
       <ScrollSurface
         ><RevealBlock card :delay="0.25"

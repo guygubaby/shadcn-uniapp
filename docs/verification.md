@@ -3,6 +3,11 @@
 Verified on October 15, 2026. These are deliberately separate levels of evidence,
 not a claim of exhaustive real-device support.
 
+Release update, October 16, 2026: `shadcn-uniapp@0.1.0` is published on npm.
+The package has been downloaded from the public registry, and its runtime API,
+20-block registry and Vite plugin exports have been verified. The website is live
+on Cloudflare Pages at https://shadcn-uniapp.guygubaby.top.
+
 ## Automated checks
 
 - Initial GitHub commit `e374d46`: the Check workflow passed tests, type checks,
@@ -38,10 +43,6 @@ preview switch and no multi-column responsive component layout.
 
 ## Still required
 
-- Production Cloudflare Pages deployment, custom-domain HTTPS, and live route/asset
-  verification remain pending. A selected repository or target DNS name is not
-  evidence that the website is deployed.
 - Real-device WeChat and mobile-browser checks for gestures, media playback,
   canvas/signature/crop export, font loading, and portal positioning.
 - Upload is intentionally disabled. No file-upload service is tested.
-- The maintainer still needs to publish npm; this task does not run `publish`.

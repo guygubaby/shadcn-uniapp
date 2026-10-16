@@ -32,8 +32,8 @@ export function createAgentSetupPrompt(
     ),
     `2. ${styling[options.styling]}`,
     say(
-      '3. 使用 pnpm。先检查 shadcn-uniapp 是否已发布或可从项目本地包获取；可用时安装 shadcn-uniapp 与 sass。尚未发布时从 https://github.com/guygubaby/shadcn-uniapp 在临时目录构建并打包，再将本地 tgz 安装进目标项目，不要假设 npm 已可用。静态主题用 devDependency；若应用使用运行时 getWotThemeVars，则将 shadcn-uniapp 作为运行时依赖。',
-      '3. Use pnpm. Check whether shadcn-uniapp is published or available locally before installing it and sass. If unpublished, build and pack https://github.com/guygubaby/shadcn-uniapp in a temporary directory and install the local tgz into the target project; do not assume npm availability. Use a dev dependency for static themes and a runtime dependency when the application uses getWotThemeVars.',
+      '3. 使用 pnpm，从 npm 安装：pnpm add -D shadcn-uniapp sass。静态主题用 devDependency；若应用使用运行时 getWotThemeVars，则将 shadcn-uniapp 作为运行时依赖。',
+      '3. Use pnpm to install from npm: pnpm add -D shadcn-uniapp sass. Use a dev dependency for static themes and a runtime dependency when the application uses getWotThemeVars.',
     ),
     options.lucide
       ? say(

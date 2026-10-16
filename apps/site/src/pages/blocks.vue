@@ -109,7 +109,7 @@ watch(selected, async () => {
         </div>
         <CodeBlock
           :code="`pnpm dlx shadcn-uniapp add ${selected.name}`"
-          :label="t('Run init first. Available after the npm release.')"
+          :label="t('Run init first.')"
         />
         <RevealBlock card :delay="0.15" class="mt-6"
           ><div class="mx-auto w-full max-w-sm rounded-lg border p-6">

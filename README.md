@@ -25,9 +25,9 @@ Consumer projects: Vue 3 + uni-app, npm-installed `@wot-ui/ui` **2.x** (verified
 
 `uni_modules` installation and Wot v1 are not supported by this CLI. Do not upgrade your component library just to run it. H5 previews do not establish WeChat real-device compatibility.
 
-## Use after npm publication
+## Installation
 
-The npm package is prepared but is published manually by the maintainer. Until publication, use the local CLI described below.
+`shadcn-uniapp@0.1.0` is available on npm.
 
 ```sh
 pnpm add -D shadcn-uniapp sass
@@ -104,13 +104,6 @@ pnpm dev
 ```sh
 pnpm check
 pnpm pack:release
-```
-
-Try the unpublished CLI against an existing Wot v2 project:
-
-```sh
-node packages/shadcn-uniapp/dist/cli.js init --cwd /absolute/path/to/your-project
-node packages/shadcn-uniapp/dist/cli.js add profile-card --cwd /absolute/path/to/your-project
 ```
 
 ## Repository
@@ -203,4 +196,4 @@ Theme exports contain no icon assets or global Wot icon replacements. Wot's priv
 
 For a new uni-app miniapp, use **Tailwind CSS v4 + weapp-tailwindcss** with the [official uni-app Vite setup](https://tw.weapp.dev/zh-cn/docs/quick-start/frameworks/uni-app-vite). Preserve existing projects' styling system.
 
-Existing UnoCSS projects are supported without a migration. The theme does not install or configure a utility framework. Docs includes **Set up with an AI agent**: choose existing styling, Tailwind v4, or UnoCSS, optionally enable Lucide, and copy project-aware installation instructions into your coding agent. The instructions preserve existing versions and uncommitted files, handle unpublished-package installation, and require H5 / miniapp verification.
+Existing UnoCSS projects are supported without a migration. The theme does not install or configure a utility framework. Docs includes **Set up with an AI agent**: choose existing styling, Tailwind v4, or UnoCSS, optionally enable Lucide, and copy project-aware installation instructions into your coding agent. The instructions install from npm, preserve existing versions and uncommitted files, and require H5 / miniapp verification.

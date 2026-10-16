@@ -71,9 +71,7 @@ import { Search } from '@lucide/vue'`
           </div>
           <p class="rounded-lg border bg-muted/50 p-3 text-xs leading-6 text-muted-foreground">
             {{
-              t(
-                'The npm package is not published yet. Until the release, use the built local CLI described in the docs. Custom fonts use system fallbacks on WeChat unless you load the font yourself.',
-              )
+              t('Custom fonts use system fallbacks on WeChat unless you load the font yourself.')
             }}
           </p>
         </TabsContent>

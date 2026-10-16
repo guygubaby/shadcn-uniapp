@@ -10,7 +10,8 @@ export const chineseMessages: Record<string, string> = {
   'Tailwind CSS v4': 'Tailwind CSS v4',
   'Use weapp-tailwindcss for uni-app targets.': '通过 weapp-tailwindcss 适配 uni-app。',
   UnoCSS: 'UnoCSS',
-  'Use compatible uni-app presets and preserve existing versions.': '使用兼容的 uni-app 预设，保留已有版本。',
+  'Use compatible uni-app presets and preserve existing versions.':
+    '使用兼容的 uni-app 预设，保留已有版本。',
   'Use Lucide icons': '使用 Lucide 图标',
   'Automatically adapt named imports with the Vite 5 plugin.': '通过 Vite 5 插件自动适配图标导入。',
   'Agent instructions': 'Agent 配置指令',
@@ -81,8 +82,8 @@ export const chineseMessages: Record<string, string> = {
   'Add source-owned blocks': '添加源码区块',
   'Add to bag': '加入购物袋',
   'Adjust quantities and review a total calculated in cents.': '调整数量，以整数分计算订单总额。',
-  'After the npm release, run these commands. The init command creates your config and theme JSON / SCSS, then appends the theme imports to App.vue. It does not install dependencies or patch Wot.':
-    'npm 发布后即可运行这些命令。init 会创建配置和主题 JSON / SCSS，并向 App.vue 添加主题导入，不会安装依赖或修改 Wot 源码。',
+  'Install from npm and initialize your project. The init command creates your config and theme JSON / SCSS, then appends the theme imports to App.vue. It does not install dependencies or patch Wot.':
+    '从 npm 安装并初始化项目。init 会创建配置和主题 JSON / SCSS，并向 App.vue 添加主题导入，不会安装依赖或修改 Wot 源码。',
   'All components': '全部组件',
   'All items': '全部项目',
   'All required files are ready': '所有必需文件已就绪',
@@ -476,7 +477,7 @@ export const chineseMessages: Record<string, string> = {
   'Run generate to update the configured stylesheet.': '运行 generate 更新配置的样式文件。',
   'Run init before adding a block. Existing files are protected unless you explicitly pass --force. Your application handles business events.':
     '添加区块前请先运行 init。除非显式使用 --force，否则不会覆盖已有文件。业务事件由你的应用处理。',
-  'Run init first. Available after the npm release.': '请先运行 init。npm 发布后可用。',
+  'Run init first.': '请先运行 init。',
   'Runtime themes': '运行时主题',
   'Runtime themes and overlays': '运行时主题与弹层',
   'Same Wot components. A fresh expression.': '同样的 Wot 组件，全新的表达。',
@@ -570,10 +571,8 @@ export const chineseMessages: Record<string, string> = {
   'The initializer adds these imports to App.vue. An existing Wot theme import is not added again.':
     '初始化会向 App.vue 添加这些导入，已有的 Wot 主题导入不会重复添加。',
   'The little details, all in one place.': '每个小细节，都在这里。',
-  'The maintainer publishes to npm manually. Until then, clone the repository and use the local CLI:':
-    '维护者会手动发布 npm。在发布前，请克隆仓库并使用本地 CLI：',
-  'The npm package is not published yet. Until the release, use the built local CLI described in the docs. Custom fonts use system fallbacks on WeChat unless you load the font yourself.':
-    'npm 包尚未发布，请先使用文档中的本地 CLI。微信端的自定义字体会回退到系统字体，除非自行加载。',
+  'Custom fonts use system fallbacks on WeChat unless you load the font yourself.':
+    '微信端的自定义字体会回退到系统字体，除非自行加载。',
   'The preview could not start. Check your connection and make sure the H5 preview is built.':
     '预览启动失败，请检查网络并确认 H5 预览已经构建。',
   'The same generator powers the Creator, exported styles, and Wot preview. What you see is what you take with you.':
@@ -605,8 +604,6 @@ export const chineseMessages: Record<string, string> = {
   'UI and local interactions only. Connect save and selection events to your business logic.':
     '仅展示界面与本地交互，保存和选择事件需接入你的业务逻辑。',
   Undo: '撤销',
-  'Until the npm release, use the CLI built from this repository.':
-    'npm 发布前，请使用本仓库构建的 CLI。',
   'Upcoming events': '近期活动',
   Upload: '上传',
   'Upload JSON': '上传 JSON',

@@ -52,8 +52,6 @@ plugins: [lucideUniapp(), uni()]
 
 // Your component imports stay the same:
 import { Search } from '@lucide/vue'`
-const local =
-  'pnpm install\npnpm --filter shadcn-uniapp build\nnode /path/to/shadcn-uniapp/packages/shadcn-uniapp/dist/cli.js init --cwd /path/to/your-project'
 const app = `<style lang="scss">\n@use '@wot-ui/ui/styles/theme/index.scss' as *;\n@use './theme/shadcn.scss' as *;\n</style>`
 const block = `<script setup lang="ts">\nimport ProfileCard from '@/components/blocks/profile-card/ProfileCard.vue'\n<\/script>\n\n<template>\n  <ProfileCard\n    name="Bryce"\n    description="Design & Development"\n    @edit="openEditPage"\n  />\n</template>`
 const runtime = `import { getWotThemeVars } from 'shadcn-uniapp'
@@ -129,20 +127,12 @@ const vars = getWotThemeVars(config, 'dark')`
           <p class="my-4 text-sm leading-7 text-muted-foreground">
             {{
               t(
-                'After the npm release, run these commands. The init command creates your config and theme JSON / SCSS, then appends the theme imports to App.vue. It does not install dependencies or patch Wot.',
+                'Install from npm and initialize your project. The init command creates your config and theme JSON / SCSS, then appends the theme imports to App.vue. It does not install dependencies or patch Wot.',
               )
             }}
           </p>
           <CodeBlock :code="install" />
           <div class="mt-4"><CodeBlock :code="icons" label="vite.config.ts / icons" /></div>
-          <p class="my-4 text-sm leading-7 text-muted-foreground">
-            {{
-              t(
-                'The maintainer publishes to npm manually. Until then, clone the repository and use the local CLI:',
-              )
-            }}
-          </p>
-          <CodeBlock :code="local" />
           <p class="my-4 text-sm leading-7 text-muted-foreground">
             {{
               t(
