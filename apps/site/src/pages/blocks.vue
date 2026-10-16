@@ -112,10 +112,8 @@ watch(selected, async () => {
           :label="t('Run init first. Available after the npm release.')"
         />
         <RevealBlock card :delay="0.15" class="mt-6"
-          ><div class="rounded-lg border">
-            <div class="mx-auto max-w-lg">
-              <WotPreview :theme="theme" :mode="modeRef" :block="selected.name" />
-            </div>
+          ><div class="mx-auto w-full max-w-sm rounded-lg border pt-6">
+            <WotPreview :theme="theme" :mode="modeRef" :block="selected.name" />
           </div>
         </RevealBlock>
         <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
