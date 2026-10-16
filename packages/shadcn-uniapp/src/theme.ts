@@ -226,6 +226,7 @@ export function getThemeVariables(
     '--wot-tag-radius': `${Math.max(0, config.radius - 2)}px`,
     '--wot-cell-padding': config.density === 'compact' ? '10px 14px' : '14px 16px',
     '--wot-input-padding': '0 12px',
+    '--wot-textarea-padding': '12px',
     '--wot-input-bg': c.card,
     '--wot-input-inner-color': c.foreground,
     '--wot-input-inner-placeholder-color': c.mutedForeground,
@@ -360,6 +361,10 @@ export const componentThemeCss = `.wd-checkbox--vertical + .wd-checkbox--vertica
 
 .wd-cell.wd-form-item .wd-input.is-compact {
   padding: var(--wot-input-padding);
+}
+
+.wd-cell.wd-form-item .wd-textarea.is-compact {
+  padding: var(--wot-textarea-padding, 12px);
 }
 
 .wd-input:focus-within,
