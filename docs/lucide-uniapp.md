@@ -9,6 +9,26 @@ import { lucideUniapp } from 'shadcn-uniapp/vite'
 plugins: [lucideUniapp(), uni()]
 ```
 
+## Vite 5 CommonJS configuration
+
+Starting with 0.1.1, `shadcn-uniapp/vite` provides ESM and CommonJS entries and matching type declarations. The static import above works in `vite.config.ts` even when the consumer's package.json has no `"type": "module"`. Keep the project's existing module format and Vite version.
+
+Version 0.1.0 only provides an ESM entry. Until you upgrade, load it dynamically inside the existing config callback:
+
+```ts
+import { defineConfig } from 'vite'
+
+export default defineConfig(async () => {
+  const { lucideUniapp } = await import('shadcn-uniapp/vite')
+  return {
+    // Keep the other plugins and settings from your config.
+    plugins: [lucideUniapp(), uni()],
+  }
+})
+```
+
+`pnpm pack:release` checks the actual tarball with Vite 5.2.8 loading both a CommonJS `vite.config.ts` and an ESM `vite.config.mts`, then runs the miniapp import transform through each loaded plugin.
+
 Use normal named imports everywhere:
 
 ```vue

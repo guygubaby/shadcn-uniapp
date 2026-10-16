@@ -7,7 +7,7 @@ import { blocks } from './blocks'
 import { parseTheme, presetNames } from './theme'
 import type { PresetName } from './theme'
 
-const help = `shadcn-uniapp 0.1.0 — Wot UI 2.x themes and source blocks
+const help = `shadcn-uniapp 0.1.1 — Wot UI 2.x themes and source blocks
 
   shadcn-uniapp init [--preset ${presetNames.join('|')}]
   shadcn-uniapp init --theme ./shadcn.theme.json

@@ -13,7 +13,7 @@
     "typecheck": "pnpm --filter shadcn-uniapp build && node scripts/build-registry.mjs && pnpm -r typecheck",
     "check": "pnpm test && pnpm typecheck && pnpm build && pnpm build:weixin",
     "build:weixin": "pnpm --filter shadcn-uniapp build && node scripts/build-registry.mjs && pnpm --filter @shadcn-uniapp/preview build:weixin",
-    "pack:release": "pnpm --filter shadcn-uniapp pack --out artifacts/%s-%v.tgz"
+    "pack:release": "pnpm --filter shadcn-uniapp pack --out artifacts/%s-%v.tgz && node scripts/verify-vite-config.mjs"
   },
   "devDependencies": {
     "@types/node": "^24.10.0",

@@ -54,6 +54,8 @@ MIT. Independent community project, not an official Wot or shadcn product.
 
 Install icons with `pnpm add @lucide/vue`. Import `lucideUniapp` from `shadcn-uniapp/vite` and register `lucideUniapp()` before the existing `uni()` plugin. The plugin supports Vite 5. Keep ordinary imports such as `import { Search } from '@lucide/vue'`.
 
+The Vite plugin entry supports both ESM and CommonJS starting with 0.1.1, including static imports in `vite.config.ts` without changing the project's package.json module type. On 0.1.0, use `await import('shadcn-uniapp/vite')` inside an async Vite config callback when the config loads as CommonJS.
+
 H5 uses the official Lucide component unchanged. Miniapp builds and watch mode automatically adapt named icon imports to native `view` components with inline masks. Use `size`, `color`, and `stroke-width` for portable styling. Only imported icons and their license are cached in `src/shadcn-lucide/`; add `shadcn-lucide/` to `.gitignore`. Aliases and type-only imports are supported. No icon generation command is required.
 
 Theme exports contain no icon assets or global Wot icon replacements. Wot's private internal icons keep their defaults. SVG DOM APIs, children, filters, and SVG animation are not polyfilled. WeChat compilation is checked; real-device rendering is not yet verified. GitHub keeps its brand logo because Lucide v1 does not contain brand icons.

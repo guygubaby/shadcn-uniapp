@@ -177,6 +177,8 @@ import { lucideUniapp } from 'shadcn-uniapp/vite'
 plugins: [lucideUniapp(), uni()]
 ```
 
+Starting with 0.1.1, the plugin entry supports both ESM and CommonJS Vite configurations. Version 0.1.0 needs a dynamic import inside an async config callback for CommonJS projects; see [the compatibility notes](docs/lucide-uniapp.md#vite-5-commonjs-configuration).
+
 ```vue
 <script setup lang="ts">
 import { Search } from '@lucide/vue'
