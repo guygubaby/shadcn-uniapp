@@ -111,6 +111,7 @@ function share() {
 
 <template>
   <TooltipProvider :delay-duration="200">
+    <h1 class="sr-only">{{ t('Wot UI theme creator for uni-app') }}</h1>
     <div class="creator-workbench flex h-[calc(100dvh-3.5rem)] gap-4 p-3 lg:gap-6 lg:p-5 lg:pt-1">
       <Transition name="fade"
         ><button

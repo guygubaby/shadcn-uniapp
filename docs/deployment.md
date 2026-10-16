@@ -4,7 +4,7 @@
 
 目标域名：https://shadcn-uniapp.guygubaby.top
 
-本项目是静态 Vue SPA，H5 预览和 Registry 在同一次构建中生成，无业务后端、数据库或认证服务。
+本项目使用 Vue + Vite SSG，构建时预渲染官网正文与 SEO 元信息。交互界面仍由 Vue 驱动；H5 预览和 Registry 在同一次构建中生成，无业务后端、数据库或认证服务。
 
 ## 构建配置
 
@@ -24,7 +24,13 @@
 
 ## 路由和缓存
 
-站点提供 SPA fallback，支持直接刷新 /create、/creator、/blocks 和 /docs。/preview/index.html 为真实的隔离 H5 应用；/r/_.json 为静态源码 Registry；/themes/_ 为预生成主题。
+首页、/create、/blocks、/docs 与对应的 /en 英文页面都输出独立 HTML，包含标题、描述、canonical、hreflang、Open Graph 与 JSON-LD。语言切换保留查询参数和锚点；主题分享参数规范到无参数的 Creator URL。/creator 永久重定向到 /create。
+
+Cloudflare Pages 的 HTML 扩展名解析支持直接刷新这些地址。根目录 404.html 让未知地址返回真正的 404；不要添加覆盖全站的 200 SPA fallback。sitemap.xml 从同一页面配置生成，不伪造 lastmod。
+
+/preview/index.html 为真实的隔离 H5 应用；/r/_.json 为静态源码 Registry；/themes/_ 为预生成主题。它们不参与搜索索引。预览资源 URL 还包含 Tailwind 源码指纹，避免构建后处理生成的新 CSS 沿用旧文件名而命中浏览器旧缓存。
+
+运行 pnpm build 会自动检查生成 HTML 中的正文、元信息、结构化数据、站点地图和分享图。发布后可将 https://shadcn-uniapp.guygubaby.top/sitemap.xml 提交到已验证的 Google Search Console / Bing Webmaster Tools；网站归属验证凭证不写入仓库。
 
 自定义域名应使用 Cloudflare 项目的域名绑定流程配置，由平台管理 DNS 与 TLS。只操作 shadcn-uniapp.guygubaby.top，不修改已有其他站点或域名记录。
 

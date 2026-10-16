@@ -5,7 +5,10 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
 /r/*
   Cache-Control: public, max-age=300
+  X-Robots-Tag: noindex
 /themes/*
   Cache-Control: public, max-age=300
+  X-Robots-Tag: noindex
 /preview/*
   Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex

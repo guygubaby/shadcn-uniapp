@@ -18,7 +18,7 @@ import ThemeStory from '@/components/ThemeStory.vue'
 import ElasticDivider from '@/components/motion/ElasticDivider.vue'
 import ScrollSurface from '@/components/motion/ScrollSurface.vue'
 
-const { t } = useI18n()
+const { t, localePath } = useI18n()
 const presetRef = ref<PresetName>('zinc')
 const themeRef = shallowRef(createPreset())
 const { modeRef } = storeToRefs(useAppearanceStore())
@@ -76,7 +76,7 @@ const steps = [
           ><div class="mt-8 flex flex-wrap items-center gap-3">
             <MarketingLink to="/create" :label="t('Create a theme')" />
             <Button as-child variant="outline" size="lg"
-              ><RouterLink to="/docs">{{ t('Get started') }}</RouterLink></Button
+              ><RouterLink :to="localePath('/docs')">{{ t('Get started') }}</RouterLink></Button
             >
           </div></RevealBlock
         >
@@ -140,9 +140,9 @@ const steps = [
       <RevealBlock :delay="0.15"
         ><div class="flex flex-wrap gap-3 md:justify-end">
           <Button as-child variant="outline"
-            ><RouterLink to="/blocks">{{ t('Explore blocks') }}</RouterLink></Button
+            ><RouterLink :to="localePath('/blocks')">{{ t('Explore blocks') }}</RouterLink></Button
           ><Button as-child
-            ><RouterLink to="/create">{{ t('Open Creator') }}</RouterLink></Button
+            ><RouterLink :to="localePath('/create')">{{ t('Open Creator') }}</RouterLink></Button
           >
         </div></RevealBlock
       >

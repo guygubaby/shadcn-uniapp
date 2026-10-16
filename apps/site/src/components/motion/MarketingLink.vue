@@ -3,12 +3,12 @@ import { useI18n } from '@/lib/i18n'
 
 import { ArrowUpRight } from '@lucide/vue'
 
-const { t } = useI18n()
+const { t, localePath } = useI18n()
 defineProps<{ to: string; label: string }>()
 </script>
 <template>
   <RouterLink
-    :to="to"
+    :to="localePath(to)"
     :aria-label="t(label)"
     data-cursor="none"
     class="group relative isolate inline-flex h-12 items-center justify-center gap-5 overflow-hidden rounded-full border border-foreground px-6 text-sm font-semibold text-foreground transition-colors duration-500 hover:text-background focus-visible:text-background motion-reduce:transition-none"

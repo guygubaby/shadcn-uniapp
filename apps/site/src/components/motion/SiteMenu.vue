@@ -7,7 +7,7 @@ import { useI18n } from '@/lib/i18n'
 import ExpandPanel from './ExpandPanel.vue'
 
 defineProps<{ links: { to: string; label: string }[] }>()
-const { t } = useI18n()
+const { t, localePath } = useI18n()
 const route = useRoute()
 const id = useId()
 const openRef = ref(false)
@@ -53,7 +53,7 @@ watch(openRef, async (open) => {
           <RouterLink
             v-for="link in links"
             :key="link.to"
-            :to="link.to"
+            :to="localePath(link.to)"
             class="nav-link rounded-lg px-3 py-3 text-sm transition-colors hover:bg-muted"
             @click="openRef = false"
             >{{ t(link.label) }}</RouterLink

@@ -78,7 +78,7 @@ watch(selected, async () => {
 <template>
   <div class="mx-auto max-w-7xl px-5 py-10 lg:px-8">
     <h1 class="text-3xl font-semibold tracking-tight">
-      <RevealText :text="t('A head start. Not a black box.')" />
+      <RevealText :text="t('Mobile app blocks for uni-app')" />
     </h1>
     <p class="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
       <RevealText

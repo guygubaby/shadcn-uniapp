@@ -8,7 +8,7 @@ import RevealBlock from '@/components/motion/RevealBlock.vue'
 import RevealText from '@/components/motion/RevealText.vue'
 import ScrollSurface from '@/components/motion/ScrollSurface.vue'
 
-const { t } = useI18n()
+const { t, localePath } = useI18n()
 const steps = [
   {
     number: '01',
@@ -73,7 +73,7 @@ const facts = [
           </div>
           <RevealBlock :delay="0.25"
             ><Button as-child variant="secondary" size="lg" class="mt-10 rounded-full"
-              ><RouterLink to="/blocks"
+              ><RouterLink :to="localePath('/blocks')"
                 >{{ t('Explore the building blocks') }}<ArrowUpRight /></RouterLink></Button
           ></RevealBlock>
         </div>

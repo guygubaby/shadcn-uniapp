@@ -14,6 +14,7 @@ const props = withDefaults(
 )
 const frameRef = useTemplateRef<HTMLIFrameElement>('frame')
 const readyRef = ref(false)
+const mountedRef = ref(false)
 const failedRef = ref(false)
 let timer: ReturnType<typeof setTimeout> | undefined
 
@@ -53,6 +54,7 @@ watch(() => [props.theme, props.mode, props.block, props.canvas, localeRef.value
   deep: true,
 })
 onMounted(() => {
+  mountedRef.value = true
   window.addEventListener('message', receive)
   timer = setTimeout(() => {
     if (!readyRef.value) failedRef.value = true
@@ -67,8 +69,10 @@ onUnmounted(() => {
 <template>
   <div :class="cn('relative min-w-0', canvas && 'h-full')">
     <iframe
+      v-if="mountedRef"
       ref="frame"
       src="/preview/index.html#/"
+      loading="lazy"
       :title="t('Live Wot UI component preview')"
       :class="cn('block w-full border-0', canvas ? 'h-full min-h-0' : 'h-152')"
       @load="send"

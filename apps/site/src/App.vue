@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from '@/lib/i18n'
-const { t, localeRef } = useI18n()
+const { t, localeRef, localePath } = useI18n()
 
 import GitHubIcon from '@/components/GitHubIcon.vue'
 import { motion, useReducedMotion } from 'motion-v'
@@ -14,28 +14,28 @@ import SiteMenu from '@/components/motion/SiteMenu.vue'
 import ThemeToggle from '@/components/motion/ThemeToggle.vue'
 import { computed, provide, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useAppearanceStore } from '@/stores/appearance'
+import { basePath, localizedPath, routeLocale } from '@/lib/seo'
+import { usePageSeo } from '@/lib/usePageSeo'
 
 const route = useRoute()
+const router = useRouter()
+usePageSeo()
 const reducedRef = useReducedMotion()
 const { modeRef } = storeToRefs(useAppearanceStore())
 provide('shadcn-uniapp:translate', t)
 watch(
-  localeRef,
-  (locale) => {
-    document.documentElement.lang = locale
-    try {
-      localStorage.setItem('shadcn-uniapp:locale', locale)
-    } catch {
-      /* Keep the in-memory preference. */
-    }
+  () => route.path,
+  (path) => {
+    localeRef.value = routeLocale(path)
   },
   { immediate: true },
 )
 watch(
   () => route.query.mode,
   (mode) => {
+    if (import.meta.env.SSR) return
     if (mode === 'light' || mode === 'dark') modeRef.value = mode
   },
   { immediate: true },
@@ -43,6 +43,7 @@ watch(
 watch(
   modeRef,
   (mode) => {
+    if (import.meta.env.SSR) return
     document.documentElement.classList.toggle('dark', mode === 'dark')
     document.documentElement.style.colorScheme = mode
     document
@@ -51,22 +52,14 @@ watch(
   },
   { immediate: true },
 )
-const isCreator = computed(() => ['/create', '/creator'].includes(route.path))
-
-const pageTitles: Record<string, string> = {
-  '/': 'New theme. Same components.',
-  '/create': 'Create your theme',
-  '/creator': 'Theme Creator',
-  '/blocks': 'Source-owned blocks',
-  '/docs': 'Getting started',
+const isCreator = computed(() => ['/create', '/creator'].includes(basePath(route.path)))
+function switchLanguage() {
+  void router.replace({
+    path: localizedPath(route.path, localeRef.value === 'zh-CN' ? 'en-US' : 'zh-CN'),
+    query: route.query,
+    hash: route.hash,
+  })
 }
-watch(
-  () => [route.path, localeRef.value],
-  () => {
-    document.title = `${t(pageTitles[route.path] ?? 'Page not found')} — shadcn-uniapp`
-  },
-  { immediate: true },
-)
 
 const links = [
   { to: '/create', label: 'Create' },
@@ -87,7 +80,7 @@ const links = [
     class="scroll-progress pointer-events-none fixed inset-x-0 top-0 z-50 h-0.5 origin-left bg-foreground"
   />
   <motion.header
-    :initial="reducedRef ? false : { opacity: 0, y: -16 }"
+    :initial="false"
     :animate="{ opacity: 1, y: 0 }"
     :transition="{ duration: reducedRef ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] }"
     class="sticky top-0 z-40 bg-background/95 backdrop-blur-sm"
@@ -98,7 +91,7 @@ const links = [
       :class="!isCreator && 'max-w-7xl'"
     >
       <RouterLink
-        to="/"
+        :to="localePath('/')"
         class="group/brand flex min-w-0 items-center gap-2.5 text-base font-bold tracking-tight"
       >
         <BrandMark
@@ -110,22 +103,18 @@ const links = [
         <motion.span
           v-for="(link, index) in links"
           :key="link.to"
-          :initial="reducedRef ? false : { opacity: 0, y: -10 }"
+          :initial="false"
           :animate="{ opacity: 1, y: 0 }"
           :transition="{ duration: reducedRef ? 0 : 0.6, delay: reducedRef ? 0 : index * 0.08 }"
           ><RouterLink
-            :to="link.to"
+            :to="localePath(link.to)"
             class="nav-link text-sm font-medium text-muted-foreground hover:text-foreground aria-[current=page]:text-foreground"
             >{{ t(link.label) }}</RouterLink
           ></motion.span
         >
       </nav>
       <div class="flex items-center gap-2">
-        <Button
-          variant="ghost"
-          size="sm"
-          :aria-label="t('Switch language')"
-          @click="localeRef = localeRef === 'zh-CN' ? 'en-US' : 'zh-CN'"
+        <Button variant="ghost" size="sm" :aria-label="t('Switch language')" @click="switchLanguage"
           ><motion.span
             :key="localeRef"
             :initial="reducedRef ? false : { opacity: 0, y: 6 }"

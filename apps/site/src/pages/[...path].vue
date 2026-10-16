@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import RevealText from '@/components/motion/RevealText.vue'
 import RevealBlock from '@/components/motion/RevealBlock.vue'
 
-const { t } = useI18n()
+const { t, localePath } = useI18n()
 </script>
 <template>
   <section class="mx-auto max-w-3xl px-5 py-24">
@@ -19,9 +19,9 @@ const { t } = useI18n()
       </p>
       <div class="mt-7 flex gap-3">
         <Button as-child
-          ><RouterLink to="/">{{ t('Back to home') }}</RouterLink></Button
+          ><RouterLink :to="localePath('/')">{{ t('Back to home') }}</RouterLink></Button
         ><Button as-child variant="outline"
-          ><RouterLink to="/docs">{{ t('Read the docs') }}</RouterLink></Button
+          ><RouterLink :to="localePath('/docs')">{{ t('Read the docs') }}</RouterLink></Button
         >
       </div>
     </RevealBlock>

@@ -1,4 +1,4 @@
-import { inject, ref, watch } from 'vue'
+import { inject, onMounted, ref, watch } from 'vue'
 import type { InjectionKey, Ref } from 'vue'
 import { useInView, useReducedMotion } from 'motion-v'
 
@@ -9,7 +9,10 @@ export function useReveal(target: Ref<HTMLElement | null>) {
   const readyRef = inject(routeReadyKey, ref(true))
   const reducedRef = useReducedMotion()
   const inViewRef = useInView(target, { once: true, margin: '0px 0px -5% 0px' })
-  const shownRef = ref(false)
+  const shownRef = ref(true)
+  onMounted(() => {
+    if (!reducedRef.value && !inViewRef.value) shownRef.value = false
+  })
   watch(
     [readyRef, reducedRef, inViewRef],
     () => {

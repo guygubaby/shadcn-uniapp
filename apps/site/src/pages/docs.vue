@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import CodeBlock from '@/components/CodeBlock.vue'
 import AgentSetupDialog from '@/components/docs/AgentSetupDialog.vue'
 
-const { t } = useI18n()
+const { t, localePath } = useI18n()
 const articleRef = useTemplateRef<HTMLElement>('article')
 const sections = [
   { id: 'requirements', label: 'Requirements' },
@@ -37,12 +37,14 @@ function scheduleActiveSection() {
     activeSectionRef.value = active
   })
 }
-useEventListener(window, 'scroll', scheduleActiveSection, { passive: true })
-useEventListener(window, 'resize', scheduleActiveSection)
-useEventListener(window, 'hashchange', scheduleActiveSection)
+useEventListener('scroll', scheduleActiveSection, { passive: true })
+useEventListener('resize', scheduleActiveSection)
+useEventListener('hashchange', scheduleActiveSection)
 useResizeObserver(articleRef, scheduleActiveSection)
 onMounted(scheduleActiveSection)
-onUnmounted(() => cancelAnimationFrame(scrollFrame))
+onUnmounted(() => {
+  if (scrollFrame) cancelAnimationFrame(scrollFrame)
+})
 const install =
   'pnpm add -D shadcn-uniapp sass\npnpm add @lucide/vue\npnpm exec shadcn-uniapp init --preset zinc'
 const icons = `import { lucideUniapp } from 'shadcn-uniapp/vite'
@@ -79,7 +81,7 @@ const vars = getWotThemeVars(config, 'dark')`
     </nav>
     <article ref="article" class="max-w-3xl min-w-0">
       <h1 class="text-3xl font-semibold tracking-tight">
-        <RevealText :text="t('Add a theme. Keep your components.')" />
+        <RevealText :text="t('shadcn-uniapp documentation')" />
       </h1>
       <p class="mt-4 text-base leading-8 text-muted-foreground">
         <RevealText
@@ -168,7 +170,7 @@ const vars = getWotThemeVars(config, 'dark')`
           <CodeBlock code="pnpm exec shadcn-uniapp generate" />
           <div class="mt-4">
             <Button as-child variant="outline"
-              ><RouterLink to="/create">{{ t('Open Creator') }}</RouterLink></Button
+              ><RouterLink :to="localePath('/create')">{{ t('Open Creator') }}</RouterLink></Button
             >
           </div>
         </section></RevealBlock

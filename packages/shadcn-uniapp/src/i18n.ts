@@ -1,6 +1,9 @@
 export type UiLocale = 'zh-CN' | 'en-US'
 
 export const chineseMessages: Record<string, string> = {
+  'Wot UI theme creator for uni-app': 'uni-app Wot UI 在线主题生成器',
+  'Mobile app blocks for uni-app': 'uni-app 手机端与校园业务区块',
+  'shadcn-uniapp documentation': 'shadcn-uniapp 安装与使用文档',
   'Account & access': '账号与登录',
   'WeChat-first sign-in with an account-password alternative and privacy agreement.':
     '微信一键登录为主，可切换账号密码登录，包含隐私协议确认。',

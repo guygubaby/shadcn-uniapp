@@ -1,16 +1,41 @@
-import { createApp } from 'vue'
+import { ViteSSG } from 'vite-ssg'
 import { createPinia } from 'pinia'
 import { VueQueryPlugin } from '@tanstack/vue-query'
-import { createRouter, createWebHistory } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 import { routes } from 'vue-router/auto-routes'
 import '@fontsource-variable/manrope'
 import '@fontsource-variable/jetbrains-mono'
 import './style.css'
 import App from './App.vue'
+import { localizedPath } from './lib/seo'
 
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-  scrollBehavior: () => ({ top: 0, behavior: 'instant' }),
-})
-createApp(App).use(createPinia()).use(VueQueryPlugin).use(router).mount('#app')
+const localizedRoutes: RouteRecordRaw[] = routes.flatMap((route) =>
+  (['zh-CN', 'en-US'] as const).map((locale): RouteRecordRaw => {
+    const path = localizedPath(route.path, locale)
+    if (route.path === '/creator')
+      return {
+        path,
+        redirect: (to) => ({
+          path: localizedPath('/create', locale),
+          query: to.query,
+          hash: to.hash,
+        }),
+      }
+    return { ...route, path, name: `${String(route.name)}-${locale}` }
+  }),
+)
+
+export const createApp = ViteSSG(
+  App,
+  {
+    routes: localizedRoutes,
+    scrollBehavior: () => ({ top: 0, behavior: 'instant' }),
+  },
+  ({ app, isClient }) => {
+    app.use(createPinia()).use(VueQueryPlugin)
+    if (!isClient)
+      app.config.errorHandler = (error) => {
+        throw error
+      }
+  },
+)

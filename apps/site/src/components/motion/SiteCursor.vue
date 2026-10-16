@@ -2,6 +2,7 @@
 import { onMounted, onUnmounted, useTemplateRef, watch } from 'vue'
 import { useReducedMotion } from 'motion-v'
 import { useRoute } from 'vue-router'
+import { basePath } from '@/lib/seo'
 const cursorRef = useTemplateRef<HTMLDivElement>('cursor')
 const dotRef = useTemplateRef<HTMLDivElement>('dot')
 const reducedRef = useReducedMotion()
@@ -33,7 +34,7 @@ function move(event: PointerEvent) {
   if (
     reducedRef.value ||
     event.pointerType !== 'mouse' ||
-    ['/create', '/creator'].includes(route.path)
+    ['/create', '/creator'].includes(basePath(route.path))
   ) {
     hide()
     return

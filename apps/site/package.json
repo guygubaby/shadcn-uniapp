@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vue-tsc --noEmit && vite-ssg build && node ../../scripts/verify-seo.mjs",
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
@@ -12,6 +12,7 @@
     "@fontsource-variable/manrope": "^5.2.8",
     "@lucide/vue": "^1.57.0",
     "@tanstack/vue-query": "^5.104.3",
+    "@unhead/vue": "^2.1.17",
     "@vueuse/core": "^14.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -34,6 +35,7 @@
     "tailwindcss": "^4.3.3",
     "unplugin-vue-router": "^0.19.2",
     "vite": "8.3.4",
+    "vite-ssg": "28.3.0",
     "vue-tsc": "^3.2.5"
   }
 }
