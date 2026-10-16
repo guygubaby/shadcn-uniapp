@@ -29,6 +29,7 @@ it('preserves nested expressions, calculations, validation and component events'
     "message: 'Enter a valid email address'",
   )
   expect(source('profile-card', 'ProfileCard.vue')).toContain('@click="$emit(\'edit\')"')
+  expect(source('absence-request', 'AbsenceRequest.vue')).toContain(": 'Select dates',")
   const unrelated = "<script setup>const t = (value) => value; t('keep me')</script>"
   expect(removePreviewI18n(unrelated)).toBe(unrelated)
 })

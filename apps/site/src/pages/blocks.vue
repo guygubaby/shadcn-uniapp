@@ -25,6 +25,17 @@ const router = useRouter()
 const selected = computed(
   () => blocks.find((block) => block.name === route.query.name) ?? blocks[0],
 )
+const blockGroups = [
+  'Account & access',
+  'Shopping & services',
+  'International schools',
+  'More layouts',
+].map((title) => ({
+  title,
+  items: blocks.filter(
+    (block) => ('category' in block ? block.category : 'More layouts') === title,
+  ),
+}))
 const theme = createPreset()
 const { modeRef } = storeToRefs(useAppearanceStore())
 const sourceVisibleRef = ref(false)
@@ -73,7 +84,7 @@ watch(selected, async () => {
       <RevealText
         :text="
           t(
-            'Practical interfaces composed with Wot UI 2.x. Add the Vue source, then make it yours.',
+            'Mobile flows for everyday apps and school families. Built with Wot UI, ready to make yours.',
           )
         "
         :delay="0.1"
@@ -82,22 +93,42 @@ watch(selected, async () => {
     <div class="mt-10 grid items-start gap-8 lg:grid-cols-[220px_minmax(0,1fr)]">
       <nav
         :aria-label="t('Available blocks')"
-        class="flex flex-wrap gap-2 lg:sticky lg:top-20 lg:max-h-[calc(100dvh-7rem)] lg:flex-col lg:flex-nowrap lg:overflow-y-auto"
+        class="flex flex-col gap-6 lg:sticky lg:top-20 lg:max-h-[calc(100dvh-7rem)] lg:overflow-y-auto"
       >
-        <RevealBlock
-          v-for="(block, index) in blocks"
-          :key="block.name"
-          :delay="Math.min(index * 0.035, 0.28)"
-          class="lg:w-full"
-          ><Button
-            variant="navigation"
-            :data-active="selected.name === block.name"
-            class="w-full justify-start"
-            :aria-pressed="selected.name === block.name"
-            @click="router.replace({ query: { ...route.query, name: block.name } })"
-            >{{ t(block.title) }}</Button
-          ></RevealBlock
-        >
+        <template v-for="group in blockGroups" :key="group.title">
+          <details v-if="group.title === 'More layouts'" :open="!('category' in selected)">
+            <summary class="cursor-pointer px-3 text-xs font-medium text-muted-foreground">
+              {{ t(group.title) }}
+            </summary>
+            <div class="mt-3 flex flex-wrap gap-1 lg:flex-col">
+              <Button
+                v-for="block in group.items"
+                :key="block.name"
+                variant="navigation"
+                :data-active="selected.name === block.name"
+                class="justify-start lg:w-full"
+                :aria-pressed="selected.name === block.name"
+                @click="router.replace({ query: { ...route.query, name: block.name } })"
+                >{{ t(block.title) }}</Button
+              >
+            </div>
+          </details>
+          <div v-else>
+            <p class="mb-2 px-3 text-xs font-medium text-muted-foreground">{{ t(group.title) }}</p>
+            <div class="flex flex-wrap gap-1 lg:flex-col">
+              <Button
+                v-for="block in group.items"
+                :key="block.name"
+                variant="navigation"
+                :data-active="selected.name === block.name"
+                class="justify-start lg:w-full"
+                :aria-pressed="selected.name === block.name"
+                @click="router.replace({ query: { ...route.query, name: block.name } })"
+                >{{ t(block.title) }}</Button
+              >
+            </div>
+          </div>
+        </template>
       </nav>
       <section ref="block-stage" class="min-w-0">
         <div class="mb-5 flex flex-wrap items-center justify-between gap-4">

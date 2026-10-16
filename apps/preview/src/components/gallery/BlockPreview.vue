@@ -1,13 +1,21 @@
 <script setup lang="ts">
 import { usePreviewI18n } from '../../i18n'
 
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { blocks } from 'shadcn-uniapp'
 import GallerySection from './GallerySection.vue'
 import ProfileCard from '../../blocks/profile-card/ProfileCard.vue'
 import SettingsForm from '../../blocks/settings-form/SettingsForm.vue'
 import FilterList from '../../blocks/filter-list/FilterList.vue'
 import LoginForm from '../../blocks/login-form/LoginForm.vue'
+import VerifyCode from '../../blocks/verify-code/VerifyCode.vue'
+import UserCenter from '../../blocks/user-center/UserCenter.vue'
+import AddressList from '../../blocks/address-list/AddressList.vue'
+import CheckoutOrder from '../../blocks/checkout-order/CheckoutOrder.vue'
+import CampusVisit from '../../blocks/campus-visit/CampusVisit.vue'
+import AbsenceRequest from '../../blocks/absence-request/AbsenceRequest.vue'
+import TuitionInvoice from '../../blocks/tuition-invoice/TuitionInvoice.vue'
+import ClassAttendance from '../../blocks/class-attendance/ClassAttendance.vue'
 import NotificationSettings from '../../blocks/notification-settings/NotificationSettings.vue'
 import TeamMembers from '../../blocks/team-members/TeamMembers.vue'
 import ShoppingCart from '../../blocks/shopping-cart/ShoppingCart.vue'
@@ -29,6 +37,78 @@ const { t } = usePreviewI18n()
 const props = defineProps<{ block: string; bare?: boolean }>()
 const emit = defineEmits<{ notice: [message: string] }>()
 const item = computed(() => blocks.find((block) => block.name === props.block))
+const resendAtRef = ref(Date.now() + 30000)
+const addresses = [
+  {
+    id: 'home',
+    name: 'Alex Taylor',
+    phone: '+86 138 0000 2048',
+    address: '18 Garden Road, Pudong, Shanghai',
+    label: 'Home',
+    isDefault: true,
+  },
+  {
+    id: 'office',
+    name: 'Jamie Taylor',
+    phone: '+86 139 0000 1024',
+    address: '88 Century Avenue, Pudong, Shanghai',
+    label: 'Office',
+  },
+]
+const orderItems = [
+  {
+    id: 'notebook',
+    name: 'Everyday notebook',
+    variant: 'Sand · A5',
+    quantity: 2,
+    priceCents: 4800,
+  },
+  {
+    id: 'bottle',
+    name: 'Insulated water bottle',
+    variant: 'Graphite · 500 ml',
+    quantity: 1,
+    priceCents: 12900,
+  },
+]
+const visits = [
+  {
+    id: 'north-am',
+    campus: 'North campus',
+    date: 'October 24, 2026',
+    time: '09:30 – 10:30',
+    available: true,
+  },
+  {
+    id: 'south-pm',
+    campus: 'South campus',
+    date: 'October 24, 2026',
+    time: '14:00 – 15:00',
+    available: true,
+  },
+  {
+    id: 'north-next',
+    campus: 'North campus',
+    date: 'October 31, 2026',
+    time: '09:30 – 10:30',
+    available: false,
+  },
+]
+const schoolFees = [
+  { label: 'Term tuition', amountCents: 6800000 },
+  { label: 'School meals', amountCents: 320000 },
+  { label: 'School bus', amountCents: 280000 },
+]
+const classStudents = [
+  { id: 'alex', name: 'Alex Taylor', initials: 'AT', status: 'present' as const },
+  { id: 'jamie', name: 'Jamie Chen', initials: 'JC' },
+  { id: 'sophie', name: 'Sophie Wang', initials: 'SW' },
+  { id: 'leo', name: 'Leo Morgan', initials: 'LM', status: 'absent' as const },
+]
+function resendCode() {
+  resendAtRef.value = Date.now() + 30000
+  notice('Demo resend requested. No SMS was sent.')
+}
 const projects = [
   { id: 'studio', title: 'Studio website', description: 'A home for your latest work' },
   { id: 'system', title: 'Design system', description: 'One language, every interface' },
@@ -184,7 +264,72 @@ function notice(message: string) {
         @select="notice('Selection updated locally.')" />
       <LoginForm
         v-else-if="block === 'login-form'"
-        @submit="notice('Email validated. No sign-in email was sent.')" />
+        @submit="notice('Sign-in details validated. No account was signed in.')"
+        @wechat="notice('Connect this action to your WeChat sign-in flow.')"
+        @terms="notice('Open your terms of service.')"
+        @privacy="notice('Open your privacy policy.')"
+        @forgot-password="notice('Open your password recovery page.')" />
+      <VerifyCode
+        v-else-if="block === 'verify-code'"
+        destination="+86 138 **** 2048"
+        :resend-at="resendAtRef"
+        @verify="notice('Code format validated. Connect server verification before signing in.')"
+        @resend="resendCode"
+        @change-number="notice('Open your phone-number entry page.')" />
+      <UserCenter
+        v-else-if="block === 'user-center'"
+        name="Alex Taylor"
+        initials="AT"
+        account="alex.taylor@example.com"
+        :coupons="3"
+        :favorites="12"
+        :points="860"
+        @select="notice('Account shortcut selected. Connect your destination page.')" />
+      <AddressList
+        v-else-if="block === 'address-list'"
+        :addresses="addresses"
+        @select="notice('Delivery address selected locally.')"
+        @edit="notice('Open your address editor.')"
+        @add="notice('Open your new-address page.')" />
+      <CheckoutOrder
+        v-else-if="block === 'checkout-order'"
+        :items="orderItems"
+        :address="{
+          name: 'Alex Taylor',
+          phone: '+86 138 **** 2048',
+          detail: '18 Garden Road, Pudong, Shanghai',
+        }"
+        :discount-cents="2000"
+        @address="notice('Open your saved addresses.')"
+        @confirm="notice('Demo order reviewed. No order was placed.')" />
+      <CampusVisit
+        v-else-if="block === 'campus-visit'"
+        school="Horizon International School"
+        :sessions="visits"
+        @reserve="notice('Visit details validated. No reservation was sent.')"
+        @contact="notice('Open your admissions contact page.')" />
+      <AbsenceRequest
+        v-else-if="block === 'absence-request'"
+        :students="students"
+        :min-date="dates.min"
+        :max-date="dates.max"
+        @submit="notice('Absence request validated. No request was sent to school.')" />
+      <TuitionInvoice
+        v-else-if="block === 'tuition-invoice'"
+        invoice-id="INV-2026-T1-2048"
+        :student="students[0]!"
+        term="Autumn term 2026"
+        due-date="October 30, 2026"
+        :fees="schoolFees"
+        @pay="notice('Payment method selected. No payment was made.')"
+        @download="notice('Invoice action selected. No document was downloaded.')"
+        @contact="notice('Open your school finance contact page.')" />
+      <ClassAttendance
+        v-else-if="block === 'class-attendance'"
+        class-name="Grade 5 · Homeroom A"
+        date="October 16, 2026"
+        :students="classStudents"
+        @save="notice('Attendance saved in this preview. No school records were changed.')" />
       <NotificationSettings
         v-else-if="block === 'notification-settings'"
         @save="notice('Notification preferences saved locally.')" />

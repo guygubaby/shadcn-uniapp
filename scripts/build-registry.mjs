@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { removePreviewI18n } from './block-source.mjs'
 import {
@@ -11,6 +11,8 @@ import {
 
 const root = new URL('../', import.meta.url)
 const output = new URL('apps/site/public/r/', root)
+await rm(output, { recursive: true, force: true })
+await rm(new URL('apps/preview/src/blocks/', root), { recursive: true, force: true })
 await mkdir(output, { recursive: true })
 for (const block of blocks) {
   const files = await Promise.all(
