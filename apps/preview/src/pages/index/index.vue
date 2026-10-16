@@ -21,7 +21,7 @@ import { Locale, useConfigProvider } from '@wot-ui/ui'
 import { enableMouseTouch } from '../../lib/mouse-touch'
 // #endif
 
-const localeRef = ref<UiLocale>('zh-CN')
+const localeRef = ref<UiLocale>('en-US')
 const t = (text: unknown) => translate(text, localeRef.value)
 provide('shadcn-uniapp:translate', t)
 watch(
@@ -76,7 +76,7 @@ function receive(event: MessageEvent) {
     !blocks.some((block) => block.name === data.block)
   )
     return
-  localeRef.value = data.locale === 'en-US' ? 'en-US' : 'zh-CN'
+  localeRef.value = data.locale === 'zh-CN' ? 'zh-CN' : 'en-US'
   themeRef.value = result.data
   modeRef.value = data.mode
   blockRef.value = data.block

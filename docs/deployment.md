@@ -24,7 +24,7 @@
 
 ## 路由和缓存
 
-首页、/create、/blocks、/docs 与对应的 /en 英文页面都输出独立 HTML，包含标题、描述、canonical、hreflang、Open Graph 与 JSON-LD。语言切换保留查询参数和锚点；主题分享参数规范到无参数的 Creator URL。/creator 永久重定向到 /create。
+网站默认英文：首页、/create、/blocks、/docs 与对应的 /zh 中文页面都输出独立 HTML，包含标题、描述、canonical、hreflang、Open Graph 与 JSON-LD。x-default 指向英文。语言切换保留查询参数和锚点；主题分享参数规范到无参数的 Creator URL。/creator 永久重定向到 /create；旧 /en 地址永久重定向到对应的无前缀英文地址。
 
 Cloudflare Pages 的 HTML 扩展名解析支持直接刷新这些地址。根目录 404.html 让未知地址返回真正的 404；不要添加覆盖全站的 200 SPA fallback。sitemap.xml 从同一页面配置生成，不伪造 lastmod。
 

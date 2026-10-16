@@ -1,6 +1,6 @@
 export const siteUrl = 'https://shadcn-uniapp.guygubaby.top'
 export const seoPaths = ['/', '/create', '/blocks', '/docs'] as const
-export type SiteLocale = 'zh-CN' | 'en-US'
+export type SiteLocale = 'en-US' | 'zh-CN'
 
 const pages = {
   '/': {
@@ -54,16 +54,16 @@ const pages = {
 } as const
 
 export function routeLocale(path: string): SiteLocale {
-  return path === '/en' || path.startsWith('/en/') ? 'en-US' : 'zh-CN'
+  return path === '/zh' || path.startsWith('/zh/') ? 'zh-CN' : 'en-US'
 }
 
 export function basePath(path: string): string {
-  return (routeLocale(path) === 'en-US' ? path.slice(3) : path).replace(/\/$/, '') || '/'
+  return path.replace(/^\/(?:en|zh)(?=\/|$)/, '').replace(/\/$/, '') || '/'
 }
 
 export function localizedPath(path: string, locale: SiteLocale): string {
   const base = basePath(path)
-  return locale === 'en-US' ? `/en${base === '/' ? '' : base}` : base
+  return locale === 'zh-CN' ? `/zh${base === '/' ? '' : base}` : base
 }
 
 export function getPageSeo(path: string) {
@@ -88,9 +88,9 @@ export function getPageSeo(path: string) {
     indexable: Boolean(page),
     alternates: page
       ? [
-          { hreflang: 'zh-CN', href: `${siteUrl}${localizedPath(route, 'zh-CN')}` },
           { hreflang: 'en', href: `${siteUrl}${localizedPath(route, 'en-US')}` },
-          { hreflang: 'x-default', href: `${siteUrl}${localizedPath(route, 'zh-CN')}` },
+          { hreflang: 'zh-CN', href: `${siteUrl}${localizedPath(route, 'zh-CN')}` },
+          { hreflang: 'x-default', href: `${siteUrl}${localizedPath(route, 'en-US')}` },
         ]
       : [],
   }
@@ -107,7 +107,7 @@ export function getStructuredData(path: string) {
         '@id': `${siteUrl}/#website`,
         name: 'shadcn-uniapp',
         url: `${siteUrl}/`,
-        inLanguage: ['zh-CN', 'en'],
+        inLanguage: ['en', 'zh-CN'],
       },
       {
         '@type': 'SoftwareSourceCode',
@@ -138,7 +138,7 @@ export function getStructuredData(path: string) {
 export function createSitemap(): string {
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${seoPaths
     .flatMap((path) =>
-      (['zh-CN', 'en-US'] as const).map((locale) => {
+      (['en-US', 'zh-CN'] as const).map((locale) => {
         const page = getPageSeo(localizedPath(path, locale))
         return `  <url><loc>${page.canonical}</loc>${page.alternates.map((alternate) => `<xhtml:link rel="alternate" hreflang="${alternate.hreflang}" href="${alternate.href}" />`).join('')}</url>`
       }),

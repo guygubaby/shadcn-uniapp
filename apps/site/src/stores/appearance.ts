@@ -4,6 +4,6 @@ import type { ThemeMode, UiLocale } from 'shadcn-uniapp'
 
 export const useAppearanceStore = defineStore('appearance', () => {
   const modeRef = ref<ThemeMode>('light')
-  const localeRef = ref<UiLocale>('zh-CN')
+  const localeRef = ref<UiLocale>('en-US')
   return { modeRef, localeRef }
 })

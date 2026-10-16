@@ -33,7 +33,7 @@ describe('component gallery coverage', () => {
 
   it('declares the default language in both applications', () => {
     for (const path of ['apps/site/index.html', 'apps/preview/index.html']) {
-      expect(readFileSync(path, 'utf8')).toContain('lang="zh-CN"')
+      expect(readFileSync(path, 'utf8')).toContain('lang="en-US"')
     }
   })
 

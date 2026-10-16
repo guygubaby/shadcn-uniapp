@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 
 const output = new URL('../apps/site/dist/', import.meta.url)
-const paths = ['/', '/create', '/blocks', '/docs', '/en', '/en/create', '/en/blocks', '/en/docs']
+const paths = ['/', '/create', '/blocks', '/docs', '/zh', '/zh/create', '/zh/blocks', '/zh/docs']
 for (const path of paths) {
   const html = await readFile(
     new URL(path === '/' ? 'index.html' : `${path.slice(1)}.html`, output),
@@ -14,7 +14,7 @@ for (const path of paths) {
   assert.match(html, /<meta property="og:image" content="https:\/\/[^\"]+\/og-image.png"/)
   assert.equal((html.match(/rel="canonical"/g) ?? []).length, 1, `${path} must have one canonical`)
   assert.ok(html.includes(`rel="canonical" href="https://shadcn-uniapp.guygubaby.top${path}"`))
-  assert.match(html, path.startsWith('/en') ? /<html lang="en-US"/ : /<html lang="zh-CN"/)
+  assert.match(html, path.startsWith('/zh') ? /<html lang="zh-CN"/ : /<html lang="en-US"/)
   assert.match(html, /hreflang="x-default"/)
   assert.doesNotMatch(html, /noindex|<div id="app"><!----><\/div>/)
   const structured = html.match(

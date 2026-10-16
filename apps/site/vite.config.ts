@@ -8,9 +8,9 @@ import { createSitemap, localizedPath, seoPaths } from './src/lib/seo'
 
 const ssgOptions: ViteSSGOptions = {
   includedRoutes: () => [
-    ...seoPaths.flatMap((path) => [path, localizedPath(path, 'en-US')]),
+    ...seoPaths.flatMap((path) => [path, localizedPath(path, 'zh-CN')]),
     '/404',
-    '/en/404',
+    '/zh/404',
   ],
   formatting: 'minify',
   beastiesOptions: false,

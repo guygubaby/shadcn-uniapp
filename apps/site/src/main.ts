@@ -10,7 +10,7 @@ import App from './App.vue'
 import { localizedPath } from './lib/seo'
 
 const localizedRoutes: RouteRecordRaw[] = routes.flatMap((route) =>
-  (['zh-CN', 'en-US'] as const).map((locale): RouteRecordRaw => {
+  (['en-US', 'zh-CN'] as const).map((locale): RouteRecordRaw => {
     const path = localizedPath(route.path, locale)
     if (route.path === '/creator')
       return {
@@ -23,6 +23,16 @@ const localizedRoutes: RouteRecordRaw[] = routes.flatMap((route) =>
       }
     return { ...route, path, name: `${String(route.name)}-${locale}` }
   }),
+)
+localizedRoutes.push(
+  ...routes.map((route): RouteRecordRaw => ({
+    path: `/en${route.path === '/' ? '' : route.path}`,
+    redirect: (to) => ({
+      path: localizedPath(route.path === '/creator' ? '/create' : route.path, 'en-US'),
+      query: to.query,
+      hash: to.hash,
+    }),
+  })),
 )
 
 export const createApp = ViteSSG(
