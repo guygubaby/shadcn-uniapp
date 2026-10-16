@@ -7,3 +7,4 @@ artifacts
 node_modules
 docs/feasibility-research.md
 docs/implementation-evidence.md
+packages/shadcn-uniapp/src/lucide-icons.ts

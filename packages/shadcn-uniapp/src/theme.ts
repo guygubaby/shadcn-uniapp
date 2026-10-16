@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { lucideThemeCss } from './lucide-icons'
 
 const colorSchema = z.string().regex(/^#[\da-f]{6}$/i, 'Use a six-digit hex color, e.g. #18181b')
 
@@ -216,6 +217,7 @@ export function getThemeVariables(
     '--wot-button-height-large': config.density === 'compact' ? '40px' : '48px',
     '--wot-tag-radius': `${Math.max(0, config.radius - 2)}px`,
     '--wot-cell-padding': config.density === 'compact' ? '10px 14px' : '14px 16px',
+    '--wot-input-padding': '0 12px',
     '--wot-input-bg': c.card,
     '--wot-input-inner-color': c.foreground,
     '--wot-input-inner-placeholder-color': c.mutedForeground,
@@ -304,6 +306,53 @@ export function getWotThemeVars(
   )
 }
 
+export const componentThemeCss = `${lucideThemeCss}
+
+.wd-checkbox--vertical + .wd-checkbox--vertical {
+  margin-top: 8px;
+}
+
+.wd-cell.wd-form-item > .wd-cell__wrapper:not(.wd-cell__wrapper--vertical) {
+  align-items: center;
+}
+
+.wd-month__day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wd-month__day-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: var(--wot-calendar-view-day-height, 60px);
+  aspect-ratio: 1;
+  line-height: 1;
+}
+
+.wd-input,
+.wd-textarea {
+  box-sizing: border-box;
+  border: 1px solid var(--sui-border);
+  border-radius: var(--sui-radius);
+}
+
+.wd-cell.wd-form-item .wd-input.is-compact {
+  padding: var(--wot-input-padding);
+}
+
+.wd-input:focus-within,
+.wd-textarea:focus-within {
+  border-color: var(--sui-primary);
+}
+
+.wd-input.is-error,
+.wd-textarea.is-error {
+  border-color: var(--sui-destructive);
+}`
+
 export function generateThemeCss(input: ThemeConfig): string {
   const config = parseTheme(input)
   const declarations = (mode: ThemeMode) =>
@@ -315,6 +364,7 @@ export function generateThemeCss(input: ThemeConfig): string {
     `:root,\npage,\n.wot-theme-light,\n.wot-theme-${config.name},\n.wd-root-portal.wot-theme-light {\n${declarations('light')}\n}`,
     `.wot-theme-dark,\n.wot-theme-${config.name}-dark,\n.wd-root-portal.wot-theme-dark {\n${declarations('dark')}\n}`,
     'page {\n  background: var(--sui-background);\n  color: var(--sui-foreground);\n  font-family: var(--sui-font-body);\n}',
+    componentThemeCss,
     '',
   ].join('\n\n')
 }

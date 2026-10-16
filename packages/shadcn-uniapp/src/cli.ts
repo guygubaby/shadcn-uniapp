@@ -23,6 +23,8 @@ Options:
   --help             Show this message
 
 init preserves Wot APIs and adds a global theme import to App.vue.
+Install icons for your app: pnpm add @lucide/vue
+New miniapps: Tailwind CSS v4 + weapp-tailwindcss (uni-app Vite integration).
 generate reads shadcn-uniapp.json and regenerates only its CSS output.
 No dependency is installed, no Wot source is patched, and Wot v1 is not supported.
 `
@@ -70,7 +72,7 @@ try {
     process.stdout.write(`Done:\n${files.map((file) => `  ${file}`).join('\n')}\n`)
     if (command === 'init')
       process.stdout.write(
-        'Keep Wot easycom as configured. Sass is required. Edit the theme JSON, then run shadcn-uniapp generate.\n',
+        'Keep Wot easycom as configured. Sass is required.\nInstall icons: pnpm add @lucide/vue\nNew miniapps: Tailwind CSS v4 + weapp-tailwindcss. The generated stylesheet includes Lucide replacements for Wot icons.\nEdit the theme JSON, then run shadcn-uniapp generate.\n',
       )
   }
 } catch (error) {

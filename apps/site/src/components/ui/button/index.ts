@@ -8,6 +8,8 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
+        navigation:
+          'border border-transparent text-muted-foreground hover:bg-muted hover:text-foreground data-[active=true]:border-foreground/10 data-[active=true]:bg-foreground/8 data-[active=true]:font-semibold data-[active=true]:text-foreground focus-visible:border-transparent focus-visible:ring-0 focus-visible:inset-ring-2 focus-visible:inset-ring-foreground/45',
         default: 'bg-primary text-primary-foreground hover:bg-primary/90',
         destructive:
           'bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',

@@ -8,6 +8,8 @@ Shadcn-inspired themes and source-owned blocks for **Wot UI 2.x + uni-app**.
 
 In an existing Vue 3 / uni-app project with npm-installed `@wot-ui/ui` 2.x, Wot easycom and Sass:
 
+Blocks use Tailwind CSS v4 utility classes. Configure Tailwind CSS v4 in your project; for uni-app miniapps, use the [weapp-tailwindcss Vite integration](https://tw.weapp.dev/zh-cn/docs/quick-start/frameworks/uni-app-vite).
+
 ```sh
 pnpm add -D shadcn-uniapp sass
 pnpm exec shadcn-uniapp init --preset zinc
@@ -47,3 +49,9 @@ Pass `themeVars` to Wot ConfigProvider with `theme="dark"`. The adapter emits co
 Verified token adapter for Wot UI 2.3.2. No Wot v1 or uni_modules CLI adapter, no native App target, and no full desktop shadcn-vue compatibility. H5 preview is not WeChat real-device verification. Existing business color overrides may need adjustment.
 
 MIT. Independent community project, not an official Wot or shadcn product.
+
+### Icons and new miniapps
+
+Install icons with `pnpm add @lucide/vue`. The generated theme stylesheet maps Wot's icon names (including `search`) to SVG masks built from this library. H5 and WeChat use the same glyphs and inherit their color from the component; no SVG DOM tags or Wot source patches are needed in the miniapp. Import the generated stylesheet after Wot's theme stylesheet. GitHub keeps its brand logo because Lucide v1 does not contain brand icons.
+
+For a new uni-app miniapp, use **Tailwind CSS v4 + weapp-tailwindcss** with the [official uni-app Vite setup](https://tw.weapp.dev/zh-cn/docs/quick-start/frameworks/uni-app-vite). Preserve existing projects' styling system.

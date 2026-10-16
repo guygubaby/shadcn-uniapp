@@ -1,7 +1,9 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
+import { removePreviewI18n } from './block-source.mjs'
 import {
   blocks,
+  componentThemeCss,
   createPreset,
   generateThemeCss,
   presetNames,
@@ -31,9 +33,9 @@ for (const block of blocks) {
         title: block.title,
         description: block.description,
         type: 'registry:block',
-        dependencies: ['@wot-ui/ui@^2.3.2'],
-        files,
-        docs: 'Requires uni-app Vue 3, Wot UI 2.x easycom, and a shadcn-uniapp theme. This is not a desktop Reka component.',
+        dependencies: ['@wot-ui/ui@^2.3.2', '@lucide/vue@^1.57.0'],
+        files: files.map((file) => ({ ...file, content: removePreviewI18n(file.content) })),
+        docs: 'Requires uni-app Vue 3, Wot UI 2.x easycom, Tailwind CSS v4 utilities, and a shadcn-uniapp theme. Miniapps need weapp-tailwindcss. This is not a desktop Reka component.',
       },
       null,
       2,
@@ -48,6 +50,7 @@ for (const block of blocks) {
 }
 const themes = new URL('apps/site/public/themes/', root)
 await mkdir(themes, { recursive: true })
+await writeFile(new URL('apps/preview/src/theme.scss', root), componentThemeCss)
 for (const preset of presetNames) {
   const theme = createPreset(preset)
   await writeFile(new URL(`${preset}.json`, themes), JSON.stringify(theme, null, 2) + '\n')

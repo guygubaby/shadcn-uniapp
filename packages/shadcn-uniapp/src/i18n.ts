@@ -745,6 +745,8 @@ export const chineseMessages: Record<string, string> = {
   'No account is created.': '不会创建账户。',
   'No file was downloaded.': '不会下载文件。',
   'All themes': '全部主题',
+  'Keep your Wot easycom and Sass setup. Install @lucide/vue for icons. New miniapps should use Tailwind CSS v4 with weapp-tailwindcss.':
+    '保留 Wot easycom 与 Sass 配置，安装 @lucide/vue 图标库。新小程序项目建议使用 Tailwind CSS v4 + weapp-tailwindcss。',
   'Copied to clipboard': '已复制到剪贴板',
   'Clipboard access is unavailable. Select and copy the text manually.':
     '无法访问剪贴板，请手动选中文字并复制。',

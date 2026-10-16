@@ -2,7 +2,7 @@
 import { useI18n } from '@/lib/i18n'
 const { t, localeRef } = useI18n()
 
-import { GitBranch } from '@lucide/vue'
+import GitHubIcon from '@/components/GitHubIcon.vue'
 import { motion, useReducedMotion } from 'motion-v'
 import { Toaster } from 'vue-sonner'
 import { Button } from '@/components/ui/button'
@@ -141,7 +141,7 @@ const links = [
             target="_blank"
             rel="noopener noreferrer"
             :aria-label="t('Source on GitHub')"
-            ><GitBranch
+            ><GitHubIcon
           /></a>
         </Button>
         <SiteMenu :links="links" />

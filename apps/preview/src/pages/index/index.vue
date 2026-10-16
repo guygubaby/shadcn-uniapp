@@ -17,6 +17,9 @@ import ComponentGallery from '../../components/gallery/ComponentGallery.vue'
 import enUS from '@wot-ui/ui/locale/lang/en-US'
 import zhCN from '@wot-ui/ui/locale/lang/zh-CN'
 import { Locale, useConfigProvider } from '@wot-ui/ui'
+// #ifdef H5
+import { enableMouseTouch } from '../../lib/mouse-touch'
+// #endif
 
 const localeRef = ref<UiLocale>('zh-CN')
 const t = (text: unknown) => translate(text, localeRef.value)
@@ -90,11 +93,16 @@ function receive(event: MessageEvent) {
   )
 }
 
+let removeMouseTouch: (() => void) | undefined
 onMounted(() => {
+  removeMouseTouch = enableMouseTouch(document)
   window.addEventListener('message', receive)
   window.parent.postMessage({ type: 'shadcn-uniapp:ready' }, window.location.origin)
 })
-onUnmounted(() => window.removeEventListener('message', receive))
+onUnmounted(() => {
+  removeMouseTouch?.()
+  window.removeEventListener('message', receive)
+})
 // #endif
 </script>
 

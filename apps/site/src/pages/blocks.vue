@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import CodeBlock from '@/components/CodeBlock.vue'
 import WotPreview from '@/components/WotPreview.vue'
+import { formatBlockSource } from '@/lib/block-source'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -46,11 +47,10 @@ const {
     const item = registrySchema.parse(
       await ky.get(`/r/${selected.value.name}.json`, { signal }).json(),
     )
-    return item.files[0]!.content
+    return formatBlockSource(item.files[0]!.content)
   },
 })
 watch(selected, async () => {
-  sourceVisibleRef.value = false
   await nextTick()
   previewAnimation?.cancel()
   if (!reducedRef.value)
@@ -90,7 +90,8 @@ watch(selected, async () => {
           :delay="Math.min(index * 0.035, 0.28)"
           class="lg:w-full"
           ><Button
-            :variant="selected.name === block.name ? 'secondary' : 'ghost'"
+            variant="navigation"
+            :data-active="selected.name === block.name"
             class="w-full justify-start"
             :aria-pressed="selected.name === block.name"
             @click="router.replace({ query: { ...route.query, name: block.name } })"
@@ -111,8 +112,10 @@ watch(selected, async () => {
           :label="t('Run init first. Available after the npm release.')"
         />
         <RevealBlock card :delay="0.15" class="mt-6"
-          ><div class="mx-auto max-w-lg">
-            <WotPreview :theme="theme" :mode="modeRef" :block="selected.name" />
+          ><div class="rounded-lg border">
+            <div class="mx-auto max-w-lg">
+              <WotPreview :theme="theme" :mode="modeRef" :block="selected.name" />
+            </div>
           </div>
         </RevealBlock>
         <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
@@ -138,8 +141,12 @@ watch(selected, async () => {
               {{ t('Could not load the source.') }}
               <button class="underline" @click="refetch()">{{ t('Retry') }}</button>
             </p>
-            <CodeBlock v-if="source" :code="source" :label="t(selected.files[0])" /></div
-        ></ExpandPanel>
+            <CodeBlock v-if="source" :code="source" :label="t(selected.files[0])" />
+            <p v-else-if="isFetching" role="status" class="py-4 text-sm text-muted-foreground">
+              {{ t('Loading...') }}
+            </p>
+          </div></ExpandPanel
+        >
       </section>
     </div>
   </div>

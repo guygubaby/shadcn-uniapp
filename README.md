@@ -68,7 +68,7 @@ pnpm exec shadcn-uniapp add settings-form
 pnpm exec shadcn-uniapp add filter-list
 ```
 
-Source is copied to `src/components/blocks/<name>`. It relies on the consumer's existing Wot easycom configuration and uses no Tailwind/UnoCSS-specific layout utilities.
+Source is copied to `src/components/blocks/<name>`. Blocks use Tailwind CSS v4 utility classes for layout and typography, alongside the existing Wot easycom configuration. Configure Tailwind CSS v4 in the consuming project; uni-app miniapps should use the [weapp-tailwindcss Vite integration](https://tw.weapp.dev/zh-cn/docs/quick-start/frameworks/uni-app-vite). Theme colors and radii use the generated `--sui-*` variables.
 
 - `ProfileCard`: `name`, `description`, `workspace`; emits `edit`.
 - `SettingsForm`: initial `email` / `notifications` and optional `loading`; validates locally and emits `save`. It never sends an API request. Use a new component key if switching the edited account.
@@ -175,3 +175,9 @@ The website and live previews support Chinese and English. The Navbar language c
 ```ts
 app.provide('shadcn-uniapp:translate', (message: string) => i18n.t(message))
 ```
+
+### Icons and new miniapps
+
+Install icons with `pnpm add @lucide/vue`. The generated theme stylesheet maps Wot's icon names (including `search`) to SVG masks built from this library. H5 and WeChat use the same glyphs and inherit their color from the component; no SVG DOM tags or Wot source patches are needed in the miniapp. Import the generated stylesheet after Wot's theme stylesheet. GitHub keeps its brand logo because Lucide v1 does not contain brand icons.
+
+For a new uni-app miniapp, use **Tailwind CSS v4 + weapp-tailwindcss** with the [official uni-app Vite setup](https://tw.weapp.dev/zh-cn/docs/quick-start/frameworks/uni-app-vite). Preserve existing projects' styling system.

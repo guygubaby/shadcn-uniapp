@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from '@/lib/i18n'
+import { computed } from 'vue'
+import { useBrowserLocation } from '@vueuse/core'
 
 import RevealText from '@/components/motion/RevealText.vue'
 import RevealBlock from '@/components/motion/RevealBlock.vue'
@@ -7,7 +9,21 @@ import { Button } from '@/components/ui/button'
 import CodeBlock from '@/components/CodeBlock.vue'
 
 const { t } = useI18n()
-const install = 'pnpm add -D shadcn-uniapp sass\npnpm exec shadcn-uniapp init --preset zinc'
+const locationRef = useBrowserLocation()
+const sections = [
+  { id: 'requirements', label: 'Requirements' },
+  { id: 'install', label: 'Installation' },
+  { id: 'theme', label: 'Create a theme' },
+  { id: 'blocks', label: 'Add blocks' },
+  { id: 'runtime', label: 'Runtime themes' },
+  { id: 'limits', label: 'Scope' },
+]
+const activeSection = computed(
+  () =>
+    sections.find((section) => `#${section.id}` === locationRef.value.hash)?.id ?? 'requirements',
+)
+const install =
+  'pnpm add -D shadcn-uniapp sass\npnpm add @lucide/vue\npnpm exec shadcn-uniapp init --preset zinc'
 const local =
   'pnpm install\npnpm --filter shadcn-uniapp build\nnode /path/to/shadcn-uniapp/packages/shadcn-uniapp/dist/cli.js init --cwd /path/to/your-project'
 const app = `<style lang="scss">\n@use '@wot-ui/ui/styles/theme/index.scss' as *;\n@use './theme/shadcn.scss' as *;\n</style>`
@@ -21,33 +37,19 @@ const vars = getWotThemeVars(config, 'dark')`
   <div class="mx-auto grid max-w-7xl gap-10 px-5 py-10 lg:grid-cols-[220px_minmax(0,1fr)] lg:px-8">
     <nav
       :aria-label="t('On this page')"
-      class="docs-nav flex flex-wrap items-start gap-5 text-sm lg:sticky lg:top-25 lg:flex-col lg:self-start"
+      class="docs-nav flex flex-wrap gap-2 text-sm lg:sticky lg:top-25 lg:flex-col lg:self-start"
     >
-      <a
-        class="nav-link translate-x-0 transition-transform duration-300 hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none"
-        href="#requirements"
-        >{{ t('Requirements') }}</a
-      ><a
-        class="nav-link translate-x-0 transition-transform duration-300 hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none"
-        href="#install"
-        >{{ t('Installation') }}</a
-      ><a
-        class="nav-link translate-x-0 transition-transform duration-300 hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none"
-        href="#theme"
-        >{{ t('Create a theme') }}</a
-      ><a
-        class="nav-link translate-x-0 transition-transform duration-300 hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none"
-        href="#blocks"
-        >{{ t('Add blocks') }}</a
-      ><a
-        class="nav-link translate-x-0 transition-transform duration-300 hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none"
-        href="#runtime"
-        >{{ t('Runtime themes') }}</a
-      ><a
-        class="nav-link translate-x-0 transition-transform duration-300 hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none"
-        href="#limits"
-        >{{ t('Scope') }}</a
+      <Button
+        v-for="section in sections"
+        :key="section.id"
+        as-child
+        variant="navigation"
+        class="justify-start lg:w-full"
+        :data-active="activeSection === section.id"
+        :aria-current="activeSection === section.id ? 'location' : undefined"
       >
+        <a :href="`#${section.id}`">{{ t(section.label) }}</a>
+      </Button>
     </nav>
     <article class="max-w-3xl min-w-0">
       <h1 class="text-3xl font-semibold tracking-tight">
@@ -77,7 +79,7 @@ const vars = getWotThemeVars(config, 'dark')`
             <li>
               {{
                 t(
-                  'Keep your Wot easycom, Sass, and build setup. No need to switch Tailwind or UnoCSS.',
+                  'Keep your Wot easycom and Sass setup. Install @lucide/vue for icons. New miniapps should use Tailwind CSS v4 with weapp-tailwindcss.',
                 )
               }}
             </li>

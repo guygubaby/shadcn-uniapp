@@ -4,6 +4,7 @@ defineOptions({ name: 'WotPreviewApp' })
 
 <style lang="scss">
 @use '@wot-ui/ui/styles/theme/index.scss' as *;
+@use './theme.scss';
 @use './components/gallery/gallery.scss';
 
 page {
