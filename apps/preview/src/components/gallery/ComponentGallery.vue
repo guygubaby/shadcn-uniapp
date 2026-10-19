@@ -2,6 +2,7 @@
 import { usePreviewI18n } from '../../i18n'
 
 import { ref } from 'vue'
+import GalleryGrid from './GalleryGrid.vue'
 import BasicsGallery from './BasicsGallery.vue'
 import FormsGallery from './FormsGallery.vue'
 import PickersGallery from './PickersGallery.vue'
@@ -39,12 +40,14 @@ const categories = [
       >{{ t(category.label) }}</wd-button
     ></view
   >
-  <BasicsGallery v-if="props.expanded || categoryRef === 'all' || categoryRef === 'basics'" />
-  <FormsGallery v-if="props.expanded || categoryRef === 'all' || categoryRef === 'forms'" />
-  <PickersGallery v-if="props.expanded || categoryRef === 'all' || categoryRef === 'pickers'" />
-  <NavigationGallery
-    v-if="props.expanded || categoryRef === 'all' || categoryRef === 'navigation'"
-  />
-  <DataGallery v-if="props.expanded || categoryRef === 'all' || categoryRef === 'data'" />
-  <FeedbackGallery v-if="props.expanded || categoryRef === 'all' || categoryRef === 'feedback'" />
+  <GalleryGrid :key="categoryRef">
+    <BasicsGallery v-if="props.expanded || categoryRef === 'all' || categoryRef === 'basics'" />
+    <FormsGallery v-if="props.expanded || categoryRef === 'all' || categoryRef === 'forms'" />
+    <PickersGallery v-if="props.expanded || categoryRef === 'all' || categoryRef === 'pickers'" />
+    <NavigationGallery
+      v-if="props.expanded || categoryRef === 'all' || categoryRef === 'navigation'"
+    />
+    <DataGallery v-if="props.expanded || categoryRef === 'all' || categoryRef === 'data'" />
+    <FeedbackGallery v-if="props.expanded || categoryRef === 'all' || categoryRef === 'feedback'" />
+  </GalleryGrid>
 </template>

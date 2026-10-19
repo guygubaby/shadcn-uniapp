@@ -1,6 +1,8 @@
 export function enableMasonry(root: HTMLElement): () => void {
   if (typeof ResizeObserver === 'undefined') return () => {}
-  const cards = Array.from(root.children) as HTMLElement[]
+  const cards = Array.from(root.children).filter((child) =>
+    child.matches('.gallery-card'),
+  ) as HTMLElement[]
   const rowHeight = 8
   function update() {
     const spans = cards.map((card) =>
