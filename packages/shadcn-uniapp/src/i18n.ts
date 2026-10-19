@@ -3,11 +3,9 @@ export type UiLocale = 'zh-CN' | 'en-US'
 export const chineseMessages: Record<string, string> = {
   'Run in your project. Your preset includes the complete theme; no download or account is needed.':
     '在项目中运行以下命令，预设码已包含完整主题，无需下载文件或注册账号。',
-  'Preset code, theme URL or JSON': '预设码、主题链接或 JSON',
-  'Paste a preset code, shared theme URL, or exported JSON. Everything stays in your browser.':
-    '粘贴预设码、主题分享链接或导出的 JSON，所有处理均在浏览器内完成。',
-  'Use a preset code, theme share link, or exported JSON. Wot v2 themes only; maximum 256 KiB.':
-    '请使用预设码、主题分享链接或导出的 JSON，仅支持 Wot v2 主题，最大 256 KiB。',
+  'Preset code': '预设码',
+  'Paste a preset code to restore all theme settings.': '粘贴预设码，还原完整主题设置。',
+  'Enter a valid preset code from Creator.': '请输入创建器生成的有效预设码。',
   'Choose Create theme and copy the init --preset command. No JSON download is needed.':
     '点击「创建主题」，复制 init --preset 命令，无需下载 JSON。',
   'Run the command in your project. Existing generated files are protected; review them before using --force to replace a theme.':
@@ -280,7 +278,7 @@ export const chineseMessages: Record<string, string> = {
   'All components': '全部组件',
   'All items': '全部项目',
   'All required files are ready': '所有必需文件已就绪',
-  'All settings are included in the URL': '所有设置都保存在链接中',
+  'All theme settings are included in this code': '所有主题设置都保存在预设码中',
   'Ambient lighting': '氛围灯',
   'An applicant summary and an admissions milestone timeline.': '申请人信息与入学申请进度时间线。',
   'An existing Vue 3 + uni-app project with npm-installed @wot-ui/ui 2.x. Tested with 2.3.2.':
@@ -364,7 +362,7 @@ export const chineseMessages: Record<string, string> = {
   Contrast: '对比度',
   'Contribution history': '贡献记录',
   Copy: '复制',
-  'Copy preset link': '复制预设链接',
+  'Copy preset code': '复制预设码',
   'Could not load the source.': '源码加载失败。',
   'Could not export signature. Please try again.': '签名导出失败，请重试。',
   Create: '创建',

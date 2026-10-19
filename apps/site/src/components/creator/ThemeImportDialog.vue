@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { useI18n } from '@/lib/i18n'
 
-import { ref, useTemplateRef } from 'vue'
-import { Upload } from '@lucide/vue'
-import { decodeThemePreset, parseTheme } from 'shadcn-uniapp'
+import { ref } from 'vue'
+import { decodeThemePreset } from 'shadcn-uniapp'
 import type { ThemeConfig } from 'shadcn-uniapp'
 import {
   Dialog,
@@ -14,49 +13,22 @@ import {
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
+import { Input } from '@/components/ui/input'
 
 const { t } = useI18n()
 const openRef = defineModel<boolean>('open', { default: false })
 const emit = defineEmits<{ apply: [theme: ThemeConfig] }>()
 const textRef = ref('')
 const errorRef = ref('')
-const fileRef = useTemplateRef<HTMLInputElement>('preset-file')
-function load(text: string) {
+function load() {
   try {
-    if (text.length > 256 * 1024) throw new Error('Too large')
-    let data = text.trim()
-    if (/^https?:\/\//.test(data)) {
-      const params = new URL(data).searchParams
-      const preset = params.get('preset')
-      if (preset) data = preset
-      else {
-        const theme = params.get('theme')
-        if (!theme || theme.length > 4096) throw new Error('Invalid link')
-        data = atob(theme)
-      }
-    }
-    emit('apply', data.startsWith('{') ? parseTheme(JSON.parse(data)) : decodeThemePreset(data))
+    emit('apply', decodeThemePreset(textRef.value.trim()))
     openRef.value = false
     textRef.value = ''
     errorRef.value = ''
   } catch {
-    errorRef.value =
-      'Use a preset code, theme share link, or exported JSON. Wot v2 themes only; maximum 256 KiB.'
+    errorRef.value = 'Enter a valid preset code from Creator.'
   }
-}
-async function upload(event: Event) {
-  const input = event.target as HTMLInputElement
-  const file = input.files?.[0]
-  if (file) {
-    try {
-      if (file.size > 256 * 1024) throw new Error('Too large')
-      load(await file.text())
-    } catch {
-      errorRef.value = 'Could not read this file. Choose a theme JSON smaller than 256 KiB.'
-    }
-  }
-  input.value = ''
 }
 </script>
 
@@ -66,18 +38,19 @@ async function upload(event: Event) {
       <DialogHeader
         ><DialogTitle>{{ t('Open a preset') }}</DialogTitle
         ><DialogDescription>{{
-          t(
-            'Paste a preset code, shared theme URL, or exported JSON. Everything stays in your browser.',
-          )
+          t('Paste a preset code to restore all theme settings.')
         }}</DialogDescription></DialogHeader
       >
-      <div class="flex flex-col gap-3">
-        <Label for="preset-text">{{ t('Preset code, theme URL or JSON') }}</Label
-        ><Textarea
+      <form class="flex flex-col gap-3" @submit.prevent="load">
+        <Label for="preset-text">{{ t('Preset code') }}</Label
+        ><Input
           id="preset-text"
           v-model="textRef"
-          class="min-h-44 font-mono text-xs"
-          placeholder="su1-..."
+          class="font-mono text-sm"
+          autocomplete="off"
+          autocapitalize="none"
+          :spellcheck="false"
+          placeholder="su1-820"
           :aria-invalid="!!errorRef"
           :aria-describedby="errorRef ? 'preset-error' : undefined"
         />
@@ -89,19 +62,10 @@ async function upload(event: Event) {
         >
           {{ t(errorRef) }}
         </p>
-      </div>
-      <div class="flex flex-wrap items-center justify-between gap-3">
-        <input
-          ref="preset-file"
-          type="file"
-          accept=".json,application/json"
-          class="hidden"
-          :aria-label="t('Upload a theme JSON')"
-          @change="upload"
-        /><Button variant="outline" @click="fileRef?.click()"
-          ><Upload />{{ t('Upload JSON') }}</Button
-        ><Button :disabled="!textRef.trim()" @click="load(textRef)">{{ t('Open preset') }}</Button>
-      </div>
+        <Button type="submit" class="self-end" :disabled="!textRef.trim()">{{
+          t('Open preset')
+        }}</Button>
+      </form>
     </DialogContent>
   </Dialog>
 </template>

@@ -17,7 +17,9 @@ describe('interface languages', () => {
       'Loading...',
       'Play preview',
       'Pause playback',
-      'Could not read this file. Choose a theme JSON smaller than 256 KiB.',
+      'Copy preset code',
+      'Preset code',
+      'Enter a valid preset code from Creator.',
     ]) {
       expect(translate(label, 'zh-CN')).not.toBe(label)
     }

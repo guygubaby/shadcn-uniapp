@@ -15,9 +15,9 @@ Keep your `wd-*` components. Generate a theme instead of replacing the component
 - CLI commands: `init`, `generate`, `add`.
 - 20 source-owned blocks for account, commerce, productivity, and campus app layouts.
 - Vue SPA website using shadcn-vue, plus a real, separately compiled uni-app H5 preview.
-- Creator with color/radius/density editing, contrast hints, JSON import/export, SCSS export and shareable URLs.
+- Creator with color/radius/density editing, contrast hints, portable preset codes and copyable SCSS.
 
-No Wot v1 adapter, dependency patching, Vite plugin, backend, account system or cloud theme storage is included. JSON imports are processed locally, not uploaded.
+No Wot v1 adapter, dependency patching, backend, account system or cloud theme storage is included. Preset codes are processed locally.
 
 ## Requirements
 
@@ -127,7 +127,7 @@ MIT. Wot UI is the runtime dependency of preview and consumer projects. The webs
 ## Mobile Creator and component fixtures
 
 `/create` follows the shadcn-vue Create workbench: compact dark controls, pickers,
-per-setting shuffle locks, URL presets, JSON import, and an export/install dialog.
+per-setting shuffle locks, preset code import/copy, and an install dialog.
 `/creator` remains an alias. The preview is a fixed 376px mobile canvas, not a desktop
 component layout; all owned interface copy and the Wot locale are English.
 
@@ -152,7 +152,7 @@ Creator generates a portable preset code. Copy its install command to initialize
 pnpm dlx shadcn-uniapp@latest init --preset su1-820
 ```
 
-Preset codes contain the complete theme and resolve locally without an account, database, or network request. Common Creator choices fit in a short code; custom names and colors add an encoded extension. `su1-820` is the default zinc theme. The CLI writes an editable theme JSON and SCSS into your project. JSON import/export and `--theme <file>` remain available.
+Choose **Copy preset code** to copy just the code, then paste it into **Open preset** or use it with `init --preset`. Codes contain the complete theme and resolve locally without an account, database, or network request. Common Creator choices fit in a short code; custom names and colors add an encoded extension. `su1-820` is the default zinc theme. The CLI writes an editable theme JSON and SCSS into your project. Creator has no file-download workflow; the CLI retains `--theme <file>` for existing projects.
 
 Font stacks are exported, not font files. The website bundles Manrope and JetBrains Mono
 for preview; consumer projects must provide those fonts or use the system fallback.

@@ -24,7 +24,7 @@ pnpm dlx shadcn-uniapp@latest init --preset su1-820
 
 Preset codes resolve locally and contain all theme settings. Common choices use a short code; custom names and colors add an encoded extension. Codes do not expire or require a backend. `su1-820` is the default zinc theme. `init --theme <file>` remains available for existing JSON workflows.
 
-Edit `src/theme/shadcn.theme.json`, or export validated JSON from Creator to that path, then:
+Creator also provides **Copy preset code** and **Open preset** for reusing themes without links or file downloads. To edit the installed theme locally, change `src/theme/shadcn.theme.json`, then:
 
 ```sh
 pnpm exec shadcn-uniapp generate
