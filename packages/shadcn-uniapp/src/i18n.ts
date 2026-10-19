@@ -83,6 +83,8 @@ export const chineseMessages: Record<string, string> = {
   'To ship': '待发货',
   'To receive': '待收货',
   'To review': '待评价',
+  Receive: '待收货',
+  Review: '待评价',
   'Help and support': '帮助与客服',
   'Account settings': '账号设置',
   'Choose where your next delivery goes.': '为下一次配送选择收货地址。',

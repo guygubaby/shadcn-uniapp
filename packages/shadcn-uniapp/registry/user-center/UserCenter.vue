@@ -88,17 +88,34 @@ defineEmits<{ select: [destination: string] }>()
           t('View all')
         }}</wd-button></view
       >
-      <wd-grid :column="4" clickable :border="false">
-        <wd-grid-item :text="t('To pay')" @click="$emit('select', 'unpaid')"
+      <wd-grid
+        :column="4"
+        clickable
+        :border="false"
+        custom-style="--wot-grid-item-padding: 12px 0; --wot-grid-item-font-size: 12px; --wot-grid-item-line-height: 18px;"
+      >
+        <wd-grid-item
+          :text="t('To pay')"
+          custom-text="whitespace-nowrap"
+          @click="$emit('select', 'unpaid')"
           ><template #icon><CreditCard :size="24" /></template
         ></wd-grid-item>
-        <wd-grid-item :text="t('To ship')" @click="$emit('select', 'processing')"
+        <wd-grid-item
+          :text="t('To ship')"
+          custom-text="whitespace-nowrap"
+          @click="$emit('select', 'processing')"
           ><template #icon><Package :size="24" /></template
         ></wd-grid-item>
-        <wd-grid-item :text="t('To receive')" @click="$emit('select', 'shipping')"
+        <wd-grid-item
+          :text="t('Receive')"
+          custom-text="whitespace-nowrap"
+          @click="$emit('select', 'shipping')"
           ><template #icon><Truck :size="24" /></template
         ></wd-grid-item>
-        <wd-grid-item :text="t('To review')" @click="$emit('select', 'reviews')"
+        <wd-grid-item
+          :text="t('Review')"
+          custom-text="whitespace-nowrap"
+          @click="$emit('select', 'reviews')"
           ><template #icon><MessageSquare :size="24" /></template
         ></wd-grid-item>
       </wd-grid>
