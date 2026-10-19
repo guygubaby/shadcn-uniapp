@@ -3,6 +3,15 @@
   columns: 280px;
   column-gap: 24px;
 }
+/* #ifdef H5 */
+.gallery-grid,
+.overview-board {
+  columns: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  align-items: start;
+}
+/* #endif */
 .gallery-card {
   display: inline-block;
   box-sizing: border-box;

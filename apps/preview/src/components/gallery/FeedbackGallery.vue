@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import GalleryGrid from './GalleryGrid.vue'
 import { usePreviewI18n } from '../../i18n'
 
 import video from '../../static/preview-clip.mp4'
@@ -39,7 +40,7 @@ function confirm() {
 }
 </script>
 <template>
-  <view class="gallery-grid">
+  <GalleryGrid>
     <GallerySection :title="t('Messages')" :description="t('Toast, Notify, Dialog, and NoticeBar.')"
       ><wd-notice-bar
         :text="t('Your theme is ready to use.')"
@@ -138,7 +139,7 @@ function confirm() {
         confirm-button-text="Confirm"
         @confirm="cropRef = false"
     /></GallerySection>
-  </view>
+  </GalleryGrid>
   <wd-toast selector="gallery" /><wd-notify selector="gallery" /><wd-dialog
     selector="gallery"
   /><wd-image-preview selector="gallery" /><wd-video-preview selector="gallery" />

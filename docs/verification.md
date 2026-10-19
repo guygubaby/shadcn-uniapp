@@ -38,8 +38,13 @@ changes, shuffle with a locked theme, dark mode, detached Popup theming,
 and the export dialog. It reported no page errors. A subsequent source fix
 corrected the CheckboxGroup fixture names exposed by its warnings.
 
-The final Creator uses only a fixed mobile canvas. There is no desktop component
-preview switch and no multi-column responsive component layout.
+The Creator H5 preview uses responsive card columns. A shared Grid layout measures
+natural card heights with ResizeObserver; it avoids CSS column rebalancing that
+could move a card out of view when switching tabs.
+
+The regression check reproduced that jump in Chrome, then verified repeated
+Card / Transfer changes, taller and shorter navigation panels, indicator bounds,
+and 390px / 1248px layouts. H5 and WeChat builds passed; no real-device check was run.
 
 ## Still required
 
