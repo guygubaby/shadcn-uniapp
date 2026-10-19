@@ -2,6 +2,7 @@
 import { useI18n } from '@/lib/i18n'
 import { onMounted, onUnmounted, ref, useTemplateRef } from 'vue'
 import { useEventListener, useResizeObserver } from '@vueuse/core'
+import { Search } from '@lucide/vue'
 
 import RevealText from '@/components/motion/RevealText.vue'
 import RevealBlock from '@/components/motion/RevealBlock.vue'
@@ -52,7 +53,6 @@ const icons = `import { lucideUniapp } from 'shadcn-uniapp/vite'
 // Add before uni() in your existing Vite 5 config.
 plugins: [lucideUniapp(), uni()]
 
-// Your component imports stay the same:
 import { Search } from '@lucide/vue'`
 const app = `<style lang="scss">\n@use '@wot-ui/ui/styles/theme/index.scss' as *;\n@use './theme/shadcn.scss' as *;\n</style>`
 const block = `<script setup lang="ts">\nimport ProfileCard from '@/components/blocks/profile-card/ProfileCard.vue'\n<\/script>\n\n<template>\n  <ProfileCard\n    name="Bryce"\n    description="Design & Development"\n    @edit="openEditPage"\n  />\n</template>`
@@ -134,7 +134,14 @@ const vars = getWotThemeVars(config, 'dark')`
             }}
           </p>
           <CodeBlock :code="install" />
-          <div class="mt-4"><CodeBlock :code="icons" label="vite.config.ts / icons" /></div>
+          <div class="mt-4 flex flex-col gap-3">
+            <CodeBlock :code="icons" label="vite.config.ts / icons" />
+            <div class="flex items-center gap-3 rounded-lg border bg-muted/40 px-4 py-3">
+              <span class="mr-auto text-xs text-muted-foreground">{{ t('Preview') }}</span>
+              <Search class="size-5" aria-hidden="true" />
+              <span class="text-sm font-medium">Search</span>
+            </div>
+          </div>
           <p class="my-4 text-sm leading-7 text-muted-foreground">
             {{
               t(
