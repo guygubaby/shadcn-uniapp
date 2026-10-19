@@ -30,7 +30,7 @@ Creator also provides **Copy preset code** and **Open preset** for reusing theme
 pnpm exec shadcn-uniapp generate
 ```
 
-Presets: zinc, blue, emerald, rose, orange, violet, amber, teal, red, pink. Blocks: profile-card, settings-form, filter-list.
+Presets: zinc, blue, emerald, rose, orange, violet, amber, teal, red, pink. Includes 28 source-owned blocks for mobile apps and international schools; see the [Blocks catalog](https://shadcn-uniapp.guygubaby.top/blocks) for names and previews.
 
 `init` preserves existing App.vue content and appends theme imports. Existing generated files are protected unless `--force` is passed. `generate` replaces only the configured generated stylesheet. No dependency is installed and no Wot code is patched.
 
