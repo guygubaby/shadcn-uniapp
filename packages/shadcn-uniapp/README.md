@@ -16,7 +16,13 @@ pnpm exec shadcn-uniapp init --preset zinc
 pnpm exec shadcn-uniapp add profile-card
 ```
 
-Use `init --theme ./shadcn.theme.json` to initialize from a Creator export.
+In Creator, choose **Create theme** and copy the preset command; no file download is needed:
+
+```sh
+pnpm dlx shadcn-uniapp@latest init --preset su1-820
+```
+
+Preset codes resolve locally and contain all theme settings. Common choices use a short code; custom names and colors add an encoded extension. Codes do not expire or require a backend. `su1-820` is the default zinc theme. `init --theme <file>` remains available for existing JSON workflows.
 
 Edit `src/theme/shadcn.theme.json`, or export validated JSON from Creator to that path, then:
 

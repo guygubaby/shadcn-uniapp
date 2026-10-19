@@ -157,8 +157,20 @@ const vars = getWotThemeVars(config, 'dark')`
                 )
               }}
             </li>
-            <li>{{ t('Export JSON to the theme path in shadcn-uniapp.json.') }}</li>
-            <li>{{ t('Run generate to update the configured stylesheet.') }}</li>
+            <li>
+              {{
+                t(
+                  'Choose Create theme and copy the init --preset command. No JSON download is needed.',
+                )
+              }}
+            </li>
+            <li>
+              {{
+                t(
+                  'Run the command in your project. Existing generated files are protected; review them before using --force to replace a theme.',
+                )
+              }}
+            </li>
             <li>
               {{
                 t(
@@ -167,6 +179,13 @@ const vars = getWotThemeVars(config, 'dark')`
               }}
             </li>
           </ol>
+          <p class="my-4 text-sm leading-7 text-muted-foreground">
+            {{
+              t(
+                'The CLI saves an editable theme JSON in your project. After local edits, run generate to update only its stylesheet.',
+              )
+            }}
+          </p>
           <CodeBlock code="pnpm exec shadcn-uniapp generate" />
           <div class="mt-4">
             <Button as-child variant="outline"

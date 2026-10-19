@@ -4,7 +4,13 @@ import { useI18n } from '@/lib/i18n'
 import { toast } from 'vue-sonner'
 import { storeToRefs } from 'pinia'
 import { useAppearanceStore } from '@/stores/appearance'
-import { createPreset, parseTheme, presetNames } from 'shadcn-uniapp'
+import {
+  createPreset,
+  decodeThemePreset,
+  encodeThemePreset,
+  parseTheme,
+  presetNames,
+} from 'shadcn-uniapp'
 import type { ColorTokens, PresetName, ThemeConfig } from 'shadcn-uniapp'
 import { baseColors, baseOptions, fontOptions, styles, styleOptions } from './options'
 import type { SettingKey } from './options'
@@ -41,7 +47,12 @@ export function useCreatorTheme() {
   })
   function persist() {
     void router.replace({
-      query: { ...route.query, theme: btoa(JSON.stringify(themeRef.value)), mode: modeRef.value },
+      query: {
+        ...route.query,
+        theme: undefined,
+        preset: encodeThemePreset(themeRef.value),
+        mode: modeRef.value,
+      },
     })
   }
   function apply(theme: ThemeConfig) {
@@ -132,12 +143,16 @@ export function useCreatorTheme() {
     })
   }
   watch(
-    () => [route.query.theme, route.query.mode],
+    () => [route.query.preset, route.query.theme, route.query.mode],
     () => {
-      if (typeof route.query.theme === 'string') {
+      if (typeof route.query.preset === 'string' || typeof route.query.theme === 'string') {
         try {
-          if (route.query.theme.length > 4096) throw new Error('Theme URL too large')
-          themeRef.value = parseTheme(JSON.parse(atob(route.query.theme)))
+          if (typeof route.query.preset === 'string') {
+            themeRef.value = decodeThemePreset(route.query.preset)
+          } else if (typeof route.query.theme === 'string') {
+            if (route.query.theme.length > 4096) throw new Error('Theme URL too large')
+            themeRef.value = parseTheme(JSON.parse(atob(route.query.theme)))
+          }
         } catch {
           toast.error(t('The linked theme is invalid. Your current theme was kept.'))
         }

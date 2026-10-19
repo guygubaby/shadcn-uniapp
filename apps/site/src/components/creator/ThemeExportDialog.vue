@@ -3,7 +3,7 @@ import { useI18n } from '@/lib/i18n'
 
 import { computed, ref } from 'vue'
 import { Download, Sparkles } from '@lucide/vue'
-import { generateThemeCss } from 'shadcn-uniapp'
+import { encodeThemePreset, generateThemeCss } from 'shadcn-uniapp'
 import type { ThemeConfig } from 'shadcn-uniapp'
 import {
   Dialog,
@@ -28,9 +28,9 @@ const json = computed(() => JSON.stringify(props.theme, null, 2) + '\n')
 const css = computed(() => generateThemeCss(props.theme))
 const install = computed(() =>
   [
-    'pnpm add -D shadcn-uniapp sass',
+    'pnpm add -D shadcn-uniapp@latest sass',
     ...(lucideRef.value ? ['pnpm add @lucide/vue'] : []),
-    'pnpm exec shadcn-uniapp init --theme ./shadcn.theme.json',
+    `pnpm dlx shadcn-uniapp@latest init --preset ${encodeThemePreset(props.theme)}`,
   ].join('\n'),
 )
 const icons = `import { lucideUniapp } from 'shadcn-uniapp/vite'
@@ -77,21 +77,12 @@ import { Search } from '@lucide/vue'`
             />
           </div>
           <div class="flex flex-col gap-3">
-            <p class="text-sm">
-              <span class="mr-2 text-muted-foreground">1.</span>
-              {{ t('Download your config into your project root.') }}
-            </p>
-            <Button
-              variant="outline"
-              class="self-start"
-              @click="downloadText('shadcn.theme.json', json, 'application/json')"
-              ><Download />{{ t('Download theme JSON') }}</Button
-            >
-          </div>
-          <div class="flex flex-col gap-3">
-            <p class="text-sm">
-              <span class="mr-2 text-muted-foreground">2.</span>
-              {{ t('Initialize the theme in your Wot project.') }}
+            <p class="text-sm text-muted-foreground">
+              {{
+                t(
+                  'Run in your project. Your preset includes the complete theme; no download or account is needed.',
+                )
+              }}
             </p>
             <CodeBlock :code="install" label="pnpm" />
             <CodeBlock v-if="lucideRef" :code="icons" label="vite.config.ts / icons" />

@@ -146,11 +146,13 @@ Source coverage and a successful WeChat compile are not a claim that every inter
 has passed on a real phone. Camera/file selection, canvas export, gestures, video playback,
 font loading, and detached overlays should be checked on the intended WeChat devices.
 
-Creator exports can initialize a project directly:
+Creator generates a portable preset code. Copy its install command to initialize directly, without downloading a theme file:
 
 ```sh
-pnpm exec shadcn-uniapp init --theme ./shadcn.theme.json
+pnpm dlx shadcn-uniapp@latest init --preset su1-820
 ```
+
+Preset codes contain the complete theme and resolve locally without an account, database, or network request. Common Creator choices fit in a short code; custom names and colors add an encoded extension. `su1-820` is the default zinc theme. The CLI writes an editable theme JSON and SCSS into your project. JSON import/export and `--theme <file>` remain available.
 
 Font stacks are exported, not font files. The website bundles Manrope and JetBrains Mono
 for preview; consumer projects must provide those fonts or use the system fallback.

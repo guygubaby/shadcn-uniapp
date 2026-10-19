@@ -5,11 +5,11 @@ import { resolve } from 'node:path'
 import { addBlock, generateProjectTheme, initProject } from './project'
 import { blocks } from './blocks'
 import { parseTheme, presetNames } from './theme'
-import type { PresetName } from './theme'
 
 const help = `shadcn-uniapp 0.1.1 — Wot UI 2.x themes and source blocks
 
   shadcn-uniapp init [--preset ${presetNames.join('|')}]
+  shadcn-uniapp init --preset <code-from-creator>
   shadcn-uniapp init --theme ./shadcn.theme.json
   shadcn-uniapp generate
   shadcn-uniapp add <block>
@@ -18,6 +18,7 @@ Blocks: ${blocks.map((block) => block.name).join(', ')}
 
 Options:
   --cwd <directory>  Use a different project directory
+  --preset <code>    Apply a Creator preset code or a built-in preset name
   --theme <file>     Initialize from exported Creator JSON (relative to --cwd)
   --force            Explicitly replace existing generated files
   --help             Show this message
@@ -34,7 +35,7 @@ try {
     allowPositionals: true,
     options: {
       cwd: { type: 'string', default: process.cwd() },
-      preset: { type: 'string', default: 'zinc' },
+      preset: { type: 'string' },
       theme: { type: 'string' },
       force: { type: 'boolean', default: false },
       help: { type: 'boolean', short: 'h', default: false },
@@ -48,8 +49,8 @@ try {
       throw new Error('Unexpected arguments. Run with --help.')
     let files: string[]
     if (command === 'init') {
-      if (!(presetNames as readonly string[]).includes(values.preset))
-        throw new Error(`Unknown preset: ${values.preset}`)
+      if (values.theme && values.preset)
+        throw new Error('Use either --preset or --theme, not both.')
       if (values.theme) {
         const file = resolve(values.cwd, values.theme)
         if (statSync(file).size > 256 * 1024)
@@ -60,7 +61,7 @@ try {
           values.force,
         )
       } else {
-        files = initProject(values.cwd, values.preset as PresetName, values.force)
+        files = initProject(values.cwd, values.preset ?? 'zinc', values.force)
       }
     } else if (command === 'generate') {
       files = generateProjectTheme(values.cwd)

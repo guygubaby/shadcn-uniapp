@@ -1,6 +1,19 @@
 export type UiLocale = 'zh-CN' | 'en-US'
 
 export const chineseMessages: Record<string, string> = {
+  'Run in your project. Your preset includes the complete theme; no download or account is needed.':
+    '在项目中运行以下命令，预设码已包含完整主题，无需下载文件或注册账号。',
+  'Preset code, theme URL or JSON': '预设码、主题链接或 JSON',
+  'Paste a preset code, shared theme URL, or exported JSON. Everything stays in your browser.':
+    '粘贴预设码、主题分享链接或导出的 JSON，所有处理均在浏览器内完成。',
+  'Use a preset code, theme share link, or exported JSON. Wot v2 themes only; maximum 256 KiB.':
+    '请使用预设码、主题分享链接或导出的 JSON，仅支持 Wot v2 主题，最大 256 KiB。',
+  'Choose Create theme and copy the init --preset command. No JSON download is needed.':
+    '点击「创建主题」，复制 init --preset 命令，无需下载 JSON。',
+  'Run the command in your project. Existing generated files are protected; review them before using --force to replace a theme.':
+    '在项目中运行命令。已有生成文件会受到保护，使用 --force 替换主题前请先检查这些文件。',
+  'The CLI saves an editable theme JSON in your project. After local edits, run generate to update only its stylesheet.':
+    'CLI 会在项目中保存可编辑的主题 JSON，本地修改后运行 generate，仅更新对应样式文件。',
   'Wot UI theme creator for uni-app': 'uni-app Wot UI 在线主题生成器',
   'Mobile app blocks for uni-app': 'uni-app 手机端与校园业务区块',
   'shadcn-uniapp documentation': 'shadcn-uniapp 安装与使用文档',

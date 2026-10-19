@@ -13,6 +13,7 @@ import { afterEach, describe, expect, it } from 'vitest'
 import { addBlock, generateProjectTheme, initProject } from '../packages/shadcn-uniapp/src/project'
 import { blocks } from '../packages/shadcn-uniapp/src/blocks'
 import { createPreset } from '../packages/shadcn-uniapp/src/theme'
+import { encodeThemePreset } from '../packages/shadcn-uniapp/src/preset'
 
 const directories: string[] = []
 function project() {
@@ -34,6 +35,19 @@ afterEach(() => {
 })
 
 describe('safe source installation', () => {
+  it('installs a preset code without an input file and refuses invalid codes without writing', () => {
+    const root = project()
+    const theme = { ...createPreset('blue'), radius: 12 }
+    const app = readFileSync(join(root, 'src/App.vue'), 'utf8')
+    expect(() => initProject(root, 'su2-unknown')).toThrow(/Unknown preset/)
+    expect(existsSync(join(root, 'shadcn-uniapp.json'))).toBe(false)
+    expect(readFileSync(join(root, 'src/App.vue'), 'utf8')).toBe(app)
+    initProject(root, encodeThemePreset(theme))
+    expect(JSON.parse(readFileSync(join(root, 'src/theme/shadcn.theme.json'), 'utf8'))).toEqual(
+      theme,
+    )
+    expect(readFileSync(join(root, 'src/theme/shadcn.scss'), 'utf8')).toContain('#1d4ed8')
+  })
   it('initializes from a validated Creator theme with typography', () => {
     const root = project()
     const theme = { ...createPreset('violet'), font: 'mono' as const, radius: 16 }

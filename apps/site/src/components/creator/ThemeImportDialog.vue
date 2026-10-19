@@ -3,7 +3,7 @@ import { useI18n } from '@/lib/i18n'
 
 import { ref, useTemplateRef } from 'vue'
 import { Upload } from '@lucide/vue'
-import { parseTheme } from 'shadcn-uniapp'
+import { decodeThemePreset, parseTheme } from 'shadcn-uniapp'
 import type { ThemeConfig } from 'shadcn-uniapp'
 import {
   Dialog,
@@ -16,7 +16,6 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 
-
 const { t } = useI18n()
 const openRef = defineModel<boolean>('open', { default: false })
 const emit = defineEmits<{ apply: [theme: ThemeConfig] }>()
@@ -28,17 +27,22 @@ function load(text: string) {
     if (text.length > 256 * 1024) throw new Error('Too large')
     let data = text.trim()
     if (/^https?:\/\//.test(data)) {
-      const theme = new URL(data).searchParams.get('theme')
-      if (!theme || theme.length > 4096) throw new Error('Invalid link')
-      data = atob(theme)
+      const params = new URL(data).searchParams
+      const preset = params.get('preset')
+      if (preset) data = preset
+      else {
+        const theme = params.get('theme')
+        if (!theme || theme.length > 4096) throw new Error('Invalid link')
+        data = atob(theme)
+      }
     }
-    emit('apply', parseTheme(JSON.parse(data)))
+    emit('apply', data.startsWith('{') ? parseTheme(JSON.parse(data)) : decodeThemePreset(data))
     openRef.value = false
     textRef.value = ''
     errorRef.value = ''
   } catch {
     errorRef.value =
-      'Use an exported shadcn-uniapp JSON theme or share link. Wot v2 themes only; maximum 256 KiB.'
+      'Use a preset code, theme share link, or exported JSON. Wot v2 themes only; maximum 256 KiB.'
   }
 }
 async function upload(event: Event) {
@@ -62,16 +66,18 @@ async function upload(event: Event) {
       <DialogHeader
         ><DialogTitle>{{ t('Open a preset') }}</DialogTitle
         ><DialogDescription>{{
-          t('Paste a shared theme URL or exported JSON. Everything stays in your browser.')
+          t(
+            'Paste a preset code, shared theme URL, or exported JSON. Everything stays in your browser.',
+          )
         }}</DialogDescription></DialogHeader
       >
       <div class="flex flex-col gap-3">
-        <Label for="preset-text">{{ t('Theme URL or JSON') }}</Label
+        <Label for="preset-text">{{ t('Preset code, theme URL or JSON') }}</Label
         ><Textarea
           id="preset-text"
           v-model="textRef"
           class="min-h-44 font-mono text-xs"
-          placeholder="https://shadcn-uniapp.guygubaby.top/create?theme=..."
+          placeholder="su1-..."
           :aria-invalid="!!errorRef"
           :aria-describedby="errorRef ? 'preset-error' : undefined"
         />
