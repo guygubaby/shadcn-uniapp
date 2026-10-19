@@ -1,6 +1,17 @@
 export type UiLocale = 'zh-CN' | 'en-US'
 
 export const chineseMessages: Record<string, string> = {
+  'Run in your project. Your preset includes the complete theme; no download or account is needed.':
+    '在项目中运行以下命令，预设码已包含完整主题，无需下载文件或注册账号。',
+  'Preset code': '预设码',
+  'Paste a preset code to restore all theme settings.': '粘贴预设码，还原完整主题设置。',
+  'Enter a valid preset code from Creator.': '请输入创建器生成的有效预设码。',
+  'Choose Create theme and copy the init --preset command. No JSON download is needed.':
+    '点击「创建主题」，复制 init --preset 命令，无需下载 JSON。',
+  'Run the command in your project. Existing generated files are protected; review them before using --force to replace a theme.':
+    '在项目中运行命令。已有生成文件会受到保护，使用 --force 替换主题前请先检查这些文件。',
+  'The CLI saves an editable theme JSON in your project. After local edits, run generate to update only its stylesheet.':
+    'CLI 会在项目中保存可编辑的主题 JSON，本地修改后运行 generate，仅更新对应样式文件。',
   'Wot UI theme creator for uni-app': 'uni-app Wot UI 在线主题生成器',
   'Mobile app blocks for uni-app': 'uni-app 手机端与校园业务区块',
   'shadcn-uniapp documentation': 'shadcn-uniapp 安装与使用文档',
@@ -269,7 +280,7 @@ export const chineseMessages: Record<string, string> = {
   'All components': '全部组件',
   'All items': '全部项目',
   'All required files are ready': '所有必需文件已就绪',
-  'All settings are included in the URL': '所有设置都保存在链接中',
+  'All theme settings are included in this code': '所有主题设置都保存在预设码中',
   'Ambient lighting': '氛围灯',
   'An applicant summary and an admissions milestone timeline.': '申请人信息与入学申请进度时间线。',
   'An existing Vue 3 + uni-app project with npm-installed @wot-ui/ui 2.x. Tested with 2.3.2.':
@@ -353,7 +364,7 @@ export const chineseMessages: Record<string, string> = {
   Contrast: '对比度',
   'Contribution history': '贡献记录',
   Copy: '复制',
-  'Copy preset link': '复制预设链接',
+  'Copy preset code': '复制预设码',
   'Could not load the source.': '源码加载失败。',
   'Could not export signature. Please try again.': '签名导出失败，请重试。',
   Create: '创建',

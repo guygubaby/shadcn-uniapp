@@ -38,8 +38,10 @@ Cloudflare Pages 的 HTML 扩展名解析支持直接刷新这些地址。根目
 
 1. 首页、/create、/creator、/blocks、/docs 可直接打开和刷新。
 2. Creator 修改主题、浅深色和圆角后，真实 Wot 预览与 RootPortal 浮层跟随更新。
-3. JSON 导入导出、SCSS 下载和主题链接回读正常。
+3. Creator 直接复制预设码，并通过预设码导入主题或运行 init --preset，无需分享链接或下载文件。移除 JSON 导入导出及所有主题下载入口，SCSS 仍可复制。旧 ?theme= 地址仍可读取，页面状态可通过 ?preset= 保留。
 4. Registry 文件返回 JSON 而不是 SPA HTML。
 5. 域名 HTTPS 正常；GitHub 新提交能触发后续构建。
 
 部署记录与实际验证结果由本次任务完成时补充；本文的目标配置本身不代表服务已上线。
+
+预设码的解码逻辑包含在 npm 包内，不依赖服务端存储。上线新的预设码格式前，须先发布包含该解码器的 npm 版本，再部署生成相应命令的网站，避免 @latest 指向尚不支持的 CLI。

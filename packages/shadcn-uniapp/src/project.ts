@@ -10,8 +10,9 @@ import { dirname, isAbsolute, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { z } from 'zod'
 import { blocks } from './blocks'
-import { createPreset, generateThemeCss, parseTheme, presetNames } from './theme'
-import type { PresetName, ThemeConfig } from './theme'
+import { generateThemeCss, parseTheme } from './theme'
+import type { ThemeConfig } from './theme'
+import { decodeThemePreset } from './preset'
 
 const projectSchema = z.strictObject({
   version: z.literal(1),
@@ -101,11 +102,9 @@ function requireWot2(root: string) {
   }
 }
 
-export function initProject(cwd: string, preset: PresetName | ThemeConfig = 'zinc', force = false) {
+export function initProject(cwd: string, preset: string | ThemeConfig = 'zinc', force = false) {
   const root = projectRoot(cwd)
   requireWot2(root)
-  if (typeof preset === 'string' && !(presetNames as readonly string[]).includes(preset))
-    throw new Error(`Unknown preset: ${preset}`)
   const appPath = existsSync(resolve(root, 'src/App.vue')) ? 'src/App.vue' : 'App.vue'
   const app = readFileSync(checkedPath(root, appPath), 'utf8')
   const config =
@@ -117,7 +116,7 @@ export function initProject(cwd: string, preset: PresetName | ThemeConfig = 'zin
           blocks: 'components/blocks',
         }
       : defaultProjectConfig
-  const theme = typeof preset === 'string' ? createPreset(preset) : parseTheme(preset)
+  const theme = typeof preset === 'string' ? decodeThemePreset(preset) : parseTheme(preset)
   const importPath = `./${relative(dirname(resolve(root, appPath)), resolve(root, config.css))
     .split(sep)
     .join('/')}`

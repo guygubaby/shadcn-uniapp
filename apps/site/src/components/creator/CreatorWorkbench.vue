@@ -4,8 +4,8 @@ import { useI18n } from '@/lib/i18n'
 import { computed, nextTick, ref, useTemplateRef, watch } from 'vue'
 import { onKeyStroke, useMediaQuery } from '@vueuse/core'
 import RevealBlock from '@/components/motion/RevealBlock.vue'
-import { ArrowUpRight, Check, Code2, Link, RotateCcw, Settings2, Shuffle, X } from '@lucide/vue'
-import { getContrastChecks, themeSchema } from 'shadcn-uniapp'
+import { ArrowUpRight, Check, Code2, Copy, RotateCcw, Settings2, Shuffle, X } from '@lucide/vue'
+import { encodeThemePreset, getContrastChecks, themeSchema } from 'shadcn-uniapp'
 import type { ColorTokens } from 'shadcn-uniapp'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -104,9 +104,6 @@ function rename(value: string | number) {
   nameRef.value = String(value)
   if (nameValid.value) apply({ ...themeRef.value, name: nameRef.value })
 }
-function share() {
-  void copyText(window.location.href)
-}
 </script>
 
 <template>
@@ -200,12 +197,12 @@ function share() {
               ><TooltipTrigger as-child
                 ><button
                   class="creator-secondary flex h-8 items-center justify-center gap-2 rounded-lg border text-xs"
-                  @click="share"
+                  @click="copyText(encodeThemePreset(themeRef))"
                 >
-                  <Link class="size-3" />{{ t('Copy preset link') }}
+                  <Copy class="size-3" />{{ t('Copy preset code') }}
                 </button></TooltipTrigger
               ><TooltipContent side="right">{{
-                t('All settings are included in the URL')
+                t('All theme settings are included in this code')
               }}</TooltipContent></Tooltip
             >
             <button

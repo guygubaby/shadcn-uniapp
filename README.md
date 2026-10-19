@@ -8,16 +8,16 @@ Shadcn-inspired themes, a visual theme creator, and editable source blocks for *
 
 Keep your `wd-*` components. Generate a theme instead of replacing the component library.
 
-## What ships in v0.1.0
+## What ships in v0.1.1
 
 - Ten light/dark accent presets, including zinc, blue, emerald, rose, and orange.
 - Validated theme JSON, semantic CSS variables and a Wot v2 token adapter.
 - CLI commands: `init`, `generate`, `add`.
-- 20 source-owned blocks for account, commerce, productivity, and campus app layouts.
-- Vue SPA website using shadcn-vue, plus a real, separately compiled uni-app H5 preview.
-- Creator with color/radius/density editing, contrast hints, JSON import/export, SCSS export and shareable URLs.
+- 28 source-owned blocks for mobile apps, parent services, and teacher workflows.
+- A prerendered Vue website using shadcn-vue, plus a real, separately compiled uni-app H5 preview.
+- Creator with color/radius/density editing, contrast hints, portable preset codes and copyable SCSS.
 
-No Wot v1 adapter, dependency patching, Vite plugin, backend, account system or cloud theme storage is included. JSON imports are processed locally, not uploaded.
+No Wot v1 adapter, dependency patching, backend, account system or cloud theme storage is included. Preset codes are processed locally.
 
 ## Requirements
 
@@ -27,7 +27,7 @@ Consumer projects: Vue 3 + uni-app, npm-installed `@wot-ui/ui` **2.x** (verified
 
 ## Installation
 
-`shadcn-uniapp@0.1.0` is available on npm.
+Install the latest release from npm.
 
 ```sh
 pnpm add -D shadcn-uniapp sass
@@ -52,7 +52,7 @@ It appends a separate global SCSS block to `App.vue`, preserves existing scripts
 </style>
 ```
 
-Use Creator to export JSON into the configured theme path, then run:
+Initialize with the preset command copied from Creator. To update an installed theme locally, edit the configured theme JSON, then run:
 
 ```sh
 pnpm exec shadcn-uniapp generate
@@ -127,13 +127,13 @@ MIT. Wot UI is the runtime dependency of preview and consumer projects. The webs
 ## Mobile Creator and component fixtures
 
 `/create` follows the shadcn-vue Create workbench: compact dark controls, pickers,
-per-setting shuffle locks, URL presets, JSON import, and an export/install dialog.
-`/creator` remains an alias. The preview is a fixed 376px mobile canvas, not a desktop
-component layout; all owned interface copy and the Wot locale are English.
+per-setting shuffle locks, preset code import/copy, and an install dialog.
+`/creator` remains an alias. Creator has a responsive card preview; individual
+Blocks use a mobile-width preview. English is the default, with Chinese available at `/zh`.
 
 - Ten accent presets, five neutral bases, four styles, light/dark palettes,
   heading/body font stacks, chart color, radius, density, and custom hex colors.
-- An expanded multi-column creator, all 100 Wot components, and 20 editable application blocks.
+- An expanded multi-column creator, all 100 Wot components, and 28 editable application blocks.
 - The catalog has source fixtures for all 100 `wd-*` components in Wot UI 2.3.2,
   grouped into Basics, Forms, Pickers, Navigation, Data, and Feedback. Structural
   components are exercised inside their parent examples.
@@ -146,11 +146,13 @@ Source coverage and a successful WeChat compile are not a claim that every inter
 has passed on a real phone. Camera/file selection, canvas export, gestures, video playback,
 font loading, and detached overlays should be checked on the intended WeChat devices.
 
-Creator exports can initialize a project directly:
+Creator generates a portable preset code. Copy its install command to initialize directly, without downloading a theme file:
 
 ```sh
-pnpm exec shadcn-uniapp init --theme ./shadcn.theme.json
+pnpm dlx shadcn-uniapp@latest init --preset su1-820
 ```
+
+Choose **Copy preset code** to copy just the code, then paste it into **Open preset** or use it with `init --preset`. Codes contain the complete theme and resolve locally without an account, database, or network request. Common Creator choices fit in a short code; custom names and colors add an encoded extension. `su1-820` is the default zinc theme. The CLI writes an editable theme JSON and SCSS into your project. Creator has no file-download workflow; the CLI retains `--theme <file>` for existing projects.
 
 Font stacks are exported, not font files. The website bundles Manrope and JetBrains Mono
 for preview; consumer projects must provide those fonts or use the system fallback.
@@ -160,7 +162,7 @@ button text. Per-component hardcoded props can override inherited theme tokens.
 
 ### Languages
 
-The website and live previews support Chinese and English. The Navbar language control remembers the selected language. Source-owned blocks default to English and accept an optional app-level translation function without another runtime dependency:
+The website and live previews default to English, with Chinese available through the language control. Source-owned blocks default to English and accept an optional app-level translation function without another runtime dependency:
 
 ```ts
 app.provide('shadcn-uniapp:translate', (message: string) => i18n.t(message))
