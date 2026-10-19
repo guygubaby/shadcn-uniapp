@@ -16,7 +16,7 @@ pnpm exec shadcn-uniapp init --preset zinc
 pnpm exec shadcn-uniapp add profile-card
 ```
 
-In Creator, choose **Create theme** and copy the preset command; no file download is needed:
+In Creator, choose **Use this theme** and copy the preset command:
 
 ```sh
 pnpm dlx shadcn-uniapp@latest init --preset su1-820

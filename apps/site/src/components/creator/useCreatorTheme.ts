@@ -15,11 +15,16 @@ import type { ColorTokens, PresetName, ThemeConfig } from 'shadcn-uniapp'
 import { baseColors, baseOptions, fontOptions, styles, styleOptions } from './options'
 import type { SettingKey } from './options'
 
+function withPrimaryChart(theme: ThemeConfig): ThemeConfig {
+  // Keep exported v1 presets compatible with the published CLI.
+  return { ...theme, chartColor: theme.light.primary }
+}
+
 export function useCreatorTheme() {
   const { t } = useI18n()
   const route = useRoute()
   const router = useRouter()
-  const themeRef = shallowRef(createPreset())
+  const themeRef = shallowRef(withPrimaryChart(createPreset()))
   const { modeRef } = storeToRefs(useAppearanceStore())
   const locksRef = shallowRef(new Set<SettingKey>())
   const selections = computed(() => {
@@ -35,9 +40,6 @@ export function useCreatorTheme() {
         )?.value ?? 'custom',
       accent:
         presetNames.find((name) => createPreset(name).light.primary === theme.light.primary) ??
-        'custom',
-      chart:
-        presetNames.find((name) => createPreset(name).light.primary === theme.chartColor) ??
         'custom',
       font: theme.font,
       heading: theme.headingFont,
@@ -56,7 +58,7 @@ export function useCreatorTheme() {
     })
   }
   function apply(theme: ThemeConfig) {
-    themeRef.value = parseTheme(theme)
+    themeRef.value = withPrimaryChart(parseTheme(theme))
     persist()
   }
   function select(key: SettingKey, value: string) {
@@ -88,7 +90,6 @@ export function useCreatorTheme() {
         },
       }
     }
-    if (key === 'chart') next.chartColor = createPreset(value as PresetName).light.primary
     if (key === 'radius') next.radius = Number(value)
     if (key === 'font') next.font = value as ThemeConfig['font']
     if (key === 'heading') next.headingFont = value as ThemeConfig['headingFont']
@@ -119,9 +120,6 @@ export function useCreatorTheme() {
       headingFont: locked('heading')
         ? current.headingFont
         : (pick(fontOptions).value as ThemeConfig['headingFont']),
-      chartColor: locked('chart')
-        ? current.chartColor
-        : createPreset(pick(presetNames)).light.primary,
       light: {
         ...current.light,
         ...base.light,
@@ -148,10 +146,10 @@ export function useCreatorTheme() {
       if (typeof route.query.preset === 'string' || typeof route.query.theme === 'string') {
         try {
           if (typeof route.query.preset === 'string') {
-            themeRef.value = decodeThemePreset(route.query.preset)
+            themeRef.value = withPrimaryChart(decodeThemePreset(route.query.preset))
           } else if (typeof route.query.theme === 'string') {
             if (route.query.theme.length > 4096) throw new Error('Theme URL too large')
-            themeRef.value = parseTheme(JSON.parse(atob(route.query.theme)))
+            themeRef.value = withPrimaryChart(parseTheme(JSON.parse(atob(route.query.theme))))
           }
         } catch {
           toast.error(t('The linked theme is invalid. Your current theme was kept.'))

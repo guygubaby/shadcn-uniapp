@@ -1,4 +1,5 @@
-import type { UiLocale } from 'shadcn-uniapp'
+import { createPreset, type UiLocale } from 'shadcn-uniapp'
+import { createStyleGuidePrompt } from './style-guide'
 
 export type SetupStyling = 'preserve' | 'tailwind' | 'unocss'
 
@@ -53,5 +54,6 @@ export function createAgentSetupPrompt(
       '6. Use the target project commands for type checks, H5 and WeChat builds. Check theme switching, form spacing and selected icons. Report changed files, chosen styling, passed checks and remaining real-device verification; compilation is not real-device testing.',
     ),
     'References: https://shadcn-uniapp.guygubaby.top/docs | https://tw.weapp.dev/zh-cn/docs/quick-start/frameworks/uni-app-vite | https://uni-helper.js.org/unocss-preset-uni/',
+    createStyleGuidePrompt(createPreset(), options.lucide),
   ].join('\n\n')
 }

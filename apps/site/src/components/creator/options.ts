@@ -1,8 +1,7 @@
 import { baseColorNames, createPreset, getBaseColors, presetNames } from 'shadcn-uniapp'
 
 export type PickerOption = { value: string; label: string; color?: string; description?: string }
-export type SettingKey =
-  'style' | 'base' | 'accent' | 'chart' | 'heading' | 'font' | 'radius' | 'density'
+export type SettingKey = 'style' | 'base' | 'accent' | 'heading' | 'font' | 'radius' | 'density'
 
 export const baseOptions: PickerOption[] = baseColorNames.map((value) => ({
   value,

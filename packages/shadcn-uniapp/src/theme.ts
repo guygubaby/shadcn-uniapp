@@ -34,6 +34,7 @@ export const themeSchema = z.strictObject({
   density: z.enum(['comfortable', 'compact']),
   font: z.enum(fontNames).default('system'),
   headingFont: z.enum(fontNames).default('system'),
+  // Retained for the immutable v1 preset format; charts follow the active primary color.
   chartColor: colorSchema.default('#047857'),
   light: colorTokensSchema,
   dark: colorTokensSchema,
@@ -183,7 +184,7 @@ export function getThemeVariables(
     '--sui-destructive-foreground': c.destructiveForeground,
     '--sui-font-body': fontFamilies[config.font],
     '--sui-font-heading': fontFamilies[config.headingFont],
-    '--sui-chart': config.chartColor,
+    '--sui-chart': c.primary,
     '--wot-typography-body-font-family': fontFamilies[config.font],
     '--wot-typography-label-font-family': fontFamilies[config.font],
     '--wot-typography-title-font-family': fontFamilies[config.headingFont],

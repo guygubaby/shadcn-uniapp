@@ -146,7 +146,7 @@ Source coverage and a successful WeChat compile are not a claim that every inter
 has passed on a real phone. Camera/file selection, canvas export, gestures, video playback,
 font loading, and detached overlays should be checked on the intended WeChat devices.
 
-Creator generates a portable preset code. Copy its install command to initialize directly, without downloading a theme file:
+Creator generates a portable preset code. Choose **Use this theme** and copy its install command:
 
 ```sh
 pnpm dlx shadcn-uniapp@latest init --preset su1-820

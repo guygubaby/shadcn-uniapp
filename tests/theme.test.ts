@@ -11,6 +11,12 @@ import {
 } from '../packages/shadcn-uniapp/src/theme'
 
 describe('theme contract', () => {
+  it('uses the active primary color for charts even when a legacy preset has a separate chart color', () => {
+    const theme = { ...createPreset('teal'), chartColor: '#dc2626' }
+    for (const mode of ['light', 'dark'] as const)
+      expect(getThemeVariables(theme, mode)['--sui-chart']).toBe(theme[mode].primary)
+  })
+
   it.each(presetNames)(
     'generates deterministic light/dark %s styles and concrete portal vars',
     (name) => {

@@ -82,7 +82,6 @@ const pickers: {
   { key: 'style', label: 'Style', options: styleOptions, kind: 'style' },
   { key: 'base', label: 'Base color', options: baseOptions, kind: 'color' },
   { key: 'accent', label: 'Theme', options: accentOptions, kind: 'color' },
-  { key: 'chart', label: 'Chart color', options: accentOptions, kind: 'color' },
   { key: 'heading', label: 'Heading', options: fontOptions, kind: 'font', group: true },
   { key: 'font', label: 'Font', options: fontOptions, kind: 'font' },
   { key: 'radius', label: 'Radius', options: radiusOptions, kind: 'radius', group: true },
@@ -222,7 +221,7 @@ function rename(value: string | number) {
               :disabled="!nameValid"
               @click="exportRef = true"
             >
-              {{ t('Create theme') }}<ArrowUpRight class="size-3.5" />
+              {{ t('Use this theme') }}<ArrowUpRight class="size-3.5" />
             </button>
           </div></aside
       ></Transition>

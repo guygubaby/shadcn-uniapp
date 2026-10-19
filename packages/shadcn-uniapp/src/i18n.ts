@@ -1,13 +1,21 @@
 export type UiLocale = 'zh-CN' | 'en-US'
 
 export const chineseMessages: Record<string, string> = {
-  'Run in your project. Your preset includes the complete theme; no download or account is needed.':
-    '在项目中运行以下命令，预设码已包含完整主题，无需下载文件或注册账号。',
+  'AI guide': 'AI 风格指南',
+  'AI style instructions': 'AI 界面风格指令',
+  'Copy for AI': '复制给 AI',
+  'Paste this into your coding agent. It saves UI_STYLE_GUIDE.md and references it from AGENTS.md, so future pages follow your theme and shared components.':
+    '粘贴给你的编程 Agent。它会保存 UI_STYLE_GUIDE.md 并在 AGENTS.md 中引用，让后续页面遵循当前主题并复用已有组件。',
+  'Includes your selected preset and icon choice. Existing project rules are preserved.':
+    '包含当前预设和图标选择，并保留项目已有规则。',
+  'In Use this theme, open AI guide and copy the instructions to your coding agent. It saves UI_STYLE_GUIDE.md and adds a reference in AGENTS.md. Future pages reuse your installed theme, spacing rules and shared components.':
+    '在「使用此主题」中打开「AI 风格指南」，复制指令给编程 Agent。它会保存 UI_STYLE_GUIDE.md 并在 AGENTS.md 中添加引用，后续页面会复用已安装的主题、间距规范和共享组件。',
+  'Run in your project to apply this theme.': '在项目中运行以下命令，应用此主题。',
   'Preset code': '预设码',
   'Paste a preset code to restore all theme settings.': '粘贴预设码，还原完整主题设置。',
   'Enter a valid preset code from Creator.': '请输入创建器生成的有效预设码。',
-  'Choose Create theme and copy the init --preset command. No JSON download is needed.':
-    '点击「创建主题」，复制 init --preset 命令，无需下载 JSON。',
+  'Choose Use this theme and copy the init --preset command.':
+    '点击「使用此主题」，复制 init --preset 命令。',
   'Run the command in your project. Existing generated files are protected; review them before using --force to replace a theme.':
     '在项目中运行命令。已有生成文件会受到保护，使用 --force 替换主题前请先检查这些文件。',
   'The CLI saves an editable theme JSON in your project. After local edits, run generate to update only its stylesheet.':
@@ -328,7 +336,6 @@ export const chineseMessages: Record<string, string> = {
   'Categorized messages with local read state and detail actions.':
     '消息分类、本地已读状态与详情操作。',
   Category: '分类',
-  'Chart color': '图表色',
   'Check existing hardcoded colors, explicit color props, and deep style overrides.':
     '检查现有硬编码颜色、显式 color 属性和深层样式覆盖。',
   'CheckboxGroup, RadioGroup, Switch, Rate, and Slider.': '复选框组、单选框组、开关、评分和滑块。',
@@ -371,7 +378,7 @@ export const chineseMessages: Record<string, string> = {
   'Create a theme': '创建主题',
   'Create a workspace': '创建工作空间',
   'Create and update themes': '创建和更新主题',
-  'Create theme': '创建主题',
+  'Use this theme': '使用此主题',
   'Create workspace': '创建工作空间',
   'Creative studio workshop': '创意工作坊',
   'Crop image': '裁剪图片',
