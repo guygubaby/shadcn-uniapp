@@ -319,6 +319,11 @@ export const componentThemeCss = `.wd-checkbox--vertical + .wd-checkbox--vertica
   margin-top: 8px;
 }
 
+.wd-checkbox:not(.is-button) > .wd-checkbox__shape,
+.wd-radio:not(.is-button) > .wd-radio__shape {
+  align-self: flex-start;
+}
+
 .sui-choice-group {
   display: flex;
   flex-wrap: wrap;
