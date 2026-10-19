@@ -1,6 +1,6 @@
 {
   "name": "shadcn-uniapp",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Shadcn-inspired themes, a theme creator, and source-owned blocks for Wot UI and uni-app.",
   "type": "module",
   "license": "MIT",

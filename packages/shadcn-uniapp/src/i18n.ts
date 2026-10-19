@@ -1,15 +1,15 @@
 export type UiLocale = 'zh-CN' | 'en-US'
 
 export const chineseMessages: Record<string, string> = {
-  'AI guide': 'AI 风格指南',
+  'AI Style Guide': 'AI 风格指南',
   'AI style instructions': 'AI 界面风格指令',
-  'Copy for AI': '复制给 AI',
-  'Paste this into your coding agent. It saves UI_STYLE_GUIDE.md and references it from AGENTS.md, so future pages follow your theme and shared components.':
-    '粘贴给你的编程 Agent。它会保存 UI_STYLE_GUIDE.md 并在 AGENTS.md 中引用，让后续页面遵循当前主题并复用已有组件。',
-  'Includes your selected preset and icon choice. Existing project rules are preserved.':
-    '包含当前预设和图标选择，并保留项目已有规则。',
-  'In Use this theme, open AI guide and copy the instructions to your coding agent. It saves UI_STYLE_GUIDE.md and adds a reference in AGENTS.md. Future pages reuse your installed theme, spacing rules and shared components.':
-    '在「使用此主题」中打开「AI 风格指南」，复制指令给编程 Agent。它会保存 UI_STYLE_GUIDE.md 并在 AGENTS.md 中添加引用，后续页面会复用已安装的主题、间距规范和共享组件。',
+  'Copy style guide': '复制风格指南',
+  'Initialization saves UI_STYLE_GUIDE.md and links it from AGENTS.md. Preview the rules your agent will follow when building new pages.':
+    '初始化会自动保存 UI_STYLE_GUIDE.md，并在 AGENTS.md 中引用。这里可预览 Agent 构建后续页面时遵循的规则。',
+  'Existing guides and project rules are preserved. Other coding agents can reference this file from their project rules.':
+    '已有指南和项目规则会保留。其他编程 Agent 也可在其项目规则中引用同一份文件。',
+  'init saves UI_STYLE_GUIDE.md and adds its reference to AGENTS.md. Existing projects can run generate to add missing guidance. Choose Use this theme → AI Style Guide to preview or copy the rules.':
+    'init 会自动保存 UI_STYLE_GUIDE.md 并在 AGENTS.md 中引用；已有项目可运行 generate 补齐。点击「使用此主题 → AI 风格指南」可预览或复制规则。',
   'Run in your project to apply this theme.': '在项目中运行以下命令，应用此主题。',
   'Preset code': '预设码',
   'Paste a preset code to restore all theme settings.': '粘贴预设码，还原完整主题设置。',
@@ -18,8 +18,8 @@ export const chineseMessages: Record<string, string> = {
     '点击「使用此主题」，复制 init --preset 命令。',
   'Run the command in your project. Existing generated files are protected; review them before using --force to replace a theme.':
     '在项目中运行命令。已有生成文件会受到保护，使用 --force 替换主题前请先检查这些文件。',
-  'The CLI saves an editable theme JSON in your project. After local edits, run generate to update only its stylesheet.':
-    'CLI 会在项目中保存可编辑的主题 JSON，本地修改后运行 generate，仅更新对应样式文件。',
+  'The CLI saves an editable theme JSON in your project. After local edits, run generate to refresh its stylesheet. Existing style guides and agent rules are preserved.':
+    'CLI 会在项目中保存可编辑的主题 JSON，本地修改后运行 generate 更新样式，并保留已有风格指南和 Agent 规则。',
   'Wot UI theme creator for uni-app': 'uni-app Wot UI 在线主题生成器',
   'Mobile app blocks for uni-app': 'uni-app 手机端与校园业务区块',
   'shadcn-uniapp documentation': 'shadcn-uniapp 安装与使用文档',
@@ -283,8 +283,8 @@ export const chineseMessages: Record<string, string> = {
   'Add source-owned blocks': '添加源码区块',
   'Add to bag': '加入购物袋',
   'Adjust quantities and review a total calculated in cents.': '调整数量，以整数分计算订单总额。',
-  'Install from npm and initialize your project. The init command creates your config and theme JSON / SCSS, then appends the theme imports to App.vue. It does not install dependencies or patch Wot.':
-    '从 npm 安装并初始化项目。init 会创建配置和主题 JSON / SCSS，并向 App.vue 添加主题导入，不会安装依赖或修改 Wot 源码。',
+  'Install from npm and initialize your project. The init command creates project config, theme styles and UI_STYLE_GUIDE.md, adds an AGENTS.md reference, and imports the theme in App.vue.':
+    '从 npm 安装并初始化项目。init 会创建项目配置、主题样式和 UI_STYLE_GUIDE.md，在 AGENTS.md 中添加引用，并在 App.vue 中导入主题。',
   'All components': '全部组件',
   'All items': '全部项目',
   'All required files are ready': '所有必需文件已就绪',

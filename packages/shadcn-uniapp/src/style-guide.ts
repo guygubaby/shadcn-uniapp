@@ -1,20 +1,8 @@
-import { encodeThemePreset, type ThemeConfig } from 'shadcn-uniapp'
-
-export function createStyleGuidePrompt(theme: ThemeConfig, lucide: boolean) {
-  const preset = encodeThemePreset({ ...theme, chartColor: theme.light.primary })
-  return `Establish a persistent UI style for this project using the Markdown below.
-
-1. Read the project's AGENTS.md, package.json, shadcn-uniapp.json, current theme and shared components first. Preserve existing code and instructions.
-2. Save the guide after the separator as UI_STYLE_GUIDE.md in the project root. If a guide already exists, merge the rules without deleting project-specific decisions.
-3. Add this reference to the root AGENTS.md (create it if absent): "Before creating or changing UI, read and follow UI_STYLE_GUIDE.md. Reuse the installed theme and shared components." Preserve all other instructions; do not duplicate the reference. If the coding agent uses another project rules file, add the same reference there instead of duplicating the guide.
-4. For an uninitialized compatible Wot UI 2.x project, use this selected preset: pnpm dlx shadcn-uniapp@latest init --preset ${preset}. Inspect dependencies first. If already initialized, use its current theme; ask before replacing it, migrating the styling system, or using --force.
-5. For subsequent page requests, implement the requested business flow within this guide. Ask only when a business requirement or a design-system change is unclear.
-
----
-
-# UI style guide
+export const uiStyleGuide: string = `# UI Style Guide
 
 ## Source of truth
+
+This file is source-owned. Keep project-specific conventions here; later init and generate runs preserve it. If your agent uses a project rules file other than AGENTS.md, reference this guide there.
 
 - This project uses the quiet, compact shadcn/ui visual language, implemented with uni-app Vue 3 and Wot UI 2.x.
 - Read shadcn-uniapp.json for the theme, generated CSS and block paths. The installed theme JSON and stylesheet are authoritative, including later theme changes.
@@ -61,7 +49,9 @@ Use the semantic CSS variables below. Never copy a preview's light-mode hex colo
 
 ## Icons
 
-${lucide ? '- Use named imports from @lucide/vue with consistent 20px size and 2px stroke (16px in compact controls). Decorative icons should be hidden from assistive technology; icon-only actions need an accessible name.\n- Preserve lucideUniapp() from shadcn-uniapp/vite before uni() in Vite 5 so H5 and miniapps render the same icons. Do not use wd-icon font mappings, emoji or custom SVG replacements when Lucide provides the icon.' : '- Preserve the installed icon system and keep its size and stroke consistent. Lucide is disabled for this setup: do not introduce @lucide/vue imports or its Vite plugin without approval.'}
+- Read package.json and Vite configuration and reuse the installed icon system. Do not add a second icon family for a new page.
+- When @lucide/vue is installed, use named imports, consistent 20px icons and 2px strokes (16px in compact controls). Keep lucideUniapp() from shadcn-uniapp/vite before uni() for miniapps. Do not replace configured icons with wd-icon font mappings, emoji or custom SVG.
+- If Lucide is not configured, preserve existing icons. Ask before changing the project icon system. Decorative icons should be hidden from assistive technology; icon-only actions need an accessible name.
 
 ## Before completing a page
 
@@ -71,4 +61,3 @@ ${lucide ? '- Use named imports from @lucide/vue with consistent 20px size and 2
 4. Run the project's relevant type/build checks. Verify miniapp behavior on the intended runtime when available; report real-device checks separately from compilation.
 5. Keep this guide current when the project deliberately changes its design rules. Routine business pages should follow it without redesigning the UI.
 `
-}

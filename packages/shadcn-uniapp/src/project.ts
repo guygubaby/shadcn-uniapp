@@ -13,6 +13,7 @@ import { blocks } from './blocks'
 import { generateThemeCss, parseTheme } from './theme'
 import type { ThemeConfig } from './theme'
 import { decodeThemePreset } from './preset'
+import { uiStyleGuide } from './style-guide'
 
 const projectSchema = z.strictObject({
   version: z.literal(1),
@@ -27,6 +28,8 @@ export const defaultProjectConfig = {
   blocks: 'src/components/blocks',
 }
 const configFile = 'shadcn-uniapp.json'
+const guideFile = 'UI_STYLE_GUIDE.md'
+const agentRulesFile = 'AGENTS.md'
 
 function checkedPath(root: string, name: string): string {
   const full = resolve(root, name)
@@ -73,6 +76,20 @@ function writeFiles(
 
 function projectRoot(cwd: string) {
   return realpathSync(resolve(cwd))
+}
+
+function guidanceFiles(root: string): Record<string, string> {
+  const files: Record<string, string> = {}
+  const guidePath = checkedPath(root, guideFile)
+  if (!existsSync(guidePath)) files[guideFile] = uiStyleGuide
+  else if (!lstatSync(guidePath).isFile()) throw new Error(`Not a file: ${guideFile}`)
+  const rulesPath = checkedPath(root, agentRulesFile)
+  const currentRules = existsSync(rulesPath) ? readFileSync(rulesPath, 'utf8') : ''
+  if (!currentRules.includes(guideFile)) {
+    const reference = `## UI style guide\n\nBefore creating or changing UI, read and follow [${guideFile}](./${guideFile}). Reuse the installed theme and shared components.\n`
+    files[agentRulesFile] = currentRules ? `${currentRules}\n\n${reference}` : reference
+  }
+  return files
 }
 
 function readConfig(root: string) {
@@ -133,9 +150,10 @@ export function initProject(cwd: string, preset: string | ThemeConfig = 'zinc', 
       [config.theme]: JSON.stringify(theme, null, 2) + '\n',
       [config.css]: generateThemeCss(theme),
       [appPath]: nextApp,
+      ...guidanceFiles(root),
     },
     force,
-    new Set([appPath]),
+    new Set([appPath, agentRulesFile]),
   )
 }
 
@@ -146,7 +164,7 @@ export function generateProjectTheme(cwd: string) {
   if (lstatSync(themeFile).size > 256 * 1024)
     throw new Error('Theme JSON must be smaller than 256 KiB.')
   const theme = parseTheme(JSON.parse(readFileSync(themeFile, 'utf8')))
-  return writeFiles(root, { [config.css]: generateThemeCss(theme) }, true)
+  return writeFiles(root, { [config.css]: generateThemeCss(theme), ...guidanceFiles(root) }, true)
 }
 
 export function addBlock(cwd: string, name: string, force = false) {
