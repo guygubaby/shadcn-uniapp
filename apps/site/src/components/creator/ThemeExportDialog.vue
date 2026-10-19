@@ -96,7 +96,7 @@ import { Search } from '@lucide/vue'`
             <summary
               class="flex cursor-pointer list-none items-center justify-between gap-3 rounded-lg px-4 py-3 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 [&::-webkit-details-marker]:hidden"
             >
-              {{ t('Details') }}
+              {{ t('Install manually') }}
               <ChevronDown
                 class="size-4 text-muted-foreground transition-transform group-open:rotate-180 motion-reduce:transition-none"
                 aria-hidden="true"

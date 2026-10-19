@@ -167,7 +167,7 @@ const vars = getWotThemeVars(config, 'dark')`
             <li>
               {{
                 t(
-                  'Choose Use this theme and copy the agent instruction, or expand Details for manual setup.',
+                  'Choose Use this theme and copy the agent instruction, or expand Install manually for setup commands.',
                 )
               }}
             </li>
