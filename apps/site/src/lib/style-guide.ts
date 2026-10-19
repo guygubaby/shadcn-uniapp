@@ -53,10 +53,11 @@ Use the semantic CSS variables below. Never copy a preview's light-mode hex colo
 ## Controls and interaction
 
 - Reuse Wot buttons, fields, selections, dialogs and shared project wrappers. Keep primary actions visually clear and secondary actions quieter.
-- Center horizontal field labels against their controls; align checkbox/radio markers with the first line of multiline labels. Give textareas at least 12px inner padding and separate fields from action buttons.
+- Place form labels above their full-width controls, with an 8px gap. Do not use side-by-side labels and inputs. Align checkbox/radio markers with the first line of multiline labels. Give textareas at least 12px inner padding and separate fields from action buttons.
+- Notice bars inherit the theme radius; tags fit their content rather than stretching across the row. Keep avatar initials smaller than the surrounding avatar.
 - Keep normal, hover/pressed, visible keyboard focus, disabled, loading, error and empty states consistent. Preserve labels and accessible names; support keyboard use on H5.
 - Use concise sentence-case labels. Keep important content reachable with large text and the on-screen keyboard.
-- Animate only to explain an interaction. Respect reduced motion. Segmented indicators must slide inside their control when panel height changes.
+- Animate only to explain an interaction, including a 200ms border-color transition when fields gain or lose focus. Respect reduced motion. Segmented indicators must slide inside their control when panel height changes.
 
 ## Icons
 

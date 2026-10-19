@@ -45,12 +45,10 @@ describe('theme contract', () => {
     const unknown = Object.keys(getWotThemeVars(createPreset())).filter((key) => !known.has(key))
     expect(unknown).toEqual([])
   })
-  it('exports checkbox spacing, centered form rows and square calendar selection', () => {
+  it('exports checkbox spacing, stacked form fields and square calendar selection', () => {
     const css = generateThemeCss(createPreset())
     expect(css).toContain('.wd-checkbox--vertical + .wd-checkbox--vertical {\n  margin-top: 8px;')
-    expect(css).toContain(
-      '.wd-cell.wd-form-item > .wd-cell__wrapper:not(.wd-cell__wrapper--vertical)',
-    )
+    expect(css).toContain('.wd-cell.wd-form-item > .wd-cell__wrapper {\n  display: block;')
     expect(css).toContain('aspect-ratio: 1;')
     expect(css).toContain('max-width: var(--wot-calendar-view-day-height, 60px);')
     expect(css).toContain('.sui-choice-group {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px;')

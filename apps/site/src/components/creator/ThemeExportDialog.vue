@@ -54,7 +54,6 @@ import { Search } from '@lucide/vue'`
           t('Bring it to your existing Wot UI 2.x project. No component migration required.')
         }}</DialogDescription>
       </DialogHeader>
-      <CodeBlock :code="presetCode" :label="t('Preset code')" />
       <Tabs default-value="install" class="min-w-0">
         <TabsList
           ><TabsTrigger value="install">{{ t('Install') }}</TabsTrigger

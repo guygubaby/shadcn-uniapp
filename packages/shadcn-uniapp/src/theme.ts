@@ -225,6 +225,7 @@ export function getThemeVariables(
     '--wot-button-height-medium': config.density === 'compact' ? '32px' : '40px',
     '--wot-button-height-large': config.density === 'compact' ? '40px' : '48px',
     '--wot-tag-radius': `${Math.max(0, config.radius - 2)}px`,
+    '--wot-notice-bar-radius': radius,
     '--wot-cell-padding': config.density === 'compact' ? '10px 14px' : '14px 16px',
     '--wot-input-padding': '0 12px',
     '--wot-textarea-padding': '12px',
@@ -338,8 +339,33 @@ export const componentThemeCss = `.wd-checkbox--vertical + .wd-checkbox--vertica
   max-width: 100%;
 }
 
-.wd-cell.wd-form-item > .wd-cell__wrapper:not(.wd-cell__wrapper--vertical) {
-  align-items: center;
+.wd-tag {
+  width: fit-content;
+  max-width: 100%;
+}
+
+.wd-avatar__text {
+  font-size: 0.75em;
+  line-height: 1.2;
+}
+
+.wd-cell.wd-form-item > .wd-cell__wrapper {
+  display: block;
+}
+
+.wd-cell.wd-form-item > .wd-cell__wrapper > .wd-cell__left {
+  /* Wot sets the title width inline, including in vertical forms. */
+  min-width: 0 !important;
+  max-width: none !important;
+  margin-right: 0;
+}
+
+.wd-cell.wd-form-item > .wd-cell__wrapper > .wd-cell__right {
+  margin-top: 0;
+}
+
+.wd-cell.wd-form-item > .wd-cell__wrapper > .wd-cell__left + .wd-cell__right {
+  margin-top: 8px;
 }
 
 .wd-month__day {
@@ -363,6 +389,7 @@ export const componentThemeCss = `.wd-checkbox--vertical + .wd-checkbox--vertica
   box-sizing: border-box;
   border: 1px solid var(--sui-border);
   border-radius: var(--sui-radius);
+  transition: border-color 200ms ease-out;
 }
 
 .wd-cell.wd-form-item .wd-input.is-compact {
@@ -381,6 +408,13 @@ export const componentThemeCss = `.wd-checkbox--vertical + .wd-checkbox--vertica
 .wd-input.is-error,
 .wd-textarea.is-error {
   border-color: var(--sui-destructive);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wd-input,
+  .wd-textarea {
+    transition: none;
+  }
 }`
 
 export function generateThemeCss(input: ThemeConfig): string {
