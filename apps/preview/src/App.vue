@@ -4,6 +4,13 @@ defineOptions({ name: 'WotPreviewApp' })
 
 <style>
 @import './app.css';
+
+/* #ifdef H5 */
+/* Override uni-app's inline viewport-based rem scale for the embedded gallery. */
+html {
+  font-size: 100% !important;
+}
+/* #endif */
 </style>
 
 <style lang="scss">
