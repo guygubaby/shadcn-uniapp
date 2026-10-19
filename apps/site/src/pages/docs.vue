@@ -129,7 +129,7 @@ const vars = getWotThemeVars(config, 'dark')`
           <p class="my-4 text-sm leading-7 text-muted-foreground">
             {{
               t(
-                'Install from npm and initialize your project. The init command creates your config and theme JSON / SCSS, then appends the theme imports to App.vue. It does not install dependencies or patch Wot.',
+                'Install from npm and initialize your project. The init command creates project config, theme styles and UI_STYLE_GUIDE.md, adds an AGENTS.md reference, and imports the theme in App.vue.',
               )
             }}
           </p>
@@ -178,7 +178,7 @@ const vars = getWotThemeVars(config, 'dark')`
           <p class="my-4 text-sm leading-7 text-muted-foreground">
             {{
               t(
-                'The CLI saves an editable theme JSON in your project. After local edits, run generate to update only its stylesheet.',
+                'The CLI saves an editable theme JSON in your project. After local edits, run generate to refresh its stylesheet. Existing style guides and agent rules are preserved.',
               )
             }}
           </p>
@@ -186,7 +186,7 @@ const vars = getWotThemeVars(config, 'dark')`
           <p class="my-4 text-sm leading-7 text-muted-foreground">
             {{
               t(
-                'In Use this theme, open AI guide and copy the instructions to your coding agent. It saves UI_STYLE_GUIDE.md and adds a reference in AGENTS.md. Future pages reuse your installed theme, spacing rules and shared components.',
+                'init saves UI_STYLE_GUIDE.md and adds its reference to AGENTS.md. Existing projects can run generate to add missing guidance. Choose Use this theme → AI Style Guide to preview or copy the rules.',
               )
             }}
           </p>

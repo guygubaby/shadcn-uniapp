@@ -35,6 +35,58 @@ afterEach(() => {
 })
 
 describe('safe source installation', () => {
+  it('creates a persistent style guide and preserves project rules and later guide edits', () => {
+    const root = project()
+    const existingRules = '# Project rules\n\nKeep our existing stack.\n'
+    writeFileSync(join(root, 'AGENTS.md'), existingRules)
+    const files = initProject(root, 'teal')
+    expect(files).toContain('UI_STYLE_GUIDE.md')
+    expect(files).toContain('AGENTS.md')
+    const guide = readFileSync(join(root, 'UI_STYLE_GUIDE.md'), 'utf8')
+    expect(guide).toContain('# UI Style Guide')
+    expect(guide).toContain('shadcn-uniapp.json')
+    const rules = readFileSync(join(root, 'AGENTS.md'), 'utf8')
+    expect(rules.startsWith(existingRules)).toBe(true)
+    expect(rules.match(/\(\.\/UI_STYLE_GUIDE\.md\)/g)).toHaveLength(1)
+    const customizedGuide = `${guide}\n## Project conventions\nUse our shared school components.\n`
+    writeFileSync(join(root, 'UI_STYLE_GUIDE.md'), customizedGuide)
+    generateProjectTheme(root)
+    initProject(root, 'orange', true)
+    expect(readFileSync(join(root, 'UI_STYLE_GUIDE.md'), 'utf8')).toBe(customizedGuide)
+    expect(readFileSync(join(root, 'AGENTS.md'), 'utf8')).toBe(rules)
+  })
+
+  it('backfills missing guidance in an initialized project without changing its theme or app', () => {
+    const root = project()
+    initProject(root, 'blue')
+    rmSync(join(root, 'UI_STYLE_GUIDE.md'), { force: true })
+    writeFileSync(join(root, 'AGENTS.md'), '# Existing project\n')
+    const app = readFileSync(join(root, 'src/App.vue'), 'utf8')
+    const theme = readFileSync(join(root, 'src/theme/shadcn.theme.json'), 'utf8')
+    const files = generateProjectTheme(root)
+    expect(files).toContain('UI_STYLE_GUIDE.md')
+    expect(readFileSync(join(root, 'AGENTS.md'), 'utf8')).toContain('(./UI_STYLE_GUIDE.md)')
+    expect(readFileSync(join(root, 'src/App.vue'), 'utf8')).toBe(app)
+    expect(readFileSync(join(root, 'src/theme/shadcn.theme.json'), 'utf8')).toBe(theme)
+    expect(generateProjectTheme(root)).toEqual(['src/theme/shadcn.scss'])
+  })
+
+  it.each(['UI_STYLE_GUIDE.md', 'AGENTS.md'])(
+    'rejects a symlinked %s before writing project files',
+    (name) => {
+      const root = project()
+      const outside = mkdtempSync(join(tmpdir(), 'shadcn-guidance-outside-'))
+      directories.push(outside)
+      writeFileSync(join(outside, name), 'user owned')
+      symlinkSync(join(outside, name), join(root, name))
+      const app = readFileSync(join(root, 'src/App.vue'), 'utf8')
+      expect(() => initProject(root)).toThrow(/symlink/)
+      expect(existsSync(join(root, 'shadcn-uniapp.json'))).toBe(false)
+      expect(readFileSync(join(root, 'src/App.vue'), 'utf8')).toBe(app)
+      expect(readFileSync(join(outside, name), 'utf8')).toBe('user owned')
+    },
+  )
+
   it('installs a preset code without an input file and refuses invalid codes without writing', () => {
     const root = project()
     const theme = { ...createPreset('blue'), radius: 12 }
@@ -99,6 +151,8 @@ describe('safe source installation', () => {
     expect(existsSync(join(root, 'shadcn-uniapp.json'))).toBe(false)
     expect(readFileSync(join(root, 'src/App.vue'), 'utf8')).toBe(app)
     expect(readFileSync(join(root, 'src/theme/shadcn.scss'), 'utf8')).toBe('user owned')
+    expect(existsSync(join(root, 'UI_STYLE_GUIDE.md'))).toBe(false)
+    expect(existsSync(join(root, 'AGENTS.md'))).toBe(false)
   })
 
   it('preserves an existing UnoCSS setup when installing and regenerating the theme', () => {

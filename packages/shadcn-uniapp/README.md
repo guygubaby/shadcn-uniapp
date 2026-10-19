@@ -24,7 +24,7 @@ pnpm dlx shadcn-uniapp@latest init --preset su1-820
 
 Preset codes resolve locally and contain all theme settings. Common choices use a short code; custom names and colors add an encoded extension. Codes do not expire or require a backend. `su1-820` is the default zinc theme. `init --theme <file>` remains available for existing JSON workflows.
 
-Creator also provides **Copy preset code** and **Open preset** for reusing themes without links or file downloads. To edit the installed theme locally, change `src/theme/shadcn.theme.json`, then:
+Creator also provides **Copy preset code** and **Open preset** for reusing themes. To edit the installed theme locally, change `src/theme/shadcn.theme.json`, then:
 
 ```sh
 pnpm exec shadcn-uniapp generate
@@ -32,7 +32,9 @@ pnpm exec shadcn-uniapp generate
 
 Presets: zinc, blue, emerald, rose, orange, violet, amber, teal, red, pink. Includes 28 source-owned blocks for mobile apps and international schools; see the [Blocks catalog](https://shadcn-uniapp.guygubaby.top/blocks) for names and previews.
 
-`init` preserves existing App.vue content and appends theme imports. Existing generated files are protected unless `--force` is passed. `generate` replaces only the configured generated stylesheet. No dependency is installed and no Wot code is patched.
+`init` preserves existing App.vue content and appends theme imports. It also creates `UI_STYLE_GUIDE.md` in the project root and links it from `AGENTS.md`, so coding agents can reuse the current theme and UI conventions. Existing style-guide edits and agent instructions are preserved, including with `--force`.
+
+For projects initialized with an older version, run `generate` to refresh the stylesheet and add missing guidance. Existing generated theme and block files are protected unless `--force` is passed. No dependency is installed and no Wot code is patched.
 
 CLI options: `--cwd <directory>`, `--force`, `--help`. Node.js 20.19+ required.
 

@@ -1,5 +1,4 @@
-import { createPreset, type UiLocale } from 'shadcn-uniapp'
-import { createStyleGuidePrompt } from './style-guide'
+import type { UiLocale } from 'shadcn-uniapp'
 
 export type SetupStyling = 'preserve' | 'tailwind' | 'unocss'
 
@@ -50,10 +49,13 @@ export function createAgentSetupPrompt(
       '5. If not initialized, run pnpm exec shadcn-uniapp init --preset zinc. If shadcn-uniapp.json exists, preserve its theme and paths and use generate; never pass --force without confirming replacement. Keep Wot easycom and Sass and import the global theme after Wot styles. The theme works with either Tailwind or UnoCSS.',
     ),
     say(
-      '6. 使用目标项目现有命令完成类型检查、H5 与微信小程序构建，实际检查主题切换、表单间距及所选图标渲染。报告更改文件、采用的样式方案、通过的检查与未完成的真机验证。不要把编译通过说成真机验证通过。',
-      '6. Use the target project commands for type checks, H5 and WeChat builds. Check theme switching, form spacing and selected icons. Report changed files, chosen styling, passed checks and remaining real-device verification; compilation is not real-device testing.',
+      '6. init 会自动保存 UI_STYLE_GUIDE.md 并在 AGENTS.md 中引用；旧项目运行 generate 补齐缺失的指南与引用。读取这份指南，后续页面复用当前主题和共享组件。保留用户已有的指南内容及项目规则；其他 Agent 若使用不同规则文件，在其现有规则文件中引用同一份指南。',
+      '6. init automatically saves UI_STYLE_GUIDE.md and references it from AGENTS.md; generate adds missing guidance to older projects. Read that guide and reuse the current theme and shared components for future pages. Preserve customized guides and project rules. If another agent uses a different project rules file, reference the same guide there.',
+    ),
+    say(
+      '7. 使用目标项目现有命令完成类型检查、H5 与微信小程序构建，实际检查主题切换、表单间距及所选图标渲染。报告更改文件、采用的样式方案、通过的检查与未完成的真机验证。不要把编译通过说成真机验证通过。',
+      '7. Use the target project commands for type checks, H5 and WeChat builds. Check theme switching, form spacing and selected icons. Report changed files, chosen styling, passed checks and remaining real-device verification; compilation is not real-device testing.',
     ),
     'References: https://shadcn-uniapp.guygubaby.top/docs | https://tw.weapp.dev/zh-cn/docs/quick-start/frameworks/uni-app-vite | https://uni-helper.js.org/unocss-preset-uni/',
-    createStyleGuidePrompt(createPreset(), options.lucide),
   ].join('\n\n')
 }

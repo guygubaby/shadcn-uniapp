@@ -8,6 +8,8 @@ it('keeps legacy UnoCSS and project changes by default, with optional Lucide int
   expect(prompt).toContain('lucideUniapp')
   expect(prompt).toContain('before uni()')
   expect(prompt).toContain('pnpm add -D shadcn-uniapp sass')
+  expect(prompt).toContain('init automatically saves UI_STYLE_GUIDE.md')
+  expect(prompt).toContain('generate adds missing guidance')
   expect(prompt).not.toMatch(/unpublished|temporary directory|\.tgz/)
 })
 

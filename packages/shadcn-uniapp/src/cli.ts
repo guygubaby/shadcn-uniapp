@@ -6,7 +6,7 @@ import { addBlock, generateProjectTheme, initProject } from './project'
 import { blocks } from './blocks'
 import { parseTheme, presetNames } from './theme'
 
-const help = `shadcn-uniapp 0.1.1 — Wot UI 2.x themes and source blocks
+const help = `shadcn-uniapp 0.1.2 — Wot UI 2.x themes and source blocks
 
   shadcn-uniapp init [--preset ${presetNames.join('|')}]
   shadcn-uniapp init --preset <code-from-creator>
@@ -23,10 +23,10 @@ Options:
   --force            Explicitly replace existing generated files
   --help             Show this message
 
-init preserves Wot APIs and adds a global theme import to App.vue.
+init adds a global theme import, UI_STYLE_GUIDE.md and an AGENTS.md reference.
 Install icons for your app: pnpm add @lucide/vue
 New miniapps: Tailwind CSS v4 + weapp-tailwindcss (uni-app Vite integration).
-generate reads shadcn-uniapp.json and regenerates only its CSS output.
+generate refreshes CSS and adds missing guidance; existing guides and agent rules are preserved.
 No dependency is installed, no Wot source is patched, and Wot v1 is not supported.
 `
 
@@ -73,7 +73,7 @@ try {
     process.stdout.write(`Done:\n${files.map((file) => `  ${file}`).join('\n')}\n`)
     if (command === 'init')
       process.stdout.write(
-        'Keep Wot easycom as configured. Sass is required.\nInstall icons: pnpm add @lucide/vue\nRegister lucideUniapp() from shadcn-uniapp/vite before uni() in vite.config.ts (Vite 5 supported).\nUse named imports from @lucide/vue normally; miniapp builds adapt them automatically. Theme styles contain no icon assets.\nNew miniapps: Tailwind CSS v4 + weapp-tailwindcss.\nEdit the theme JSON, then run shadcn-uniapp generate.\n',
+        'UI_STYLE_GUIDE.md is linked from AGENTS.md for future UI work. Existing guidance is preserved.\nKeep Wot easycom as configured. Sass is required.\nInstall icons: pnpm add @lucide/vue\nRegister lucideUniapp() from shadcn-uniapp/vite before uni() in vite.config.ts (Vite 5 supported).\nUse named imports from @lucide/vue normally; miniapp builds adapt them automatically. Theme styles contain no icon assets.\nNew miniapps: Tailwind CSS v4 + weapp-tailwindcss.\nEdit the theme JSON, then run shadcn-uniapp generate.\n',
       )
   }
 } catch (error) {

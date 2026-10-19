@@ -8,11 +8,12 @@ Shadcn-inspired themes, a visual theme creator, and editable source blocks for *
 
 Keep your `wd-*` components. Generate a theme instead of replacing the component library.
 
-## What ships in v0.1.1
+## What ships in v0.1.2
 
 - Ten light/dark accent presets, including zinc, blue, emerald, rose, and orange.
 - Validated theme JSON, semantic CSS variables and a Wot v2 token adapter.
 - CLI commands: `init`, `generate`, `add`.
+- A persistent `UI_STYLE_GUIDE.md`, linked from `AGENTS.md`, for future AI-assisted UI work.
 - 28 source-owned blocks for mobile apps, parent services, and teacher workflows.
 - A prerendered Vue website using shadcn-vue, plus a real, separately compiled uni-app H5 preview.
 - Creator with color/radius/density editing, contrast hints, portable preset codes and copyable SCSS.
@@ -39,11 +40,15 @@ pnpm exec shadcn-uniapp add profile-card
 
 ```text
 shadcn-uniapp.json
+UI_STYLE_GUIDE.md
+AGENTS.md
 src/theme/shadcn.theme.json
 src/theme/shadcn.scss
 ```
 
-It appends a separate global SCSS block to `App.vue`, preserves existing scripts/styles, and adds the Wot theme entry only if it is not already present. An existing generated file aborts the operation before changes; `--force` is an explicit overwrite. No dependency is automatically installed.
+It appends a separate global SCSS block to `App.vue`, preserves existing scripts/styles, and adds the Wot theme entry only if it is not already present. An existing generated theme file aborts the operation before changes; `--force` is an explicit overwrite. No dependency is automatically installed.
+
+`UI_STYLE_GUIDE.md` tells coding agents to read the current theme and reuse shared components, spacing and layout conventions. Existing guide edits and agent rules are preserved, including with `--force`. For an older initialized project, `generate` adds missing guidance automatically.
 
 ```vue
 <style lang="scss">

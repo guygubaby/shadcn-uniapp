@@ -3,7 +3,7 @@ import { useI18n } from '@/lib/i18n'
 
 import { computed, ref } from 'vue'
 import { Bot, Copy, Sparkles } from '@lucide/vue'
-import { encodeThemePreset, generateThemeCss } from 'shadcn-uniapp'
+import { encodeThemePreset, generateThemeCss, uiStyleGuide } from 'shadcn-uniapp'
 import type { ThemeConfig } from 'shadcn-uniapp'
 import {
   Dialog,
@@ -20,7 +20,6 @@ import CodeBlock from '@/components/CodeBlock.vue'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { copyText } from '@/lib/browser'
-import { createStyleGuidePrompt } from '@/lib/style-guide'
 
 const { t } = useI18n()
 const openRef = defineModel<boolean>('open', { default: false })
@@ -28,7 +27,6 @@ const props = defineProps<{ theme: ThemeConfig }>()
 const lucideRef = ref(true)
 const presetCode = computed(() => encodeThemePreset(props.theme))
 const css = computed(() => generateThemeCss(props.theme))
-const styleGuide = computed(() => createStyleGuidePrompt(props.theme, lucideRef.value))
 const install = computed(() =>
   [
     'pnpm add -D shadcn-uniapp@latest sass',
@@ -59,7 +57,7 @@ import { Search } from '@lucide/vue'`
           ><TabsTrigger value="install">{{ t('Install') }}</TabsTrigger
           ><TabsTrigger value="css">CSS</TabsTrigger
           ><TabsTrigger value="ai"
-            ><Bot class="size-4" aria-hidden="true" />{{ t('AI guide') }}</TabsTrigger
+            ><Bot class="size-4" aria-hidden="true" />{{ t('AI Style Guide') }}</TabsTrigger
           ></TabsList
         >
         <TabsContent value="install" class="flex flex-col gap-5 pt-3">
@@ -108,21 +106,21 @@ import { Search } from '@lucide/vue'`
           <p class="text-sm leading-6 text-muted-foreground">
             {{
               t(
-                'Paste this into your coding agent. It saves UI_STYLE_GUIDE.md and references it from AGENTS.md, so future pages follow your theme and shared components.',
+                'Initialization saves UI_STYLE_GUIDE.md and links it from AGENTS.md. Preview the rules your agent will follow when building new pages.',
               )
             }}
           </p>
           <Textarea
-            :model-value="styleGuide"
+            :model-value="uiStyleGuide"
             :aria-label="t('AI style instructions')"
             readonly
             class="field-sizing-fixed h-72 resize-none font-mono text-xs leading-6"
           />
-          <Button @click="copyText(styleGuide)"><Copy />{{ t('Copy for AI') }}</Button>
+          <Button @click="copyText(uiStyleGuide)"><Copy />{{ t('Copy style guide') }}</Button>
           <p class="text-xs leading-5 text-muted-foreground">
             {{
               t(
-                'Includes your selected preset and icon choice. Existing project rules are preserved.',
+                'Existing guides and project rules are preserved. Other coding agents can reference this file from their project rules.',
               )
             }}
           </p>
