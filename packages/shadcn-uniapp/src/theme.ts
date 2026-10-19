@@ -228,7 +228,7 @@ export function getThemeVariables(
     '--wot-notice-bar-radius': radius,
     '--wot-cell-padding': config.density === 'compact' ? '10px 14px' : '14px 16px',
     '--wot-collapse-item-header-padding': config.density === 'compact' ? '10px 0' : '12px 0',
-    '--wot-collapse-item-body-padding': config.density === 'compact' ? '0 0 10px' : '0 0 12px',
+    '--wot-collapse-item-body-padding': config.density === 'compact' ? '12px 0' : '16px 0',
     '--wot-input-padding': '0 12px',
     '--wot-textarea-padding': '12px',
     '--wot-input-bg': c.card,
@@ -349,6 +349,11 @@ export const componentThemeCss = `.wd-checkbox--vertical + .wd-checkbox--vertica
 .wd-avatar__text {
   font-size: 0.75em;
   line-height: 1.2;
+}
+
+.wd-tooltip .wd-tooltip__pos.wd-tooltip__hidden {
+  /* Keep Wot's hidden measurement node from extending the page's scroll height. */
+  bottom: 0;
 }
 
 .wd-cell.wd-form-item > .wd-cell__wrapper {
