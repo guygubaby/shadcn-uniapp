@@ -8,10 +8,11 @@ Shadcn-inspired themes, a visual theme creator, and editable source blocks for *
 
 Keep your `wd-*` components. Generate a theme instead of replacing the component library.
 
-## What ships in v0.1.2
+## What ships in v0.1.3
 
 - Ten light/dark accent presets, including zinc, blue, emerald, rose, and orange.
 - Validated theme JSON, semantic CSS variables and a Wot v2 token adapter.
+- Compact accordion alignment with density-aware content padding, and a fix for hidden Tooltip measurement causing empty page space.
 - CLI commands: `init`, `generate`, `add`.
 - A persistent `UI_STYLE_GUIDE.md`, linked from `AGENTS.md`, for future AI-assisted UI work.
 - 28 source-owned blocks for mobile apps, parent services, and teacher workflows.

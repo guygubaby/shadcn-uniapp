@@ -4,6 +4,10 @@ Shadcn-inspired themes and source-owned blocks for **Wot UI 2.x + uni-app**.
 
 [Website](https://shadcn-uniapp.guygubaby.top) | [Creator](https://shadcn-uniapp.guygubaby.top/create) | [Documentation](https://shadcn-uniapp.guygubaby.top/docs) | [GitHub](https://github.com/guygubaby/shadcn-uniapp)
 
+## v0.1.3
+
+Accordion questions and answers now align with their container, with density-aware vertical spacing. Hidden Tooltip measurement nodes no longer create empty scroll space. Existing projects should upgrade the package and run `pnpm exec shadcn-uniapp generate` to refresh generated styles.
+
 ## Use
 
 In an existing Vue 3 / uni-app project with npm-installed `@wot-ui/ui` 2.x, Wot easycom and Sass:
