@@ -2,8 +2,8 @@
 import { useI18n } from '@/lib/i18n'
 
 import { computed, ref } from 'vue'
-import { Bot, Copy, Search, Sparkles } from '@lucide/vue'
-import { encodeThemePreset, generateThemeCss, uiStyleGuide } from 'shadcn-uniapp'
+import { ChevronDown, Search, Sparkles } from '@lucide/vue'
+import { encodeThemePreset, generateThemeCss } from 'shadcn-uniapp'
 import type { ThemeConfig } from 'shadcn-uniapp'
 import {
   Dialog,
@@ -17,9 +17,6 @@ import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { Badge } from '@/components/ui/badge'
 import CodeBlock from '@/components/CodeBlock.vue'
-import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
-import { copyText } from '@/lib/browser'
 
 const { t } = useI18n()
 const openRef = defineModel<boolean>('open', { default: false })
@@ -27,6 +24,21 @@ const props = defineProps<{ theme: ThemeConfig }>()
 const lucideRef = ref(true)
 const presetCode = computed(() => encodeThemePreset(props.theme))
 const css = computed(() => generateThemeCss(props.theme))
+const agentInstall = computed(() =>
+  [
+    t(
+      'Install and initialize shadcn-uniapp in this project with pnpm dlx shadcn-uniapp@latest init --preset {preset}.',
+    ).replace('{preset}', presetCode.value),
+    t(
+      lucideRef.value
+        ? 'Enable @lucide/vue with the lucideUniapp Vite plugin.'
+        : 'Keep existing icons; do not install @lucide/vue or enable lucideUniapp.',
+    ),
+    t(
+      'Follow https://shadcn-uniapp.guygubaby.top/docs, preserve existing styling, project rules and customized files, then verify H5 and WeChat builds.',
+    ),
+  ].join(' '),
+)
 const install = computed(() =>
   [
     'pnpm add -D shadcn-uniapp@latest sass',
@@ -52,13 +64,10 @@ import { Search } from '@lucide/vue'`
         }}</DialogDescription>
       </DialogHeader>
       <Tabs default-value="install" class="min-w-0">
-        <TabsList
-          ><TabsTrigger value="install">{{ t('Install') }}</TabsTrigger
-          ><TabsTrigger value="css">CSS</TabsTrigger
-          ><TabsTrigger value="ai"
-            ><Bot class="size-4" aria-hidden="true" />{{ t('AI Style Guide') }}</TabsTrigger
-          ></TabsList
-        >
+        <TabsList>
+          <TabsTrigger value="install">{{ t('Install') }}</TabsTrigger>
+          <TabsTrigger value="css">CSS</TabsTrigger>
+        </TabsList>
         <TabsContent value="install" class="flex flex-col gap-5 pt-3">
           <div
             class="flex items-center justify-between gap-4 rounded-md border border-foreground/20 bg-muted/50 p-4"
@@ -78,26 +87,44 @@ import { Search } from '@lucide/vue'`
               aria-describedby="export-lucide-description"
             />
           </div>
-          <div class="flex flex-col gap-3">
-            <p class="text-sm text-muted-foreground">
-              {{ t('Run in your project to apply this theme.') }}
-            </p>
-            <CodeBlock :code="install" label="pnpm" />
-            <CodeBlock v-if="lucideRef" :code="icons" label="vite.config.ts / icons" />
-            <div
-              v-if="lucideRef"
-              class="flex items-center gap-3 rounded-lg border bg-muted/40 px-4 py-3"
+          <CodeBlock
+            :code="agentInstall"
+            label="One-line agent install"
+            class="[&_pre]:whitespace-pre-wrap"
+          />
+          <details class="group rounded-lg border">
+            <summary
+              class="flex cursor-pointer list-none items-center justify-between gap-3 rounded-lg px-4 py-3 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 [&::-webkit-details-marker]:hidden"
             >
-              <span class="mr-auto text-xs text-muted-foreground">{{ t('Preview') }}</span>
-              <Search class="size-5" aria-hidden="true" />
-              <span class="text-sm font-medium">Search</span>
+              {{ t('Details') }}
+              <ChevronDown
+                class="size-4 text-muted-foreground transition-transform group-open:rotate-180 motion-reduce:transition-none"
+                aria-hidden="true"
+              />
+            </summary>
+            <div class="flex flex-col gap-3 border-t p-4">
+              <p class="text-sm text-muted-foreground">
+                {{ t('Run in your project to apply this theme.') }}
+              </p>
+              <CodeBlock :code="install" label="pnpm" />
+              <CodeBlock v-if="lucideRef" :code="icons" label="vite.config.ts / icons" />
+              <div
+                v-if="lucideRef"
+                class="flex items-center gap-3 rounded-lg border bg-muted/40 px-4 py-3"
+              >
+                <span class="mr-auto text-xs text-muted-foreground">{{ t('Preview') }}</span>
+                <Search class="size-5" aria-hidden="true" />
+                <span class="text-sm font-medium">Search</span>
+              </div>
+              <p class="text-xs leading-6 text-muted-foreground">
+                {{
+                  t(
+                    'Custom fonts use system fallbacks on WeChat unless you load the font yourself.',
+                  )
+                }}
+              </p>
             </div>
-          </div>
-          <p class="rounded-lg border bg-muted/50 p-3 text-xs leading-6 text-muted-foreground">
-            {{
-              t('Custom fonts use system fallbacks on WeChat unless you load the font yourself.')
-            }}
-          </p>
+          </details>
         </TabsContent>
         <TabsContent value="css" class="flex flex-col gap-3 pt-3"
           ><p class="text-sm text-muted-foreground">
@@ -108,29 +135,6 @@ import { Search } from '@lucide/vue'`
             }}
           </p>
           <div class="max-h-80 overflow-auto"><CodeBlock :code="css" label="shadcn.scss" /></div>
-        </TabsContent>
-        <TabsContent value="ai" class="flex flex-col gap-4 pt-3">
-          <p class="text-sm leading-6 text-muted-foreground">
-            {{
-              t(
-                'Initialization saves UI_STYLE_GUIDE.md and links it from AGENTS.md. Preview the rules your agent will follow when building new pages.',
-              )
-            }}
-          </p>
-          <Textarea
-            :model-value="uiStyleGuide"
-            :aria-label="t('AI style instructions')"
-            readonly
-            class="field-sizing-fixed h-72 resize-none font-mono text-xs leading-6"
-          />
-          <Button @click="copyText(uiStyleGuide)"><Copy />{{ t('Copy style guide') }}</Button>
-          <p class="text-xs leading-5 text-muted-foreground">
-            {{
-              t(
-                'Existing guides and project rules are preserved. Other coding agents can reference this file from their project rules.',
-              )
-            }}
-          </p>
         </TabsContent>
       </Tabs>
     </DialogContent>

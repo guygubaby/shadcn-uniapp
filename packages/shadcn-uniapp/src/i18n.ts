@@ -1,21 +1,22 @@
 export type UiLocale = 'zh-CN' | 'en-US'
 
 export const chineseMessages: Record<string, string> = {
-  'AI Style Guide': 'AI 风格指南',
-  'AI style instructions': 'AI 界面风格指令',
-  'Copy style guide': '复制风格指南',
-  'Initialization saves UI_STYLE_GUIDE.md and links it from AGENTS.md. Preview the rules your agent will follow when building new pages.':
-    '初始化会自动保存 UI_STYLE_GUIDE.md，并在 AGENTS.md 中引用。这里可预览 Agent 构建后续页面时遵循的规则。',
-  'Existing guides and project rules are preserved. Other coding agents can reference this file from their project rules.':
-    '已有指南和项目规则会保留。其他编程 Agent 也可在其项目规则中引用同一份文件。',
-  'init saves UI_STYLE_GUIDE.md and adds its reference to AGENTS.md. Existing projects can run generate to add missing guidance. Choose Use this theme → AI Style Guide to preview or copy the rules.':
-    'init 会自动保存 UI_STYLE_GUIDE.md 并在 AGENTS.md 中引用；已有项目可运行 generate 补齐。点击「使用此主题 → AI 风格指南」可预览或复制规则。',
+  'One-line agent install': '一句话交给 AI 安装',
+  Details: '详细步骤',
+  'Install and initialize shadcn-uniapp in this project with pnpm dlx shadcn-uniapp@latest init --preset {preset}.':
+    '请在当前项目中使用 pnpm dlx shadcn-uniapp@latest init --preset {preset} 安装并初始化 shadcn-uniapp。',
+  'Enable @lucide/vue with the lucideUniapp Vite plugin.':
+    '安装 @lucide/vue 并配置 lucideUniapp Vite 插件。',
+  'Keep existing icons; do not install @lucide/vue or enable lucideUniapp.':
+    '保留现有图标方案，不安装 @lucide/vue，也不启用 lucideUniapp。',
+  'Follow https://shadcn-uniapp.guygubaby.top/docs, preserve existing styling, project rules and customized files, then verify H5 and WeChat builds.':
+    '按照 https://shadcn-uniapp.guygubaby.top/docs 操作，保留现有样式方案、项目规则和自定义文件，并验证 H5 与微信小程序构建。',
   'Run in your project to apply this theme.': '在项目中运行以下命令，应用此主题。',
   'Preset code': '预设码',
   'Paste a preset code to restore all theme settings.': '粘贴预设码，还原完整主题设置。',
   'Enter a valid preset code from Creator.': '请输入创建器生成的有效预设码。',
-  'Choose Use this theme and copy the init --preset command.':
-    '点击「使用此主题」，复制 init --preset 命令。',
+  'Choose Use this theme and copy the agent instruction, or expand Details for manual setup.':
+    '点击「使用此主题」，复制 Agent 安装指令，或展开「详细步骤」查看手动配置流程。',
   'Run the command in your project. Existing generated files are protected; review them before using --force to replace a theme.':
     '在项目中运行命令。已有生成文件会受到保护，使用 --force 替换主题前请先检查这些文件。',
   'The CLI saves an editable theme JSON in your project. After local edits, run generate to refresh its stylesheet. Existing style guides and agent rules are preserved.':

@@ -165,7 +165,11 @@ const vars = getWotThemeVars(config, 'dark')`
               }}
             </li>
             <li>
-              {{ t('Choose Use this theme and copy the init --preset command.') }}
+              {{
+                t(
+                  'Choose Use this theme and copy the agent instruction, or expand Details for manual setup.',
+                )
+              }}
             </li>
             <li>
               {{
@@ -190,13 +194,6 @@ const vars = getWotThemeVars(config, 'dark')`
             }}
           </p>
           <CodeBlock code="pnpm exec shadcn-uniapp generate" />
-          <p class="my-4 text-sm leading-7 text-muted-foreground">
-            {{
-              t(
-                'init saves UI_STYLE_GUIDE.md and adds its reference to AGENTS.md. Existing projects can run generate to add missing guidance. Choose Use this theme → AI Style Guide to preview or copy the rules.',
-              )
-            }}
-          </p>
           <div class="mt-4">
             <Button as-child variant="outline"
               ><RouterLink :to="localePath('/create')">{{ t('Open Creator') }}</RouterLink></Button
