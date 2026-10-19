@@ -227,6 +227,8 @@ export function getThemeVariables(
     '--wot-tag-radius': `${Math.max(0, config.radius - 2)}px`,
     '--wot-notice-bar-radius': radius,
     '--wot-cell-padding': config.density === 'compact' ? '10px 14px' : '14px 16px',
+    '--wot-collapse-item-header-padding': config.density === 'compact' ? '10px 0' : '12px 0',
+    '--wot-collapse-item-body-padding': config.density === 'compact' ? '0 0 10px' : '0 0 12px',
     '--wot-input-padding': '0 12px',
     '--wot-textarea-padding': '12px',
     '--wot-input-bg': c.card,
