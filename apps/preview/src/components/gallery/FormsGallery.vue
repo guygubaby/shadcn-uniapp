@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import GalleryGrid from './GalleryGrid.vue'
 import { usePreviewI18n } from '../../i18n'
 
 import { inject, ref, shallowRef } from 'vue'
@@ -23,7 +24,7 @@ const noticeRef = ref('')
 const signatureRef = shallowRef<SignatureResult>()
 </script>
 <template>
-  <view class="gallery-grid">
+  <GalleryGrid>
     <GallerySection
       :title="t('Inputs')"
       :description="t('Input, Textarea, InputNumber, and Search.')"
@@ -41,7 +42,11 @@ const signatureRef = shallowRef<SignatureResult>()
     <GallerySection
       :title="t('Choices')"
       :description="t('CheckboxGroup, RadioGroup, Switch, Rate, and Slider.')"
-      ><wd-checkbox-group v-model="checksRef" shape="square" direction="horizontal" custom-class="sui-choice-group"
+      ><wd-checkbox-group
+        v-model="checksRef"
+        shape="square"
+        direction="horizontal"
+        custom-class="sui-choice-group"
         ><wd-checkbox name="design">{{ t('Design') }}</wd-checkbox
         ><wd-checkbox name="code">{{ t('Development') }}</wd-checkbox></wd-checkbox-group
       ><wd-radio-group v-model="radioRef" direction="horizontal" custom-class="sui-choice-group"
@@ -110,5 +115,5 @@ const signatureRef = shallowRef<SignatureResult>()
         )
       }}</text></GallerySection
     >
-  </view>
+  </GalleryGrid>
 </template>

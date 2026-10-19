@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import GalleryGrid from './GalleryGrid.vue'
 import { usePreviewI18n } from '../../i18n'
 
 import { computed, ref, shallowRef } from 'vue'
@@ -29,7 +30,7 @@ const min = new Date(2026, 9, 1).getTime()
 const max = new Date(2026, 9, 31).getTime()
 </script>
 <template>
-  <view class="gallery-grid">
+  <GalleryGrid>
     <GallerySection
       :title="t('Popup pickers')"
       :description="t('Picker, SelectPicker, Cascader, DateTimePicker, and Calendar.')"
@@ -75,5 +76,5 @@ const max = new Date(2026, 9, 31).getTime()
       :description="t('A bounded date range for a deterministic fixture.')"
       ><wd-calendar-view v-model="dateRef" :min-date="min" :max-date="max" :panel-height="320"
     /></GallerySection>
-  </view>
+  </GalleryGrid>
 </template>

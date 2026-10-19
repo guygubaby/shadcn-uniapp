@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import GalleryGrid from './GalleryGrid.vue'
 import { usePreviewI18n } from '../../i18n'
 
 import { inject, ref, shallowRef } from 'vue'
@@ -21,7 +22,7 @@ const heightRef = ref(160)
 const anchors = shallowRef([160, 300])
 </script>
 <template>
-  <view class="gallery-grid">
+  <GalleryGrid>
     <GallerySection
       :title="t('Navigation bars')"
       :description="t('Navbar, NavbarCapsule, Tabbar, and TabbarItem.')"
@@ -138,5 +139,5 @@ const anchors = shallowRef([160, 300])
         ></wd-floating-panel
       ></GallerySection
     >
-  </view>
+  </GalleryGrid>
 </template>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import GalleryGrid from './GalleryGrid.vue'
 import { usePreviewI18n } from '../../i18n'
 
 import image from '../../static/preview-cover.png'
@@ -17,7 +18,7 @@ const rows = [
 const noticeRef = ref('')
 </script>
 <template>
-  <view class="gallery-grid">
+  <GalleryGrid>
     <GallerySection :title="t('Table')" :description="t('Table and TableColumn with local data.')"
       ><wd-table :data="rows" :height="210"
         ><wd-table-column prop="name" :label="t('Project')" :width="150" /><wd-table-column
@@ -63,5 +64,5 @@ const noticeRef = ref('')
         :height="120"
         @change="currentRef = $event.current" /><wd-swiper-nav :current="currentRef" :total="3"
     /></GallerySection>
-  </view>
+  </GalleryGrid>
 </template>

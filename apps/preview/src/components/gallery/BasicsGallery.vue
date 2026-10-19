@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import GalleryGrid from './GalleryGrid.vue'
 import { usePreviewI18n } from '../../i18n'
 
 import { inject, ref } from 'vue'
@@ -12,7 +13,7 @@ const counterRef = ref(1280)
 const watermarkRef = ref(false)
 </script>
 <template>
-  <view class="gallery-grid">
+  <GalleryGrid>
     <GallerySection
       :title="t('Buttons')"
       :description="t('Solid, outline, soft, loading, and disabled.')"
@@ -110,5 +111,5 @@ const watermarkRef = ref(false)
       </view>
       <wd-qr-code text="https://shadcn-uniapp.guygubaby.top" :size="100"
     /></GallerySection>
-  </view>
+  </GalleryGrid>
 </template>
