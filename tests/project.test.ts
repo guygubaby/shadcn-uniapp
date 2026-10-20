@@ -35,6 +35,26 @@ afterEach(() => {
 })
 
 describe('safe source installation', () => {
+  it('reuses global SCSS and repairs a legacy CLI-only style block during generate', () => {
+    const root = project()
+    const appPath = join(root, 'src/App.vue')
+    const original =
+      '<script setup>const keep = true</script>\n<style lang="scss">.keep { color: red; }</style>\n'
+    writeFileSync(appPath, original)
+    initProject(root)
+    expect(readFileSync(appPath, 'utf8').match(/<style\b/g)).toHaveLength(1)
+    writeFileSync(
+      appPath,
+      `${original}\n<style lang="scss">\n@use '@wot-ui/ui/styles/theme/index.scss' as *;\n@use './theme/shadcn.scss' as *;\n</style>\n`,
+    )
+    expect(generateProjectTheme(root)).toContain('src/App.vue')
+    const repaired = readFileSync(appPath, 'utf8')
+    expect(repaired.match(/<style\b/g)).toHaveLength(1)
+    expect(repaired).toContain('.keep { color: red; }')
+    expect(generateProjectTheme(root)).toEqual(['src/theme/shadcn.scss'])
+    expect(readFileSync(appPath, 'utf8')).toBe(repaired)
+  })
+
   it('creates a persistent style guide and preserves project rules and later guide edits', () => {
     const root = project()
     const existingRules = '# Project rules\n\nKeep our existing stack.\n'

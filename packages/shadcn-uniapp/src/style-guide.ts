@@ -10,6 +10,16 @@ This file is source-owned. Keep project-specific conventions here; later init an
 - Preserve existing UnoCSS. New projects may use Tailwind CSS v4 + weapp-tailwindcss; do not install both systems or migrate without permission.
 - Use atomic classes for layout. Use shared theme rules for third-party component overrides. Do not fork Wot internals.
 
+## Adopting an existing application
+
+Installing a theme supplies tokens and Wot styles; it does not rewrite existing pages. Treat visual adoption as part of an explicitly requested UI migration, not as complete when init or a build succeeds.
+
+1. Inspect App.vue, the installed theme, UnoCSS/Tailwind configuration, global styles, shared components and every useConfigProvider/themeVars override. An old provider with concrete colors can override the generated theme even when the stylesheet is imported correctly.
+2. Establish one source of truth. Derive Wot runtime variables from the installed theme with getWotThemeVars; map existing project color aliases and utility tokens to semantic theme variables. Retire overlapping legacy color, font, radius and shadow declarations instead of keeping competing theme systems. Preserve meaningful warning, success and destructive states.
+3. Refactor the shared page, card, heading, form, navigation and empty/error primitives first. Within the requested scope, replace page-local hardcoded surfaces, decorative colors, heavy shadows, oversized type and arbitrary radii with those shared conventions. Keep business logic, permissions, events, routes, data queries, localization and safe-area behavior intact.
+4. Inspect the actual rendered pages before declaring adoption complete. Compare representative screens at phone width and check long labels, forms, loading/empty/error states and overlays. Report any pages still using legacy styling; a passing compiler does not establish visual consistency.
+5. Make these rules discoverable from the repository's existing agent entry point. In a monorepo, link this guide from the root AGENTS.md as well as the app-local rules when agents normally start at the root. If another agent uses a different rules file, reference the same guide there instead of creating another design specification.
+
 ## Colors, type and shape
 
 Use the semantic CSS variables below. Never copy a preview's light-mode hex colors into a page.

@@ -9,8 +9,8 @@ export const chineseMessages: Record<string, string> = {
     '安装 @lucide/vue 并配置 lucideUniapp Vite 插件。',
   'Keep existing icons; do not install @lucide/vue or enable lucideUniapp.':
     '保留现有图标方案，不安装 @lucide/vue，也不启用 lucideUniapp。',
-  'Follow https://shadcn-uniapp.guygubaby.top/docs, preserve existing styling, project rules and customized files, then verify H5 and WeChat builds.':
-    '按照 https://shadcn-uniapp.guygubaby.top/docs 操作，保留现有样式方案、项目规则和自定义文件，并验证 H5 与微信小程序构建。',
+  'Follow https://shadcn-uniapp.guygubaby.top/docs and UI_STYLE_GUIDE.md to apply the theme to existing shared UI and pages, resolve legacy theme overrides, preserve business behavior and the utility framework, then inspect the UI and verify H5 and WeChat builds.':
+    '按照 https://shadcn-uniapp.guygubaby.top/docs 与 UI_STYLE_GUIDE.md，将主题应用到已有共享界面和页面，处理旧主题覆盖，保留业务行为与原子 CSS 方案，并检查实际界面及 H5、微信小程序构建。',
   'Run in your project to apply this theme.': '在项目中运行以下命令，应用此主题。',
   'Preset code': '预设码',
   'Paste a preset code to restore all theme settings.': '粘贴预设码，还原完整主题设置。',

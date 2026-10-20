@@ -49,8 +49,8 @@ export function createAgentSetupPrompt(
       '5. If not initialized, run pnpm exec shadcn-uniapp init --preset zinc. If shadcn-uniapp.json exists, preserve its theme and paths and use generate; never pass --force without confirming replacement. Keep Wot easycom and Sass and import the global theme after Wot styles. The theme works with either Tailwind or UnoCSS.',
     ),
     say(
-      '6. init 会自动保存 UI_STYLE_GUIDE.md 并在 AGENTS.md 中引用；旧项目运行 generate 补齐缺失的指南与引用。读取这份指南，后续页面复用当前主题和共享组件。保留用户已有的指南内容及项目规则；其他 Agent 若使用不同规则文件，在其现有规则文件中引用同一份指南。',
-      '6. init automatically saves UI_STYLE_GUIDE.md and references it from AGENTS.md; generate adds missing guidance to older projects. Read that guide and reuse the current theme and shared components for future pages. Preserve customized guides and project rules. If another agent uses a different project rules file, reference the same guide there.',
+      '6. init 会自动保存 UI_STYLE_GUIDE.md 并在 AGENTS.md 中引用；旧项目运行 generate 补齐缺失的指南与引用。读取这份指南，后续页面复用当前主题和共享组件。安装本身不会重排旧页面：若任务包含旧界面迁移，检查 App.vue、useConfigProvider/themeVars、原子 CSS tokens 和页面写死的颜色/圆角/阴影，统一共享主题后再修改任务范围内的页面并检查实际效果。保留业务逻辑与自定义指南；monorepo 从根目录工作时，在根 AGENTS.md 中链接同一份指南。',
+      '6. init automatically saves UI_STYLE_GUIDE.md and references it from AGENTS.md; generate adds missing guidance to older projects. Read that guide and reuse the current theme and shared components for future pages. Installation does not redesign existing pages: if UI migration is requested, audit App.vue, useConfigProvider/themeVars, utility tokens and hardcoded page colors/radii/shadows, consolidate the shared theme, then adapt pages in scope and inspect the rendered result. Preserve business logic and customized guides; link the same guide from root AGENTS.md when working from a monorepo root.',
     ),
     say(
       '7. 使用目标项目现有命令完成类型检查、H5 与微信小程序构建，实际检查主题切换、表单间距及所选图标渲染。报告更改文件、采用的样式方案、通过的检查与未完成的真机验证。不要把编译通过说成真机验证通过。',

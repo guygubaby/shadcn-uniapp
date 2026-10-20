@@ -14,6 +14,7 @@ import { generateThemeCss, parseTheme } from './theme'
 import type { ThemeConfig } from './theme'
 import { decodeThemePreset } from './preset'
 import { uiStyleGuide } from './style-guide'
+import { addThemeStyles } from './app-styles'
 
 const projectSchema = z.strictObject({
   version: z.literal(1),
@@ -119,11 +120,19 @@ function requireWot2(root: string) {
   }
 }
 
+function appThemeFile(root: string, css: string) {
+  const appPath = existsSync(resolve(root, 'src/App.vue')) ? 'src/App.vue' : 'App.vue'
+  const source = readFileSync(checkedPath(root, appPath), 'utf8')
+  const importPath = `./${relative(dirname(resolve(root, appPath)), resolve(root, css))
+    .split(sep)
+    .join('/')}`
+  return { appPath, source, content: addThemeStyles(source, appPath, importPath) }
+}
+
 export function initProject(cwd: string, preset: string | ThemeConfig = 'zinc', force = false) {
   const root = projectRoot(cwd)
   requireWot2(root)
   const appPath = existsSync(resolve(root, 'src/App.vue')) ? 'src/App.vue' : 'App.vue'
-  const app = readFileSync(checkedPath(root, appPath), 'utf8')
   const config =
     appPath === 'App.vue'
       ? {
@@ -134,15 +143,7 @@ export function initProject(cwd: string, preset: string | ThemeConfig = 'zinc', 
         }
       : defaultProjectConfig
   const theme = typeof preset === 'string' ? decodeThemePreset(preset) : parseTheme(preset)
-  const importPath = `./${relative(dirname(resolve(root, appPath)), resolve(root, config.css))
-    .split(sep)
-    .join('/')}`
-  const wotImport = app.includes('@wot-ui/ui/styles/theme/index.scss')
-    ? ''
-    : "@use '@wot-ui/ui/styles/theme/index.scss' as *;\n"
-  const nextApp = app.includes(importPath)
-    ? app
-    : `${app.trimEnd()}\n\n<style lang="scss">\n${wotImport}@use '${importPath}' as *;\n</style>\n`
+  const { content: nextApp } = appThemeFile(root, config.css)
   return writeFiles(
     root,
     {
@@ -164,7 +165,16 @@ export function generateProjectTheme(cwd: string) {
   if (lstatSync(themeFile).size > 256 * 1024)
     throw new Error('Theme JSON must be smaller than 256 KiB.')
   const theme = parseTheme(JSON.parse(readFileSync(themeFile, 'utf8')))
-  return writeFiles(root, { [config.css]: generateThemeCss(theme), ...guidanceFiles(root) }, true)
+  const app = appThemeFile(root, config.css)
+  return writeFiles(
+    root,
+    {
+      [config.css]: generateThemeCss(theme),
+      ...(app.source === app.content ? {} : { [app.appPath]: app.content }),
+      ...guidanceFiles(root),
+    },
+    true,
+  )
 }
 
 export function addBlock(cwd: string, name: string, force = false) {

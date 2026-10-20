@@ -4,9 +4,11 @@ Shadcn-inspired themes and source-owned blocks for **Wot UI 2.x + uni-app**.
 
 [Website](https://shadcn-uniapp.guygubaby.top) | [Creator](https://shadcn-uniapp.guygubaby.top/create) | [Documentation](https://shadcn-uniapp.guygubaby.top/docs) | [GitHub](https://github.com/guygubaby/shadcn-uniapp)
 
-## v0.1.3
+## v0.1.4
 
-Accordion questions and answers now align with their container, with density-aware vertical spacing. Hidden Tooltip measurement nodes no longer create empty scroll space. Existing projects should upgrade the package and run `pnpm exec shadcn-uniapp generate` to refresh generated styles.
+Initialization reuses compatible global SCSS in App.vue instead of always adding another style block. `generate` can consolidate a dedicated theme block created by an older CLI. Runtime theme validation skips Zod's generated object parser for miniapp compatibility. New style guides include an explicit workflow for adopting the selected theme across existing UI; customized guides remain protected.
+
+Existing projects should upgrade the package and run `pnpm exec shadcn-uniapp generate`. Existing customized guides are preserved; merge new adoption rules into them deliberately.
 
 ## Use
 
@@ -36,7 +38,9 @@ pnpm exec shadcn-uniapp generate
 
 Presets: zinc, blue, emerald, rose, orange, violet, amber, teal, red, pink. Includes 28 source-owned blocks for mobile apps and international schools; see the [Blocks catalog](https://shadcn-uniapp.guygubaby.top/blocks) for names and previews.
 
-`init` preserves existing App.vue content and appends theme imports. It also creates `UI_STYLE_GUIDE.md` in the project root and links it from `AGENTS.md`, so coding agents can reuse the current theme and UI conventions. Existing style-guide edits and agent instructions are preserved, including with `--force`.
+`init` preserves App.vue and inserts theme imports into an existing global inline SCSS block when compatible. Scoped, CSS-module, external or other-language styles stay intact; a separate global SCSS block is added in those cases. `generate` also consolidates an older CLI-only theme block when a compatible SCSS block exists. It creates `UI_STYLE_GUIDE.md` and links it from `AGENTS.md`. Existing style-guide edits and agent instructions are preserved, including with `--force`.
+
+Existing page design is not rewritten by installation. Ask your coding agent to follow the guide's adoption workflow: consolidate old ConfigProvider overrides and utility tokens, refactor shared UI, then migrate the requested screens and inspect them visually. In monorepos, link the guide from the root agent rules too.
 
 For projects initialized with an older version, run `generate` to refresh the stylesheet and add missing guidance. Existing generated theme and block files are protected unless `--force` is passed. No dependency is installed and no Wot code is patched.
 

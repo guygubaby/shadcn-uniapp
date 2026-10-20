@@ -1,6 +1,6 @@
 {
   "name": "shadcn-uniapp",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Shadcn-inspired themes, a theme creator, and source-owned blocks for Wot UI and uni-app.",
   "type": "module",
   "license": "MIT",
@@ -67,11 +67,11 @@
     "prepack": "pnpm build"
   },
   "dependencies": {
+    "@vue/compiler-sfc": "^3.5.44",
     "magic-string": "^0.30.21",
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@vue/compiler-sfc": "^3.5.44",
     "tsdown": "^0.23.1",
     "vite": "5.2.8"
   }

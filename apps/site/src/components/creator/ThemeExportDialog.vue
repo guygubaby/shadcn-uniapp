@@ -35,7 +35,7 @@ const agentInstall = computed(() =>
         : 'Keep existing icons; do not install @lucide/vue or enable lucideUniapp.',
     ),
     t(
-      'Follow https://shadcn-uniapp.guygubaby.top/docs, preserve existing styling, project rules and customized files, then verify H5 and WeChat builds.',
+      'Follow https://shadcn-uniapp.guygubaby.top/docs and UI_STYLE_GUIDE.md to apply the theme to existing shared UI and pages, resolve legacy theme overrides, preserve business behavior and the utility framework, then inspect the UI and verify H5 and WeChat builds.',
     ),
   ].join(' '),
 )

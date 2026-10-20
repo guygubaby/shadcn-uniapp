@@ -113,7 +113,8 @@ export function createPreset(preset: PresetName = 'zinc'): ThemeConfig {
 }
 
 export function parseTheme(value: unknown): ThemeConfig {
-  return themeSchema.parse(value)
+  // WeChat can pass eval detection while rejecting Zod's generated object parser.
+  return themeSchema.parse(value, { jitless: true })
 }
 
 function channels(hex: string): [number, number, number] {

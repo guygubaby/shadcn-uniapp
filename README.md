@@ -8,12 +8,13 @@ Shadcn-inspired themes, a visual theme creator, and editable source blocks for *
 
 Keep your `wd-*` components. Generate a theme instead of replacing the component library.
 
-## What ships in v0.1.3
+## What ships in v0.1.4
 
 - Ten light/dark accent presets, including zinc, blue, emerald, rose, and orange.
 - Validated theme JSON, semantic CSS variables and a Wot v2 token adapter.
 - Compact accordion alignment with density-aware content padding, and a fix for hidden Tooltip measurement causing empty page space.
 - CLI commands: `init`, `generate`, `add`.
+- Safe App.vue SCSS integration, legacy generated-block consolidation, and runtime theme validation without generated object parsers.
 - A persistent `UI_STYLE_GUIDE.md`, linked from `AGENTS.md`, for future AI-assisted UI work.
 - 28 source-owned blocks for mobile apps, parent services, and teacher workflows.
 - A prerendered Vue website using shadcn-vue, plus a real, separately compiled uni-app H5 preview.
@@ -47,9 +48,11 @@ src/theme/shadcn.theme.json
 src/theme/shadcn.scss
 ```
 
-It appends a separate global SCSS block to `App.vue`, preserves existing scripts/styles, and adds the Wot theme entry only if it is not already present. An existing generated theme file aborts the operation before changes; `--force` is an explicit overwrite. No dependency is automatically installed.
+It reuses an existing unscoped inline SCSS block in `App.vue`, preserving scripts and styles and placing the theme after the Wot import. A separate global SCSS block is added only when the existing styles use incompatible scope, language or external sources. An existing generated theme file aborts the operation before changes; `--force` is an explicit overwrite. No dependency is automatically installed.
 
 `UI_STYLE_GUIDE.md` tells coding agents to read the current theme and reuse shared components, spacing and layout conventions. Existing guide edits and agent rules are preserved, including with `--force`. For an older initialized project, `generate` adds missing guidance automatically.
+
+Existing pages need an explicit visual migration: remove competing ConfigProvider colors and legacy theme overrides, connect utility tokens to the selected theme, and refactor shared UI before adapting page layouts. Installing a stylesheet or generating an agent guide alone does not redesign those pages. Link the guide from the monorepo root rules when that is the agent's entry point.
 
 ```vue
 <style lang="scss">
